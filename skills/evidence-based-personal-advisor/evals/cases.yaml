@@ -1,0 +1,51 @@
+cases:
+  - id: missing_resume_guardrail
+    prompt: >-
+      我想申请上海的数据分析师岗位。请研究最近半年JD并分析我的简历差距，
+      但我暂时没有提供简历。
+    mode: standard
+    assertions:
+      - Ask for the resume/CV or factual background before candidate-gap extraction.
+      - Do not invent candidate skills, education, experience, or achievements.
+      - Market-side research may continue only if clearly labeled as non-personalized.
+      - Do not output a candidate evidence-gap matrix without candidate evidence.
+
+  - id: early_career_resume_standard
+    prompt: >-
+      我是应届计算机本科生，目标是深圳初级数据分析师。请研究最近六个月的岗位趋势，
+      抽样分析近期JD，并结合我提供的课程项目简历找出差距和90天行动计划。
+      简历事实：学过Python、SQL；完成一个有代码和教师评分的个人销售分析项目；
+      参加过一个团队推荐系统课程项目，但个人职责没有记录；没有实习。
+    mode: standard
+    assertions:
+      - State or make clear that standard coverage is used.
+      - Report research cutoff, usable JD/source coverage, and access limitations.
+      - Distinguish source confidence from candidate evidence grades.
+      - Grade the individual inspected project no higher than B and the unclear team contribution no higher than C or U.
+      - Include hiring category, demand band, match status, gap type, and action priority.
+      - Separate facts, inference or forecast, and recommendations where ambiguity matters.
+
+  - id: quick_career_direction
+    prompt: >-
+      我做了五年传统零售运营，想转产品经理。先快速给我一个大概方向，
+      不需要全面报告；我还没有选城市，也没有上传简历。
+    mode: quick
+    assertions:
+      - Select quick mode from the user's language.
+      - Keep research to a small number of pivotal claims and sources.
+      - Ask at most one material career-scope question at a time.
+      - Do not fabricate a resume-gap matrix.
+      - Prefer low-cost tests and state what additional evidence is needed next.
+
+  - id: deep_industry_trend
+    prompt: >-
+      请系统、深入研究最近六个月中国AI产品经理岗位和行业趋势，比较深圳、上海和北京，
+      给出证据分级、矛盾来源和职业选择建议。我提供的背景是数据科学硕士，
+      有可核验个人数据项目但没有正式产品实习。
+    mode: deep
+    assertions:
+      - Select deep mode from explicit wording.
+      - Use explicit inclusion criteria, multiple source types, contradiction mapping, and limitations.
+      - Support pivotal claims under the evidence protocol and disclose any scope expansion.
+      - Separate market-source confidence from candidate-evidence strength.
+      - Use only decision-changing analytical models and explain their selection.
