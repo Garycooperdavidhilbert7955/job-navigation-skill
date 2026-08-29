@@ -1,9 +1,9 @@
 ---
-name: evidence-based-personal-advisor
+name: job-navigation-skill
 description: Research current job markets and hiring requirements, analyze recent job descriptions, compare them with a user's resume, projects, skills, and constraints, and turn the gaps into prioritized career actions. Use for students, job seekers, and career changers who need industry or role trends, cross-platform JD sampling, role-fit analysis, resume evidence-gap analysis or truthful tailoring, career-skill prioritization, target-role course or certificate decisions, application readiness, or a capacity-bounded 30/60/90-day job-search plan. Do not use for general personal advice, education choices unrelated to a target career, simple factual lookups, automatic job applications, or unsupported resume rewriting.
 ---
 
-# Evidence-Based Career and Resume Advisor
+# Job Navigation Skill
 
 ## Operating contract
 

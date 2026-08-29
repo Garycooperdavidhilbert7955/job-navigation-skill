@@ -1,4 +1,0 @@
-interface:
-  display_name: "循证求职与简历顾问"
-  short_description: "研究近期岗位与JD，对照简历找出适配、证据和技能差距"
-  default_prompt: "Use $evidence-based-personal-advisor to research current roles and JDs, compare them with my resume evidence, and prioritize my job-search actions."

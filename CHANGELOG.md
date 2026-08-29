@@ -2,6 +2,13 @@
 
 This project is in public beta. Versions describe repository milestones, not proof of effectiveness.
 
+## 0.5.0-beta — 2026-08-30
+
+- Renamed the project, Skill identifier, Plugin identifier, repository, install directory, invocation, and package filenames to `job-navigation-skill`.
+- Added repository and homepage metadata to the OpenAI Plugin manifest.
+- Documented the one-time migration required for installations using the previous Skill identifier.
+- Kept `v0.4.0-beta` available as a rollback release; the identifier change is intentionally breaking.
+
 ## 0.4.0-beta — 2026-08-29
 
 - Added a universal ChatGPT/Codex plugin manifest around the canonical Skill.

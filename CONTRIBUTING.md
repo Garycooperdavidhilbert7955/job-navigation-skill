@@ -35,15 +35,15 @@ Never post resumes, names, contact details, private prompts, raw model outputs, 
 ```bash
 python3 scripts/validate_repo.py
 python3 adapters/deepseek/run.py --self-test
-python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --self-test
+python3 skills/job-navigation-skill/scripts/summarize_evals.py --self-test
 python3 scripts/package_skill.py --target all --output /tmp/evidence-advisor-dist
 ```
 
-Cross-agent wrappers must continue to use `skills/evidence-based-personal-advisor/` as the canonical source. Do not fork the core instructions into provider-specific copies.
+Cross-agent wrappers must continue to use `skills/job-navigation-skill/` as the canonical source. Do not fork the core instructions into provider-specific copies.
 
 ## Evaluation contributions
 
-Use the [paired evaluation protocol](skills/evidence-based-personal-advisor/references/evaluation-and-user-feedback.md). Keep task, model, tool access, research window, and time budget comparable. Report per-metric results, missing fields, tokens/time/cost, and every hard failure—including null and negative findings.
+Use the [paired evaluation protocol](skills/job-navigation-skill/references/evaluation-and-user-feedback.md). Keep task, model, tool access, research window, and time budget comparable. Report per-metric results, missing fields, tokens/time/cost, and every hard failure—including null and negative findings.
 
 Fewer than 10 complete pairs are debugging evidence. User ratings are experience evidence, not proof of source accuracy or causal impact.
 

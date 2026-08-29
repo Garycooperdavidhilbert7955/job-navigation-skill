@@ -1,6 +1,6 @@
 # Architecture
 
-Evidence-Based Career & Resume Advisor is a cross-agent Skill package for job-market research, role fit, resume evidence diagnosis, and career-skill prioritization—not a hosted application. One canonical Skill feeds thin ChatGPT, Codex, Claude, and DeepSeek deployment adapters. The technical identifier remains `evidence-based-personal-advisor` for compatibility.
+Job Navigation Skill is a cross-agent Skill package for job-market research, role fit, resume evidence diagnosis, and career-skill prioritization—not a hosted application. One canonical Skill feeds thin ChatGPT, Codex, Claude, and DeepSeek deployment adapters. Its display name, folder, manifest name, and invocation share the `job-navigation-skill` identifier.
 
 ## Design principles
 

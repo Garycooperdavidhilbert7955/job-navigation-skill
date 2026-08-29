@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_NAME = "evidence-based-personal-advisor"
+SKILL_NAME = "job-navigation-skill"
 SKILL = ROOT / "skills" / SKILL_NAME
 TEXT_SUFFIXES = {
     ".md", ".yaml", ".yml", ".py", ".txt", ".json", ".toml", ".sh", ".bash", ".zsh"

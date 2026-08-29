@@ -1,21 +1,27 @@
 {
-  "name": "evidence-based-personal-advisor",
-  "version": "0.4.0-beta",
+  "name": "job-navigation-skill",
+  "version": "0.5.0-beta",
   "description": "Research current roles and job descriptions, compare them with resume evidence, and prioritize job-search actions.",
   "author": {
-    "name": "Evidence-Based Career & Resume Advisor contributors"
+    "name": "Job Navigation Skill contributors",
+    "url": "https://github.com/xinyu0115"
   },
+  "homepage": "https://github.com/xinyu0115/job-navigation-skill#readme",
+  "repository": "https://github.com/xinyu0115/job-navigation-skill",
   "license": "MIT",
   "keywords": ["career", "resume", "job-search", "job-descriptions", "skills-gap"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Evidence-Based Career & Resume Advisor",
+    "displayName": "Job Navigation Skill",
     "shortDescription": "Compare current job requirements with resume evidence.",
     "longDescription": "Research current roles and job descriptions, diagnose role-fit and resume evidence gaps, prioritize career skills, and produce a capacity-bounded job-search plan.",
-    "developerName": "Evidence-Based Career & Resume Advisor contributors",
+    "developerName": "Job Navigation Skill contributors",
     "category": "Productivity",
     "capabilities": ["Research", "Analysis"],
-    "defaultPrompt": "Research my target roles and compare current job requirements with my resume evidence.",
+    "websiteURL": "https://github.com/xinyu0115/job-navigation-skill",
+    "defaultPrompt": [
+      "Research my target roles and compare current job requirements with my resume evidence."
+    ],
     "brandColor": "#3D7A66"
   }
 }

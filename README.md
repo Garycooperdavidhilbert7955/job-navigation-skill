@@ -1,18 +1,18 @@
 <div align="center">
 
-# Evidence-Based Career & Resume Advisor
+# Job Navigation Skill
 
 ### Research current roles and real JDs, compare them with your resume, and decide what to target, fix, and do first
 
 [简体中文](README.zh-CN.md) · [Architecture](ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Status](https://img.shields.io/badge/status-beta-f59e0b)
-![Version](https://img.shields.io/badge/version-0.4.0--beta-2563eb)
+![Version](https://img.shields.io/badge/version-0.5.0--beta-2563eb)
 ![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20DeepSeek-111827)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
 
-`v0.4.0-beta`
+`v0.5.0-beta`
 
 </div>
 
@@ -131,7 +131,7 @@ See the [fictional abbreviated example](examples/early-career-ai-role-brief.md).
 
 This repository keeps one canonical `SKILL.md` and reference set, then adds thin deployment adapters for ChatGPT, Codex, Claude, and DeepSeek. Career logic is not duplicated between agents.
 
-The product display name is **Evidence-Based Career & Resume Advisor**. The technical identifier remains `evidence-based-personal-advisor` to preserve existing installations and invocation compatibility.
+The product display name and technical identifier are both **Job Navigation Skill** / `job-navigation-skill`. Version `0.5.0-beta` is a breaking rename: existing installations under the previous identifier require the one-time migration in [Safe upgrade](#511-safe-upgrade).
 
 | Agent surface | Support in this repository | Deployment path |
 |---|---|---|
@@ -168,7 +168,7 @@ From the GitHub repository page, choose one method:
 1. Select **Code** on the GitHub repository page.
 2. Copy the HTTPS or SSH URL.
 3. Clone it with your Git client.
-4. Open Terminal or PowerShell in the resulting `evidence-based-personal-advisor` folder.
+4. Open Terminal or PowerShell in the resulting `job-navigation-skill` folder.
 
 The remaining commands in this manual assume that this repository folder is your current working directory.
 
@@ -190,7 +190,7 @@ Expected output:
 
 ```text
 Validation passed.
-Skill: evidence-based-personal-advisor
+Skill: job-navigation-skill
 Evaluation cases: 9
 ```
 
@@ -213,13 +213,13 @@ python scripts\install.py --agent codex
 The installer resolves the destination as:
 
 ```text
-${CODEX_HOME}/skills/evidence-based-personal-advisor
+${CODEX_HOME}/skills/job-navigation-skill
 ```
 
 If `CODEX_HOME` is not set, it uses:
 
 ```text
-~/.codex/skills/evidence-based-personal-advisor
+~/.codex/skills/job-navigation-skill
 ```
 
 The install is transactional: the repository is validated first, symlinks are rejected, files are copied to a temporary staging directory, and the existing destination is never overwritten.
@@ -249,7 +249,7 @@ python3 scripts/install.py --agent claude
 The default destination is:
 
 ```text
-~/.claude/skills/evidence-based-personal-advisor
+~/.claude/skills/job-navigation-skill
 ```
 
 For claude.ai, build an uploadable Skill archive:
@@ -300,7 +300,7 @@ Example for a personal macOS Skill library:
 python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
 ```
 
-`--dest` must point to the parent Skill directory. The installer creates the final `evidence-based-personal-advisor` folder inside it.
+`--dest` must point to the parent Skill directory. The installer creates the final `job-navigation-skill` folder inside it.
 
 For a custom Claude Code directory, use `--agent claude` with the corresponding parent path.
 
@@ -309,34 +309,44 @@ For a custom Claude Code directory, use `--agent claude` with the corresponding 
 Default macOS/Linux installation:
 
 ```bash
-test -f "$HOME/.codex/skills/evidence-based-personal-advisor/SKILL.md" && echo "Skill files installed"
+test -f "$HOME/.codex/skills/job-navigation-skill/SKILL.md" && echo "Skill files installed"
 ```
 
 Windows PowerShell:
 
 ```powershell
-Test-Path "$HOME\.codex\skills\evidence-based-personal-advisor\SKILL.md"
+Test-Path "$HOME\.codex\skills\job-navigation-skill\SKILL.md"
 ```
 
 Claude Code default installation:
 
 ```bash
-test -f "$HOME/.claude/skills/evidence-based-personal-advisor/SKILL.md" && echo "Claude Skill files installed"
+test -f "$HOME/.claude/skills/job-navigation-skill/SKILL.md" && echo "Claude Skill files installed"
 ```
 
 Then start a new Codex task and invoke the Skill explicitly:
 
 ```text
-Use $evidence-based-personal-advisor to research current target roles and JDs, compare them with my resume evidence, and prioritize my job-search actions.
+Use $job-navigation-skill to research current target roles and JDs, compare them with my resume evidence, and prioritize my job-search actions.
 ```
 
-Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$evidence-based-personal-advisor` invocation.
+Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$job-navigation-skill` invocation.
 
-For ChatGPT, use an `@` mention after installing the plugin. For Claude Code, start a new session and ask it to use `evidence-based-personal-advisor`; Claude can also select the Skill automatically when the request matches.
+For ChatGPT, use an `@` mention after installing the plugin. For Claude Code, start a new session and ask it to use `job-navigation-skill`; Claude can also select the Skill automatically when the request matches.
 
 ### 5.11 Upgrade safely
 
 The installer intentionally refuses to overwrite an existing Skill. Use a recoverable upgrade:
+
+**One-time migration from `v0.4.0-beta` or earlier:** the former Skill identifier was `evidence-based-personal-advisor`. Move that folder out of the active Skill directory before installing `job-navigation-skill`; do not leave both identifiers active because an agent may trigger the outdated copy.
+
+```bash
+mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
+  "$HOME/.codex/evidence-based-personal-advisor.pre-rename-backup"
+python3 scripts/install.py --agent codex
+```
+
+For Claude Code, apply the same migration under `$HOME/.claude/skills`. For custom Skill directories, replace the parent path with the directory used in your installation.
 
 1. Download or pull the new repository version.
 2. Validate the new repository.
@@ -348,18 +358,18 @@ The installer intentionally refuses to overwrite an existing Skill. Use a recove
 Default macOS/Linux example:
 
 ```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/skills/evidence-based-personal-advisor.backup"
+mv "$HOME/.codex/skills/job-navigation-skill" \
+  "$HOME/.codex/skills/job-navigation-skill.backup"
 python3 scripts/install.py --agent codex
 ```
 
 Rollback:
 
 ```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/skills/evidence-based-personal-advisor.failed"
-mv "$HOME/.codex/skills/evidence-based-personal-advisor.backup" \
-  "$HOME/.codex/skills/evidence-based-personal-advisor"
+mv "$HOME/.codex/skills/job-navigation-skill" \
+  "$HOME/.codex/skills/job-navigation-skill.failed"
+mv "$HOME/.codex/skills/job-navigation-skill.backup" \
+  "$HOME/.codex/skills/job-navigation-skill"
 ```
 
 For a custom destination, replace `$HOME/.codex/skills` with the same parent directory used during installation.
@@ -367,18 +377,18 @@ For a custom destination, replace `$HOME/.codex/skills` with the same parent dir
 Windows PowerShell upgrade:
 
 ```powershell
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
-  "$HOME\.codex\skills\evidence-based-personal-advisor.backup"
+Move-Item "$HOME\.codex\skills\job-navigation-skill" `
+  "$HOME\.codex\skills\job-navigation-skill.backup"
 python scripts\install.py --agent codex
 ```
 
 Windows PowerShell rollback:
 
 ```powershell
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
-  "$HOME\.codex\skills\evidence-based-personal-advisor.failed"
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor.backup" `
-  "$HOME\.codex\skills\evidence-based-personal-advisor"
+Move-Item "$HOME\.codex\skills\job-navigation-skill" `
+  "$HOME\.codex\skills\job-navigation-skill.failed"
+Move-Item "$HOME\.codex\skills\job-navigation-skill.backup" `
+  "$HOME\.codex\skills\job-navigation-skill"
 ```
 
 For Claude Code, use the same procedure under `$HOME/.claude/skills` and reinstall with `--agent claude`. ChatGPT and claude.ai packages are upgraded through their respective plugin or Skill management surfaces.
@@ -388,8 +398,8 @@ For Claude Code, use the same procedure under `$HOME/.claude/skills` and reinsta
 Move the installed folder out of the active Skill directory:
 
 ```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/evidence-based-personal-advisor.uninstalled"
+mv "$HOME/.codex/skills/job-navigation-skill" \
+  "$HOME/.codex/job-navigation-skill.uninstalled"
 ```
 
 Restart Codex and confirm the Skill is no longer discovered. Delete the moved copy later only if you no longer need rollback.
@@ -397,8 +407,8 @@ Restart Codex and confirm the Skill is no longer discovered. Delete the moved co
 Windows PowerShell:
 
 ```powershell
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
-  "$HOME\.codex\evidence-based-personal-advisor.uninstalled"
+Move-Item "$HOME\.codex\skills\job-navigation-skill" `
+  "$HOME\.codex\job-navigation-skill.uninstalled"
 ```
 
 For Claude Code, move the corresponding folder out of `$HOME/.claude/skills`. Remove ChatGPT or claude.ai packages from their respective Skill or Plugin management screens.
@@ -432,7 +442,7 @@ Research stops when two successive rounds add no decision-changing evidence.
 **Resume and current market**
 
 ```text
-Use $evidence-based-personal-advisor.
+Use $job-navigation-skill.
 
 I am targeting [role] in [geography] by [date]. Research the last [time window]
 of industry and job trends, sample recent JDs, and compare them with my redacted
@@ -444,7 +454,7 @@ per week. Disclose inaccessible sources and the research cutoff.
 **Career change**
 
 ```text
-Use $evidence-based-personal-advisor to compare [option A], [option B], and
+Use $job-navigation-skill to compare [option A], [option B], and
 [option C]. My transferable evidence is [brief facts]. My constraints are
 [time/budget/location/risk]. Use current market evidence and recommend the
 cheapest experiments that could change the decision before I commit.
@@ -453,7 +463,7 @@ cheapest experiments that could change the decision before I commit.
 **Target-role skill, certificate, or course decision**
 
 ```text
-Use $evidence-based-personal-advisor to assess whether [skill/certificate/course]
+Use $job-navigation-skill to assess whether [skill/certificate/course]
 is the best way to close [specific target-role gap]. Use current JDs to compare
 price, time, and alternative project or portfolio evidence. Tell me whether to
 learn now, test cheaply, build next, or defer.
@@ -551,11 +561,11 @@ There are no fabricated adoption numbers here. Until at least 10 complete paired
 To test the local evaluation machinery:
 
 ```bash
-python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --self-test
-python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --template
+python3 skills/job-navigation-skill/scripts/summarize_evals.py --self-test
+python3 skills/job-navigation-skill/scripts/summarize_evals.py --template
 ```
 
-Read the [evaluation protocol](skills/evidence-based-personal-advisor/references/evaluation-and-user-feedback.md) before collecting results. Raw prompts, resumes, employer identities, and complete model outputs do not belong in the public repository.
+Read the [evaluation protocol](skills/job-navigation-skill/references/evaluation-and-user-feedback.md) before collecting results. Raw prompts, resumes, employer identities, and complete model outputs do not belong in the public repository.
 
 ## 11. Maintenance and troubleshooting
 
@@ -564,7 +574,7 @@ Read the [evaluation protocol](skills/evidence-based-personal-advisor/references
 | `python3` not found | Run `python --version` | Use `python` on Windows or install a supported Python version |
 | Validation fails | Read the first reported missing file, link, local path, or secret | Restore/fix that exact item; do not bypass validation |
 | Destination already exists | The installer protects an existing installation | Use the backup-and-upgrade procedure above |
-| Skill files exist but Codex does not show it | Confirm the parent directory is a Skill directory for that environment | Start a new task, invoke `$evidence-based-personal-advisor`, then restart Codex if needed |
+| Skill files exist but Codex does not show it | Confirm the parent directory is a Skill directory for that environment | Start a new task, invoke `$job-navigation-skill`, then restart Codex if needed |
 | Requested platforms are inaccessible | Check authentication and platform restrictions | Provide exported links/text or accept a narrower, clearly labeled sample |
 | ChatGPT package cannot be installed | Confirm the plugin is published or available through an enabled development/local source | Validate `.codex-plugin/plugin.json`; packaging alone does not create a listing |
 | DeepSeek request fails before an answer | Check the API key, endpoint, model availability, and account access | Run `--self-test`, then retry without including personal data in logs |
@@ -574,10 +584,10 @@ Read the [evaluation protocol](skills/evidence-based-personal-advisor/references
 ## Project files
 
 ```text
-evidence-based-personal-advisor/
+job-navigation-skill/
 ├── .codex-plugin/plugin.json            # ChatGPT/Codex universal Plugin manifest
 ├── adapters/deepseek/run.py              # DeepSeek Responses API adapter
-├── skills/evidence-based-personal-advisor/
+├── skills/job-navigation-skill/
 │   ├── SKILL.md                         # Core decision router
 │   ├── agents/openai.yaml               # Codex UI metadata
 │   ├── references/                      # Conditional specialist guidance

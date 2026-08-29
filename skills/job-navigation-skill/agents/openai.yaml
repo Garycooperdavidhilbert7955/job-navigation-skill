@@ -1,0 +1,4 @@
+interface:
+  display_name: "求职导航 Skill"
+  short_description: "研究近期岗位与JD，对照简历找出适配、证据和技能差距"
+  default_prompt: "Use $job-navigation-skill to research current roles and JDs, compare them with my resume evidence, and prioritize my job-search actions."

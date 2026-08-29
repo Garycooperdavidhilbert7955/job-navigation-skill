@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SKILL = ROOT / "skills" / "evidence-based-personal-advisor"
+SKILL = ROOT / "skills" / "job-navigation-skill"
 INSTRUCTION_FILES = (
     SKILL / "SKILL.md",
     SKILL / "references" / "career-module.md",

@@ -1,18 +1,18 @@
 <div align="center">
 
-# 循证求职与简历顾问
+# 求职导航 Skill
 
 ### 研究近期岗位与真实JD，对照你的简历，判断适合什么、缺什么、先做什么
 
 [English](README.md) · [架构](ARCHITECTURE.md) · [路线图](ROADMAP.md) · [参与贡献](CONTRIBUTING.md)
 
 ![状态](https://img.shields.io/badge/status-beta-f59e0b)
-![版本](https://img.shields.io/badge/version-0.4.0--beta-2563eb)
+![版本](https://img.shields.io/badge/version-0.5.0--beta-2563eb)
 ![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20DeepSeek-111827)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
 ![许可证](https://img.shields.io/badge/license-MIT-16a34a)
 
-`v0.4.0-beta`
+`v0.5.0-beta`
 
 </div>
 
@@ -131,7 +131,7 @@
 
 本仓库只维护一份核心`SKILL.md`和reference规则，再通过轻量适配层部署到ChatGPT、Codex、Claude和DeepSeek。不同Agent不会各自维护一套容易漂移的职业分析逻辑。
 
-产品显示名是“循证求职与简历顾问”。为兼容现有安装和调用方式，技术标识仍保留为`evidence-based-personal-advisor`。
+产品显示名和技术标识统一为“求职导航 Skill”/`job-navigation-skill`。`0.5.0-beta`是一次破坏性重命名：使用旧标识的安装需要按[安全升级](#511-安全升级)完成一次迁移。
 
 | Agent界面 | 本仓库支持方式 | 部署入口 |
 |---|---|---|
@@ -168,7 +168,7 @@
 1. 在GitHub仓库页面点击 **Code**；
 2. 复制HTTPS或SSH地址；
 3. 使用你的Git客户端完成克隆；
-4. 在克隆得到的`evidence-based-personal-advisor`文件夹中打开终端或PowerShell。
+4. 在克隆得到的`job-navigation-skill`文件夹中打开终端或PowerShell。
 
 本手册后续命令都默认仓库根目录是当前工作目录。
 
@@ -190,7 +190,7 @@ python scripts\validate_repo.py
 
 ```text
 Validation passed.
-Skill: evidence-based-personal-advisor
+Skill: job-navigation-skill
 Evaluation cases: 9
 ```
 
@@ -213,13 +213,13 @@ python scripts\install.py --agent codex
 安装器会把目标解析为：
 
 ```text
-${CODEX_HOME}/skills/evidence-based-personal-advisor
+${CODEX_HOME}/skills/job-navigation-skill
 ```
 
 如果没有设置`CODEX_HOME`，则使用：
 
 ```text
-~/.codex/skills/evidence-based-personal-advisor
+~/.codex/skills/job-navigation-skill
 ```
 
 安装采用事务式流程：先验证仓库，拒绝符号链接，把文件复制到临时目录，再移动到最终位置；如果目标已存在则停止，不会直接覆盖。
@@ -249,7 +249,7 @@ python3 scripts/install.py --agent claude
 默认安装位置：
 
 ```text
-~/.claude/skills/evidence-based-personal-advisor
+~/.claude/skills/job-navigation-skill
 ```
 
 给claude.ai生成可上传的Skill压缩包：
@@ -300,7 +300,7 @@ python3 scripts/install.py --agent codex --dest "/absolute/path/to/codex/skills"
 python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
 ```
 
-`--dest`指向Skill父目录，安装器会在其中创建最终的`evidence-based-personal-advisor`文件夹。
+`--dest`指向Skill父目录，安装器会在其中创建最终的`job-navigation-skill`文件夹。
 
 如需自定义Claude Code目录，请使用`--agent claude`并传入对应父目录。
 
@@ -309,34 +309,44 @@ python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
 macOS或Linux默认路径：
 
 ```bash
-test -f "$HOME/.codex/skills/evidence-based-personal-advisor/SKILL.md" && echo "Skill files installed"
+test -f "$HOME/.codex/skills/job-navigation-skill/SKILL.md" && echo "Skill files installed"
 ```
 
 Windows PowerShell：
 
 ```powershell
-Test-Path "$HOME\.codex\skills\evidence-based-personal-advisor\SKILL.md"
+Test-Path "$HOME\.codex\skills\job-navigation-skill\SKILL.md"
 ```
 
 Claude Code默认安装验证：
 
 ```bash
-test -f "$HOME/.claude/skills/evidence-based-personal-advisor/SKILL.md" && echo "Claude Skill files installed"
+test -f "$HOME/.claude/skills/job-navigation-skill/SKILL.md" && echo "Claude Skill files installed"
 ```
 
 然后新建一个Codex任务，并显式调用：
 
 ```text
-使用 $evidence-based-personal-advisor，研究近期目标岗位和JD，结合我的简历证据找出岗位适配、差距和优先行动。
+使用 $job-navigation-skill，研究近期目标岗位和JD，结合我的简历证据找出岗位适配、差距和优先行动。
 ```
 
-不同Codex环境和配置对本地Skill的发现方式可能不同。如果没有显示或触发，请重启Codex、检查安装目录，并使用完整的`$evidence-based-personal-advisor`显式调用。
+不同Codex环境和配置对本地Skill的发现方式可能不同。如果没有显示或触发，请重启Codex、检查安装目录，并使用完整的`$job-navigation-skill`显式调用。
 
-ChatGPT安装Plugin后使用`@`选择；Claude Code请新建会话并要求使用`evidence-based-personal-advisor`，也可以让Claude根据请求自动匹配。
+ChatGPT安装Plugin后使用`@`选择；Claude Code请新建会话并要求使用`job-navigation-skill`，也可以让Claude根据请求自动匹配。
 
 ### 5.11 安全升级
 
 安装器会主动拒绝覆盖已有Skill。请使用可恢复的升级方式：
+
+**从`v0.4.0-beta`或更早版本迁移一次：**旧Skill技术标识是`evidence-based-personal-advisor`。安装`job-navigation-skill`前，请先把旧文件夹移出活动Skill目录；不要同时保留两个可被发现的标识，否则Agent可能触发旧版本。
+
+```bash
+mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
+  "$HOME/.codex/evidence-based-personal-advisor.pre-rename-backup"
+python3 scripts/install.py --agent codex
+```
+
+Claude Code请在`$HOME/.claude/skills`下执行同样迁移；自定义Skill目录请替换成实际安装时使用的父目录。
 
 1. 下载或拉取新版本仓库；
 2. 验证新版本；
@@ -348,18 +358,18 @@ ChatGPT安装Plugin后使用`@`选择；Claude Code请新建会话并要求使�
 macOS或Linux默认路径示例：
 
 ```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/skills/evidence-based-personal-advisor.backup"
+mv "$HOME/.codex/skills/job-navigation-skill" \
+  "$HOME/.codex/skills/job-navigation-skill.backup"
 python3 scripts/install.py --agent codex
 ```
 
 回滚：
 
 ```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/skills/evidence-based-personal-advisor.failed"
-mv "$HOME/.codex/skills/evidence-based-personal-advisor.backup" \
-  "$HOME/.codex/skills/evidence-based-personal-advisor"
+mv "$HOME/.codex/skills/job-navigation-skill" \
+  "$HOME/.codex/skills/job-navigation-skill.failed"
+mv "$HOME/.codex/skills/job-navigation-skill.backup" \
+  "$HOME/.codex/skills/job-navigation-skill"
 ```
 
 如果使用自定义目录，请把`$HOME/.codex/skills`替换为安装时使用的同一个父目录。
@@ -367,18 +377,18 @@ mv "$HOME/.codex/skills/evidence-based-personal-advisor.backup" \
 Windows PowerShell升级：
 
 ```powershell
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
-  "$HOME\.codex\skills\evidence-based-personal-advisor.backup"
+Move-Item "$HOME\.codex\skills\job-navigation-skill" `
+  "$HOME\.codex\skills\job-navigation-skill.backup"
 python scripts\install.py --agent codex
 ```
 
 Windows PowerShell回滚：
 
 ```powershell
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
-  "$HOME\.codex\skills\evidence-based-personal-advisor.failed"
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor.backup" `
-  "$HOME\.codex\skills\evidence-based-personal-advisor"
+Move-Item "$HOME\.codex\skills\job-navigation-skill" `
+  "$HOME\.codex\skills\job-navigation-skill.failed"
+Move-Item "$HOME\.codex\skills\job-navigation-skill.backup" `
+  "$HOME\.codex\skills\job-navigation-skill"
 ```
 
 Claude Code采用相同步骤，但目录换成`$HOME/.claude/skills`，并通过`--agent claude`重新安装。ChatGPT和claude.ai版本分别通过各自的Plugin或Skill管理界面升级。
@@ -388,8 +398,8 @@ Claude Code采用相同步骤，但目录换成`$HOME/.claude/skills`，并通�
 把Skill移出活动目录，不立即删除：
 
 ```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/evidence-based-personal-advisor.uninstalled"
+mv "$HOME/.codex/skills/job-navigation-skill" \
+  "$HOME/.codex/job-navigation-skill.uninstalled"
 ```
 
 重启Codex并确认Skill不再被发现。只有确定不需要恢复时，再删除移动后的备份。
@@ -397,8 +407,8 @@ mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
 Windows PowerShell：
 
 ```powershell
-Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
-  "$HOME\.codex\evidence-based-personal-advisor.uninstalled"
+Move-Item "$HOME\.codex\skills\job-navigation-skill" `
+  "$HOME\.codex\job-navigation-skill.uninstalled"
 ```
 
 Claude Code请把对应文件夹移出`$HOME/.claude/skills`。ChatGPT或claude.ai版本应从各自的Skill或Plugin管理界面移除。
@@ -432,7 +442,7 @@ Claude Code请把对应文件夹移出`$HOME/.claude/skills`。ChatGPT或claude.
 **简历与近期市场**
 
 ```text
-使用 $evidence-based-personal-advisor：
+使用 $job-navigation-skill：
 
 我的目标是于[日期]前申请[地区]的[岗位]。请研究最近[时间窗口]的行业和
 岗位趋势，抽样分析近期JD，并结合我的脱敏简历找出岗位适配、技能差距、
@@ -443,7 +453,7 @@ Claude Code请把对应文件夹移出`$HOME/.claude/skills`。ChatGPT或claude.
 **职业转型**
 
 ```text
-使用 $evidence-based-personal-advisor 比较[方向A]、[方向B]和[方向C]。
+使用 $job-navigation-skill 比较[方向A]、[方向B]和[方向C]。
 我可迁移的证据是[简要事实]，限制是[时间/预算/地区/风险]。
 请结合最新市场证据，在我作出长期投入前设计最便宜且可能改变决定的实验。
 ```
@@ -451,7 +461,7 @@ Claude Code请把对应文件夹移出`$HOME/.claude/skills`。ChatGPT或claude.
 **与目标岗位相关的技能、证书或课程选择**
 
 ```text
-使用 $evidence-based-personal-advisor 判断[技能/证书/课程]是否是弥补
+使用 $job-navigation-skill 判断[技能/证书/课程]是否是弥补
 [目标岗位的具体差距]的最佳方式。结合近期JD比较价格、时间、替代项目或作品证据，
 并告诉我应该立即学习、先低成本验证、下一步构建还是暂缓。
 ```
@@ -548,11 +558,11 @@ JD要求 → 需求带 → 候选人证据 → 证据等级
 测试本地评测组件：
 
 ```bash
-python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --self-test
-python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --template
+python3 skills/job-navigation-skill/scripts/summarize_evals.py --self-test
+python3 skills/job-navigation-skill/scripts/summarize_evals.py --template
 ```
 
-收集结果前请阅读[效果评测与用户反馈协议](skills/evidence-based-personal-advisor/references/evaluation-and-user-feedback.md)。原始提示、简历、雇主身份和模型完整输出不能放入公开仓库。
+收集结果前请阅读[效果评测与用户反馈协议](skills/job-navigation-skill/references/evaluation-and-user-feedback.md)。原始提示、简历、雇主身份和模型完整输出不能放入公开仓库。
 
 ## 11. 维护与故障排查
 
@@ -571,10 +581,10 @@ python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --temp
 ## 项目文件
 
 ```text
-evidence-based-personal-advisor/
+job-navigation-skill/
 ├── .codex-plugin/plugin.json            # ChatGPT/Codex通用Plugin清单
 ├── adapters/deepseek/run.py              # DeepSeek Responses API适配器
-├── skills/evidence-based-personal-advisor/
+├── skills/job-navigation-skill/
 │   ├── SKILL.md                         # 核心决策路由
 │   ├── agents/openai.yaml               # Codex界面元数据
 │   ├── references/                      # 按需加载的专业规则

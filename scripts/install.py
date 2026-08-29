@@ -12,7 +12,7 @@ import tempfile
 from pathlib import Path
 
 
-SKILL_NAME = "evidence-based-personal-advisor"
+SKILL_NAME = "job-navigation-skill"
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE = REPO_ROOT / "skills" / SKILL_NAME
 
