@@ -1,6 +1,6 @@
 # Architecture
 
-Evidence-Based Personal Advisor is a small Codex Skill, not a hosted application. The architecture keeps the always-loaded instructions short and loads specialist guidance only when a task needs it.
+Evidence-Based Career & Resume Advisor is a small Codex Skill for job-market research, role fit, resume evidence diagnosis, and career-skill prioritization—not a hosted application. The architecture keeps the always-loaded instructions short and loads detailed guidance only when a task needs it. The technical identifier remains `evidence-based-personal-advisor` for compatibility.
 
 ## Design principles
 
@@ -14,7 +14,7 @@ Evidence-Based Personal Advisor is a small Codex Skill, not a hosted application
 ## Runtime flow
 
 ```text
-User problem and supplied materials
+Job-search goal and supplied materials
               │
               ▼
       SKILL.md decision router
@@ -31,7 +31,7 @@ User problem and supplied materials
        output contract
               │
               ▼
- decision → ≤3 actions → limits → review loop
+ target direction → ≤3 actions → limits → review loop
 ```
 
 ## Evaluation flow

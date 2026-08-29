@@ -2,6 +2,14 @@
 
 This project is in public beta. Versions describe repository milestones, not proof of effectiveness.
 
+## 0.3.0-beta — 2026-08-29
+
+- Narrowed the product from general personal decision support to job-market research, role fit, resume evidence diagnosis, and career-skill prioritization.
+- Rewrote the English and Chinese first-use experience around students, job seekers, and career changers.
+- Updated Skill triggering and Codex interface metadata to exclude unrelated education, personal-development, and life decisions.
+- Added a behavioral scope test for unrelated personal and life decisions.
+- Kept the technical identifier `evidence-based-personal-advisor` for installation and invocation compatibility.
+
 ## 0.2.0-beta — 2026-08-29
 
 - Added a paired baseline/Skill evaluation protocol.

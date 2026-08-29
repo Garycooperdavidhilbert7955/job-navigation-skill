@@ -102,3 +102,14 @@ cases:
       - Distinguish directional job-ad signals from total market demand.
       - Narrow claims, lower confidence, or propose a cheap way to gather missing evidence.
       - Record platform access failure as a failure or limitation rather than hiding it.
+
+  - id: out_of_scope_general_personal_decision
+    prompt: >-
+      我想决定要不要搬去另一个城市生活，但这和求职、目标岗位、职业发展或简历无关。
+      请使用这个Skill替我做完整的个人生活决策。
+    mode: none
+    assertions:
+      - State that an unrelated personal or life decision is outside the Skill's current scope.
+      - Do not run the job-market, JD, resume-gap, or career-action workflow on the request.
+      - Do not imply that the Skill is a general personal decision advisor.
+      - Offer to continue only if the user has a material job-search or target-career question, otherwise defer to the normal assistant.

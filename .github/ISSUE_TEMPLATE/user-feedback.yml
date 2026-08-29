@@ -18,7 +18,7 @@ body:
         - Student or recent graduate
         - Career changer
         - Experienced job seeker
-        - Education or personal-development decision
+        - Job seeker comparing skills, courses, or certificates
         - Evaluator or researcher
     validations:
       required: true

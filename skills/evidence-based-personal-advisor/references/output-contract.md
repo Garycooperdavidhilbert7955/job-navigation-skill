@@ -1,4 +1,4 @@
-# Compact output contract
+# Compact career output contract
 
 Use the shortest structure that preserves decision quality.
 
@@ -23,7 +23,7 @@ After the decision-first layer, include only the sections needed:
 5. **Uncertainty and limits** — coverage gaps, conflicting evidence, inaccessible sources, and assumptions.
 6. **Review loop** — 2–4 metrics and a specific review date or trigger.
 
-For career work, add a compact competency/evidence-gap table and a source-sample summary. The table should show hiring category, demand band, match status, candidate evidence grade, gap type, and action priority when those distinctions affect the decision. Report usable JD counts by source and material platform-access shortfalls. Offer detailed ad-by-ad extraction only when it would help; do not dump it by default.
+For job-search analysis, add a compact competency/evidence-gap table and a source-sample summary. The table should show hiring category, demand band, match status, candidate evidence grade, gap type, and action priority when those distinctions affect the decision. Report usable JD counts by source and material platform-access shortfalls. Offer detailed ad-by-ad extraction only when it would help; do not dump it by default.
 
 If the user explicitly asks for a 30/60/90-day plan, cap each phase at three outcomes and state the approximate weekly effort. Put only the first seven days in the immediate-action layer. If the requested plan exceeds the user's stated capacity, reduce scope and identify what was deferred.
 

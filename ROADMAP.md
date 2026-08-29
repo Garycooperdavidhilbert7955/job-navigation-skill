@@ -18,7 +18,8 @@ The next milestone is evidence, not more frameworks.
 
 ## Later — scope expansion
 
-- Build dedicated education-decision and career-change modules only after the career beta is stable.
+- Build dedicated interview-readiness and application-strategy modules only after the core career beta is stable.
+- Extend career-change evaluation without expanding into unrelated personal decision support.
 - Test additional languages and geographies with appropriate source hierarchies.
 - Explore compatible packaging for other agent-skill-standard clients without weakening the Codex experience.
 
@@ -26,5 +27,6 @@ The next milestone is evidence, not more frameworks.
 
 - Automatic job applications or messages.
 - Hosted collection of resumes or personal histories.
+- General education, personal-development, medical, legal, financial, or life-decision advice unrelated to a target career.
 - Guaranteed outcomes, exhaustive web coverage, or universal decision scores.
 - Framework accumulation without evidence that it changes decisions.

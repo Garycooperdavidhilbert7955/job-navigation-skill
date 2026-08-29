@@ -24,7 +24,7 @@ For every comparison:
 - record output tokens, elapsed time, and actual cost when available; use `null`, never estimates presented as measurements;
 - score outputs before looking at aggregate results and retain negative or null results.
 
-Use at least 10 complete pairs for a preliminary comparative claim. Treat smaller samples as debugging evidence. Include diverse tasks: missing resume, sparse sources, career change, early-career candidate, conflicting evidence, user-capacity constraints, and a non-career decision before making broad claims.
+Use at least 10 complete pairs for a preliminary comparative claim. Treat smaller samples as debugging evidence. Include diverse job-search tasks: missing resume, sparse sources, career change, early-career candidate, conflicting evidence, user-capacity constraints, and a target-role skill or course investment before making broad claims.
 
 ## Evaluation measures
 

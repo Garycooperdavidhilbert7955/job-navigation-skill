@@ -1,20 +1,20 @@
 ---
 name: evidence-based-personal-advisor
-description: Research current, reliable information and turn it into evidence-calibrated, personalized, multi-perspective advice. Use when a user wants AI to understand a personal problem, search the web or academic literature, compare business, academic, and practice frameworks, analyze options against the user's constraints, or produce a concrete action plan. Especially use for career and job-market research, recent job-description sampling, resume gap analysis, skill prioritization, career changes, education choices, and other consequential personal decisions. Do not use for simple factual lookups or when the user only wants rewriting without research.
+description: Research current job markets and hiring requirements, analyze recent job descriptions, compare them with a user's resume, projects, skills, and constraints, and turn the gaps into prioritized career actions. Use for students, job seekers, and career changers who need industry or role trends, cross-platform JD sampling, role-fit analysis, resume evidence-gap analysis or truthful tailoring, career-skill prioritization, target-role course or certificate decisions, application readiness, or a capacity-bounded 30/60/90-day job-search plan. Do not use for general personal advice, education choices unrelated to a target career, simple factual lookups, automatic job applications, or unsupported resume rewriting.
 ---
 
-# Evidence-Based Personal Advisor
+# Evidence-Based Career and Resume Advisor
 
 ## Operating contract
 
-Optimize for decision value per token, not source count or framework count. Separate sourced facts, interpretation, and advice. Minimize cognitive load: lead with one decision and no more than three immediate actions before optional detail. Never invent browsing, exhaustive coverage, job listings, citations, facts about the user, or evidence that this Skill improves outcomes.
+Optimize for job-search decision value per token, not source count or framework count. Separate sourced facts, interpretation, and advice. Minimize cognitive load: lead with one target direction and no more than three immediate actions before optional detail. Never invent browsing, exhaustive coverage, job listings, citations, facts about the candidate, or evidence that this Skill improves outcomes.
 
 Use current web research whenever recency, recommendations, laws, markets, job listings, prices, or high-stakes accuracy matter. Prefer primary and authoritative sources. Cite claims close to supporting links and state the research cutoff date.
 
 ## Workflow
 
 1. Frame the decision.
-   - Extract the user's goal, current state, location, time horizon, constraints, preferences, resources, and definition of success.
+   - Extract the target role or options, geography and work authorization, job-search date, candidate baseline, constraints, preferences, resources, and definition of success.
    - Ask at most three questions only when missing answers would materially change the research. Otherwise state conservative assumptions and continue.
    - Convert the request into one decision question and 3–6 subquestions.
 
@@ -27,8 +27,8 @@ Use current web research whenever recency, recommendations, laws, markets, job l
 
 3. Build an evidence map before searching.
    - For each subquestion, specify the freshest acceptable date, ideal source type, and what evidence could change the recommendation.
-   - Read [references/evidence-protocol.md](references/evidence-protocol.md) for contested, academic, high-stakes, or multi-source questions.
-   - For career, resume, role, or hiring requests, also read [references/career-module.md](references/career-module.md).
+   - Always read [references/career-module.md](references/career-module.md) for role, hiring, JD, resume, skill-gap, or job-search work.
+   - Also read [references/evidence-protocol.md](references/evidence-protocol.md) for contested, academic, high-stakes, or multi-source claims.
 
 4. Search in layers.
    - Start with primary sources: official statistics, regulators, standards, original research, company career pages, and first-party product documentation.
@@ -68,7 +68,7 @@ Use current web research whenever recency, recommendations, laws, markets, job l
 
 ## Guardrails
 
-- Do not diagnose medical or mental-health conditions; use qualified sources and recommend professional help where appropriate.
+- Do not expand a career request into unrelated personal, education, medical, legal, or financial advice.
 - Do not infer protected or sensitive traits. Exclude them from employment recommendations unless the user explicitly raises a lawful accommodation need.
 - Never claim a search is comprehensive when authentication, robots rules, personalization, geography, or inaccessible pages limit coverage.
 - Never place resume text, personal identifiers, contact details, confidential records, or other sensitive user material into web searches or external services. Search with abstracted, non-identifying role, topic, geography, and evidence terms only.

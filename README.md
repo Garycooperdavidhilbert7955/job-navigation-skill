@@ -1,26 +1,24 @@
 <div align="center">
 
-# Evidence-Based Personal Advisor
+# Evidence-Based Career & Resume Advisor
 
-### Current evidence → your actual situation → a few actions you can finish
+### Research current roles and real JDs, compare them with your resume, and decide what to target, fix, and do first
 
 [简体中文](README.zh-CN.md) · [Architecture](ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Status](https://img.shields.io/badge/status-beta-f59e0b)
-![Version](https://img.shields.io/badge/version-0.2.0--beta-2563eb)
-![Codex Skill](https://img.shields.io/badge/Codex-local_skill-111827)
+![Version](https://img.shields.io/badge/version-0.3.0--beta-2563eb)
+![Codex Skill](https://img.shields.io/badge/Codex-career_skill-111827)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
 
-`v0.2.0-beta`
+`v0.3.0-beta`
 
 </div>
 
-I did not need AI to sound more certain. I needed it to understand my situation, research what is true now, show where the evidence stops, and tell me what to do first.
+This local Codex Skill is built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
 
-This project turns that workflow into a local Codex Skill.
-
-> **Product position:** career-first evidence-based decision support. Career and job-market research is the first complete module. Education and personal-development questions use the general research workflow but do not yet have dedicated, validated modules.
+> **Product position:** focused on job-market research, role fit, resume evidence diagnosis, skill prioritization, and capacity-bounded 30/60/90-day job-search plans. General education, personal-development, and life decisions unrelated to a target career are outside the current product scope.
 
 ## Manual map
 
@@ -43,7 +41,7 @@ This project turns that workflow into a local Codex Skill.
 - students and recent graduates choosing a role or building evidence for one;
 - job seekers comparing current JDs with a resume or portfolio;
 - career changers deciding which direction to test before paying for a long course;
-- professionals comparing locations, industries, roles, or skill investments;
+- professionals comparing job locations, industries, roles, or career-skill investments;
 - users who want sourced advice with visible uncertainty instead of motivational filler.
 
 ### Not built for
@@ -52,15 +50,15 @@ This project turns that workflow into a local Codex Skill.
 - keyword-only ATS scoring;
 - inventing resume achievements, metrics, or individual ownership;
 - guaranteeing hiring, admissions, income, or other outcomes;
-- replacing qualified medical, legal, financial, or mental-health professionals.
+- general personal decisions, education planning, or life advice unrelated to a target career.
 
-This is a **decision filter, not an oracle**. It researches, compares, and prioritizes. You review the evidence and keep the final decision.
+This is a **job-search decision and evidence-diagnosis tool, not a hiring predictor**. It researches, compares, and prioritizes. You review the evidence and keep the final decision.
 
 ## 2. What it does
 
 | Function | What you receive | Built-in boundary |
 |---|---|---|
-| Current research | Recent official, academic, company, and market evidence with a cutoff date | No claim that every requested site was accessible |
+| Role and industry research | Current official, company, job-board, and labor-market evidence with a cutoff date | No claim that every requested site was accessible |
 | Evidence calibration | Facts separated from inference, forecasts, and recommendations | A framework is never treated as empirical proof |
 | Personal fit | Findings compared with your stated goals, constraints, and evidence | No unstated skill, experience, or achievement is invented |
 | Career-market analysis | Deduplicated JD requirements, demand bands, required/preferred split | Job-ad frequency is not called total labor-market demand |
@@ -77,7 +75,7 @@ This is a **decision filter, not an oracle**. It researches, compares, and prior
 | Resume vs. current market | Redacted resume plus target role and geography | JD requirement matrix, candidate evidence grades, and priorities |
 | Career change | Transferable experience, constraints, options, risk tolerance | Direction comparison, cheap validation experiments, and defer list |
 | Industry or role trend | Geography, time window, titles/synonyms, decision to make | Sourced trend signals, contradictions, limits, and implications |
-| Skill/course choice | Candidate gaps, course details, price, time, alternatives | Whether to learn, test first, choose another proof path, or defer |
+| Career-skill investment | Target-JD gaps, course or certificate cost, time, and alternative proof paths | Whether to learn, build a project, use another proof path, or defer |
 | 30/60/90-day plan | Target, baseline, weekly capacity, deadline | Capacity-bounded milestones with only the first week shown as immediate work |
 
 ### What happens if information is missing?
@@ -133,6 +131,8 @@ See the [fictional abbreviated example](examples/early-career-ai-role-brief.md).
 
 This repository packages a **local Codex Skill**. It copies a folder containing `SKILL.md`, references, eval definitions, metadata, and a local evaluation script into a Codex Skill directory.
 
+The product display name is now **Evidence-Based Career & Resume Advisor**. The technical identifier remains `evidence-based-personal-advisor` to preserve existing installations and `$...` invocations.
+
 It does not upload the Skill, your resume, or evaluation records to the [OpenAI Skills API](https://developers.openai.com/api/reference/python/resources/skills/methods/create). Material you later provide to Codex may still be processed by the AI provider and enabled tools; see [Privacy](#9-privacy-limitations-and-safe-use).
 
 ### 5.2 Requirements
@@ -182,7 +182,7 @@ Expected output:
 ```text
 Validation passed.
 Skill: evidence-based-personal-advisor
-Evaluation cases: 8
+Evaluation cases: 9
 ```
 
 Validation checks required files, frontmatter, version consistency, local-path leakage, broken relative links, symlinks, and common secret patterns. It does not prove that web research or recommendations are correct.
@@ -248,7 +248,7 @@ Test-Path "$HOME\.codex\skills\evidence-based-personal-advisor\SKILL.md"
 Then start a new Codex task and invoke the Skill explicitly:
 
 ```text
-Use $evidence-based-personal-advisor to research my decision using current evidence and my constraints.
+Use $evidence-based-personal-advisor to research current target roles and JDs, compare them with my resume evidence, and prioritize my job-search actions.
 ```
 
 Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$evidence-based-personal-advisor` invocation.
@@ -335,7 +335,7 @@ Remove phone numbers, personal email addresses, IDs, exact home addresses, priva
 | Mode | Use it for | General research scope |
 |---|---|---|
 | `quick` | Orientation, “give me a direction,” cheap tests | 4–8 useful sources, 1–2 models, short answer |
-| `standard` | Most career and education decisions | 8–15 contextual sources, 2–4 source types, 1–3 models |
+| `standard` | Most role, resume, and job-search direction analyses | 8–15 contextual sources, 2–4 source types, 1–3 models |
 | `deep` | Explicitly systematic or consequential comparisons | Broader inclusion rules, contradiction mapping, explicit limitations |
 
 For standard career analysis, the career module additionally targets 20–40 deduplicated JD records when access and market size permit. JD record count and contextual-source count are separate controls. Fewer JDs are acceptable when disclosed; neither number is a quota.
@@ -365,13 +365,13 @@ Use $evidence-based-personal-advisor to compare [option A], [option B], and
 cheapest experiments that could change the decision before I commit.
 ```
 
-**Education or course decision**
+**Target-role skill, certificate, or course decision**
 
 ```text
-Use $evidence-based-personal-advisor to assess whether [course/program] is the
-best way to close [specific gap]. Compare price, time, alternative proof paths,
-and current role demand. State that this is using the general workflow rather
-than a dedicated validated education module.
+Use $evidence-based-personal-advisor to assess whether [skill/certificate/course]
+is the best way to close [specific target-role gap]. Use current JDs to compare
+price, time, and alternative project or portfolio evidence. Tell me whether to
+learn now, test cheaply, build next, or defer.
 ```
 
 ## 7. How it works
@@ -408,7 +408,7 @@ Candidate evidence uses a separate A/B/C/D/U scale so that a confident market cl
 
 The defensibility is not the number of frameworks. It is the combination of procedures, boundaries, and tests:
 
-1. **Claim-to-source routing** — laws, market scale, job requirements, causal claims, and practitioner friction use different source hierarchies.
+1. **Claim-to-source routing** — industry trends, hiring scale, job requirements, compensation signals, and practitioner friction use different source hierarchies.
 2. **Two independent evidence axes** — source confidence and candidate evidence strength are never merged.
 3. **JD normalization and deduplication** — syndicated postings are counted once, required and preferred signals stay separate, and posting dates are distinguished from page refresh dates.
 4. **Evidence-first model routing** — business, academic, and practice frameworks are selected only after evidence collection and removed when they do not change the action.
@@ -442,7 +442,7 @@ Read [ARCHITECTURE.md](ARCHITECTURE.md) for the runtime and evaluation flows.
 - Verify important claims and generated career material before acting or submitting.
 - Never accept invented metrics, ownership, credentials, or outcomes.
 - Follow the terms of service of websites and data sources you access.
-- Use qualified professional review for medical, legal, financial, or other high-stakes decisions where appropriate.
+- Do not treat a role-fit assessment as a hiring probability or outcome guarantee.
 
 See [SECURITY.md](SECURITY.md) for reporting and privacy guidance.
 
@@ -452,7 +452,7 @@ See [SECURITY.md](SECURITY.md) for reporting and privacy guidance.
 |---|---|
 | Repository structure and privacy checks | Passed locally; CI workflow is configured for GitHub |
 | Installer and evaluation summarizer execute | Passed local installation and synthetic self-tests |
-| Behavioral compliance across model/tool versions | Eight scenarios exist; repeatable results are not yet published |
+| Behavioral compliance across model/tool versions | Nine scenarios exist; repeatable results are not yet published |
 | Better than a neutral baseline | Not established |
 | Improves real user outcomes | Not established |
 
@@ -487,7 +487,7 @@ evidence-based-personal-advisor/
 │   ├── SKILL.md                         # Core decision router
 │   ├── agents/openai.yaml               # Codex UI metadata
 │   ├── references/                      # Conditional specialist guidance
-│   ├── evals/cases.yaml                 # Eight behavioral scenarios
+│   ├── evals/cases.yaml                 # Nine behavioral scenarios
 │   └── scripts/summarize_evals.py       # Local paired-result summary
 ├── examples/                            # Explicitly labeled examples
 ├── scripts/install.py                   # Transactional installer
