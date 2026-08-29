@@ -64,7 +64,6 @@ Requirements: **Codex** and **Python 3.9+**.
 From this GitHub page, choose **Code → Download ZIP** or clone using the URL shown under **Code**. Open a terminal in the extracted/cloned repository, then run:
 
 ```bash
-cd evidence-based-personal-advisor
 python3 scripts/install.py
 ```
 

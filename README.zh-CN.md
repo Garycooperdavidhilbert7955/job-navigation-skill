@@ -64,7 +64,6 @@
 在GitHub页面点击 **Code → Download ZIP**，或复制 **Code** 菜单里的地址进行克隆。进入解压或克隆后的仓库目录，再运行：
 
 ```bash
-cd evidence-based-personal-advisor
 python3 scripts/install.py
 ```
 
