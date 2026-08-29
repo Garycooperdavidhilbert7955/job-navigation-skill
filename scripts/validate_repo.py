@@ -26,7 +26,9 @@ REQUIRED = [
     SKILL / "references" / "career-module.md",
     SKILL / "references" / "model-router.md",
     SKILL / "references" / "output-contract.md",
+    SKILL / "references" / "evaluation-and-user-feedback.md",
     SKILL / "evals" / "cases.yaml",
+    SKILL / "scripts" / "summarize_evals.py",
 ]
 
 
@@ -79,8 +81,8 @@ def main() -> int:
     eval_file = SKILL / "evals" / "cases.yaml"
     if eval_file.is_file():
         eval_text = eval_file.read_text(encoding="utf-8")
-        if len(re.findall(r"^\s*- id:\s*", eval_text, flags=re.MULTILINE)) < 3:
-            fail("At least three behavioral evaluation cases are required", errors)
+        if len(re.findall(r"^\s*- id:\s*", eval_text, flags=re.MULTILINE)) < 8:
+            fail("At least eight behavioral evaluation cases are required", errors)
 
     local_path_patterns = [
         re.compile(r"/Users/[^/\s]+/"),

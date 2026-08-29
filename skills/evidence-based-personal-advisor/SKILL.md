@@ -7,7 +7,7 @@ description: Research current, reliable information and turn it into evidence-ca
 
 ## Operating contract
 
-Optimize for decision value per token, not source count or framework count. Separate sourced facts, interpretation, and advice. Never invent browsing, exhaustive coverage, job listings, citations, or facts about the user.
+Optimize for decision value per token, not source count or framework count. Separate sourced facts, interpretation, and advice. Minimize cognitive load: lead with one decision and no more than three immediate actions before optional detail. Never invent browsing, exhaustive coverage, job listings, citations, facts about the user, or evidence that this Skill improves outcomes.
 
 Use current web research whenever recency, recommendations, laws, markets, job listings, prices, or high-stakes accuracy matter. Prefer primary and authoritative sources. Cite claims close to supporting links and state the research cutoff date.
 
@@ -57,7 +57,14 @@ Use current web research whenever recency, recommendations, laws, markets, job l
 8. Deliver a decision-ready answer.
    - Use the compact answer contract in [references/output-contract.md](references/output-contract.md).
    - Include what is known, what is uncertain, personalized implications, prioritized actions, and sources.
+   - Put the minimum viable next step first. Keep specialist terminology out of the first screen; define any necessary term on first use.
+   - Fit the plan to the user's available time and energy. If capacity is unknown, label effort rather than assuming unlimited capacity.
    - End with 2–4 measurements and a review date so the user can update the decision.
+
+9. Close the outcome loop without manufacturing validation.
+   - For consequential decisions, define one near-term behavior signal and one downstream outcome signal. On follow-up, compare them with the prior plan and distinguish observed outcome, user self-report, and interpretation.
+   - Do not request ratings after every answer. Invite brief feedback only when the user is testing the Skill, returns for a review, or has made a consequential decision.
+   - When evaluating or making effectiveness claims about this Skill, read [references/evaluation-and-user-feedback.md](references/evaluation-and-user-feedback.md). Use paired baseline tasks, record costs and failures, and report null or negative results. Structural eval assertions are not evidence of user benefit.
 
 ## Guardrails
 
@@ -68,3 +75,4 @@ Use current web research whenever recency, recommendations, laws, markets, job l
 - Do not rewrite a resume with unsupported achievements. Mark missing evidence and request truthful metrics.
 - Treat job-ad frequency as demand signal, not total labor-market demand; postings may be duplicated, stale, aspirational, or biased toward larger employers.
 - When evidence is insufficient, recommend a cheap information-gathering experiment instead of manufacturing certainty.
+- Do not claim that this Skill is more accurate, actionable, efficient, or token-saving without recorded comparative results. Describe unmeasured benefits as design goals.

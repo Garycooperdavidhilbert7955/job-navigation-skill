@@ -27,8 +27,9 @@ Most AI advice fails in one of three ways: it is generic, outdated, or overconfi
 - **Calibrated confidence:** separates facts, inference, forecasts, and recommendations.
 - **Personal fit:** tests advice against your goals, constraints, evidence, and opportunity cost.
 - **Model discipline:** uses only 1–3 frameworks that can change the decision.
-- **Token control:** supports quick, standard, and deep research modes.
+- **Token discipline:** offers quick, standard, and deep modes designed to limit unnecessary research; comparative token savings are not yet proven.
 - **Career rigor:** deduplicates job ads and grades candidate evidence without inventing achievements.
+- **Human-sized plans:** leads with one direction and no more than three immediate actions before optional detail.
 
 ## Who is it for?
 
@@ -56,6 +57,8 @@ For career analysis, it additionally maps:
 `job requirement → demand band → candidate evidence → evidence grade → gap type → next action`
 
 Candidate evidence is graded from **A** (externally validated) to **U** (unsupported), preventing team, simulated, or forecast outcomes from being presented as verified individual achievements.
+
+The first screen stays intentionally simple: one bottom line, up to three immediate actions, and the main uncertainty. A 30/60/90-day plan is capacity-bounded and keeps only the first seven days in the immediate layer.
 
 ## Install
 
@@ -107,16 +110,34 @@ skills/evidence-based-personal-advisor/
 ├── references/              # Loaded only when relevant
 │   ├── evidence-protocol.md
 │   ├── career-module.md
+│   ├── evaluation-and-user-feedback.md
 │   ├── model-router.md
 │   └── output-contract.md
-└── evals/cases.yaml         # Behavioral evaluation scenarios
+├── evals/cases.yaml         # Behavioral evaluation scenarios
+└── scripts/summarize_evals.py # Paired evaluation report
 ```
+
+## Validation status
+
+The repository and installer have passed structural, privacy, and synthetic code checks. That means the Skill is installable and its evaluation machinery runs; it does **not** yet prove that the Skill improves accuracy, actionability, token use, or real-world outcomes.
+
+Effectiveness requires paired runs using the same prompt, materials, model, tools, research window, and time budget: one neutral baseline without the Skill and one Skill condition. Reviewers score citation support, evidence calibration, personalization, actionability, and clarity/cognitive load while recording tokens, elapsed time, actual cost, and hard failures. Real-user feedback is opt-in and kept separate from factual accuracy.
+
+Print a privacy-safe record template and summarize local JSONL results with:
+
+```bash
+python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --template
+python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py path/to/results.jsonl
+```
+
+Raw prompts, resumes, personal data, and model outputs should remain outside the public repository. Fewer than 10 complete pairs or 10 relevant users are treated as debugging evidence, not an effectiveness claim. See the [evaluation and user-feedback protocol](skills/evidence-based-personal-advisor/references/evaluation-and-user-feedback.md).
 
 ## Trust and limitations
 
 - The Skill improves research discipline; it does not guarantee exhaustive search or correct source content.
 - Job boards can be stale, duplicated, personalized, or inaccessible.
 - Frameworks organize reasoning; they are not empirical evidence.
+- Structural eval assertions do not demonstrate better decisions or user outcomes.
 - Users should remove sensitive information before sharing resumes or personal records.
 - High-stakes decisions still require qualified professional review where appropriate.
 
@@ -126,7 +147,7 @@ skills/evidence-based-personal-advisor/
 python3 scripts/validate_repo.py
 ```
 
-Validation checks the Skill structure, frontmatter, naming, required resources, evaluation cases, local-path leakage, and common secret patterns. GitHub Actions runs the same check on every push and pull request.
+Validation checks the Skill structure, frontmatter, naming, required resources, evaluation cases, local-path leakage, and common secret patterns. GitHub Actions also runs the evaluation summarizer's synthetic self-test on every push and pull request.
 
 ## License
 

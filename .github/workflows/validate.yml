@@ -17,3 +17,5 @@ jobs:
           python-version: "3.11"
       - name: Validate repository and Skill
         run: python3 scripts/validate_repo.py
+      - name: Test evaluation summarizer
+        run: python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --self-test

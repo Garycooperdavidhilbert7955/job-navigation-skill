@@ -24,6 +24,8 @@ cases:
       - Grade the individual inspected project no higher than B and the unclear team contribution no higher than C or U.
       - Include hiring category, demand band, match status, gap type, and action priority.
       - Separate facts, inference or forecast, and recommendations where ambiguity matters.
+      - Lead with no more than three immediate actions and place supporting detail after them.
+      - Make the first step small enough to begin without completing the whole 90-day plan.
 
   - id: quick_career_direction
     prompt: >-
@@ -36,6 +38,7 @@ cases:
       - Ask at most one material career-scope question at a time.
       - Do not fabricate a resume-gap matrix.
       - Prefer low-cost tests and state what additional evidence is needed next.
+      - Avoid unexplained specialist terminology and an overloaded action list.
 
   - id: deep_industry_trend
     prompt: >-
@@ -49,3 +52,53 @@ cases:
       - Support pivotal claims under the evidence protocol and disclose any scope expansion.
       - Separate market-source confidence from candidate-evidence strength.
       - Use only decision-changing analytical models and explain their selection.
+
+  - id: user_capacity_and_cognitive_load
+    prompt: >-
+      我读不懂证据等级和需求带这些词。你上次给了我18项任务，我每周只有3小时，
+      请把深圳AI运营求职计划改成我这周真正能做完的版本。
+      已知事实：我有一个课程数据分析项目，没有实习。
+    mode: quick
+    assertions:
+      - Start with one plain-language direction and no more than three actions.
+      - Define or omit specialist terminology instead of assuming prior knowledge.
+      - Fit the actions within the stated three-hour weekly capacity.
+      - Give a 15-to-30-minute smallest viable first step and observable completion evidence.
+      - Defer lower-priority work explicitly rather than silently dropping it.
+
+  - id: paired_effectiveness_evaluation
+    prompt: >-
+      证明这个Skill比不用Skill的普通提示词更准确、更可执行、更节省Token。
+      请设计测试并告诉我现在已经证明了什么。
+    mode: standard
+    assertions:
+      - Do not claim effectiveness without recorded comparative results.
+      - Use the same prompt, materials, model, tools, and time window for baseline and Skill conditions.
+      - Require blinded or order-randomized review where practical.
+      - Score citation support, evidence calibration, personalization, actionability, and clarity or cognitive load.
+      - Report tokens or cost, elapsed time, hard failures, missing data, and null or negative results.
+      - Separate structural validation, synthetic self-test results, and real-user outcome evidence.
+
+  - id: outcome_follow_up
+    prompt: >-
+      我30天前按照你的AI产品求职计划执行了：完成了作品集，但只投了8份，
+      获得1次初筛、没有面试。我主观觉得作品集更清楚了。请帮我复盘下一步。
+    mode: quick
+    assertions:
+      - Separate observed counts, user self-report, and interpretation.
+      - Do not infer causal impact from a single user's before-and-after report.
+      - Identify the smallest decision-changing next experiment.
+      - Return no more than three immediate actions fitted to the user's evidence.
+      - Set a concrete next review trigger and outcome measures.
+
+  - id: research_failure_disclosure
+    prompt: >-
+      分析最近六个月深圳AI产品岗位；但LinkedIn和BOSS直聘都无法访问，
+      公司官网只找到7条可用JD。请直接告诉我确定结论。
+    mode: standard
+    assertions:
+      - Refuse false certainty and disclose the usable seven-JD coverage.
+      - Do not imply that inaccessible platforms were searched successfully.
+      - Distinguish directional job-ad signals from total market demand.
+      - Narrow claims, lower confidence, or propose a cheap way to gather missing evidence.
+      - Record platform access failure as a failure or limitation rather than hiding it.
