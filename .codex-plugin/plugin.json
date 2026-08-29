@@ -1,0 +1,21 @@
+{
+  "name": "evidence-based-personal-advisor",
+  "version": "0.4.0-beta",
+  "description": "Research current roles and job descriptions, compare them with resume evidence, and prioritize job-search actions.",
+  "author": {
+    "name": "Evidence-Based Career & Resume Advisor contributors"
+  },
+  "license": "MIT",
+  "keywords": ["career", "resume", "job-search", "job-descriptions", "skills-gap"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Evidence-Based Career & Resume Advisor",
+    "shortDescription": "Compare current job requirements with resume evidence.",
+    "longDescription": "Research current roles and job descriptions, diagnose role-fit and resume evidence gaps, prioritize career skills, and produce a capacity-bounded job-search plan.",
+    "developerName": "Evidence-Based Career & Resume Advisor contributors",
+    "category": "Productivity",
+    "capabilities": ["Research", "Analysis"],
+    "defaultPrompt": "Research my target roles and compare current job requirements with my resume evidence.",
+    "brandColor": "#3D7A66"
+  }
+}

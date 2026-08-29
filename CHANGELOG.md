@@ -2,6 +2,15 @@
 
 This project is in public beta. Versions describe repository milestones, not proof of effectiveness.
 
+## 0.4.0-beta — 2026-08-29
+
+- Added a universal ChatGPT/Codex plugin manifest around the canonical Skill.
+- Extended the transactional installer to target Codex or Claude Code.
+- Added uploadable ChatGPT plugin and Claude Skill archive generation.
+- Added a standard-library DeepSeek Responses API adapter with optional built-in web search.
+- Kept one canonical `SKILL.md` and reference set so platform packages do not drift.
+- Documented platform-specific capability and privacy limits; actual account uploads and live DeepSeek API calls remain environment-dependent.
+
 ## 0.3.0-beta — 2026-08-29
 
 - Narrowed the product from general personal decision support to job-market research, role fit, resume evidence diagnosis, and career-skill prioritization.

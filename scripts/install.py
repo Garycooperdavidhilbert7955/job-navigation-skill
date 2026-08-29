@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the bundled Codex Skill without overwriting an existing copy."""
+"""Install the bundled Skill for Codex or Claude Code without overwriting."""
 
 from __future__ import annotations
 
@@ -18,12 +18,28 @@ SOURCE = REPO_ROOT / "skills" / SKILL_NAME
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=f"Install {SKILL_NAME} for Codex")
-    default_root = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex")) / "skills"
-    parser.add_argument("--dest", type=Path, default=default_root, help="Skills directory")
+    parser = argparse.ArgumentParser(description=f"Install {SKILL_NAME}")
+    parser.add_argument(
+        "--agent",
+        choices=("codex", "claude"),
+        default="codex",
+        help="target agent (default: codex)",
+    )
+    parser.add_argument(
+        "--dest",
+        type=Path,
+        help="override the parent Skills directory",
+    )
     args = parser.parse_args()
 
-    destination = args.dest.expanduser().resolve() / SKILL_NAME
+    if args.dest is not None:
+        target_root = args.dest
+    elif args.agent == "codex":
+        target_root = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex")) / "skills"
+    else:
+        target_root = Path.home() / ".claude" / "skills"
+
+    destination = target_root.expanduser().resolve() / SKILL_NAME
     if not SOURCE.is_dir():
         raise SystemExit(f"Skill source not found: {SOURCE}")
     if destination.exists():
@@ -52,8 +68,8 @@ def main() -> int:
         staged.rename(destination)
     finally:
         shutil.rmtree(staging_root, ignore_errors=True)
-    print(f"Installed {SKILL_NAME} to {destination}")
-    print("The Skill will be available on the next Codex turn.")
+    print(f"Installed {SKILL_NAME} for {args.agent} to {destination}")
+    print(f"Start a new {args.agent} task or session to pick up the Skill.")
     return 0
 
 

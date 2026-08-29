@@ -8,6 +8,7 @@ The next milestone is evidence, not more frameworks.
 - Collect at least 10 paired baseline/Skill tasks across the existing evaluation scenarios.
 - Recruit at least 10 students, recent graduates, and career changers for opt-in usability feedback.
 - Publish aggregate cost, failure, and null-result data without resumes, prompts, or personal records.
+- Run the same sanitized scope and failure cases across ChatGPT, Codex, Claude, and DeepSeek-capable environments.
 
 ## Next — behavioral validation
 
@@ -21,7 +22,7 @@ The next milestone is evidence, not more frameworks.
 - Build dedicated interview-readiness and application-strategy modules only after the core career beta is stable.
 - Extend career-change evaluation without expanding into unrelated personal decision support.
 - Test additional languages and geographies with appropriate source hierarchies.
-- Explore compatible packaging for other agent-skill-standard clients without weakening the Codex experience.
+- Explore compatible packaging for other agent-skill-standard clients without duplicating the canonical career workflow.
 
 ## Not planned
 

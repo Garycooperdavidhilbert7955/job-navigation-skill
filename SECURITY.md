@@ -13,9 +13,11 @@ This Skill may process resumes, transcripts, career histories, or other sensitiv
 
 ## Runtime boundary
 
-The Skill is installed locally, but Codex and its enabled tools may send supplied material to the AI provider or services configured in the user's environment. This repository does not control those systems. Review provider settings and terms before supplying sensitive material.
+The Skill can be installed locally, but ChatGPT, Codex, Claude, DeepSeek, and their enabled tools may send supplied material to the provider or services configured in the user's environment. This repository does not control those systems. Review the selected provider's settings and terms before supplying sensitive material.
 
-The Skill instructs Codex not to place resume text, identifiers, contact details, or confidential records into web searches. This is an instructional safeguard, not a network sandbox. Review generated queries and outputs when risk is material.
+The DeepSeek adapter reads a sanitized request from standard input and sends it to the configured API endpoint. It does not discover resume files automatically. Keep API credentials in environment variables or a secret manager; never commit them or paste them into prompts.
+
+The Skill instructs the active agent not to place resume text, identifiers, contact details, or confidential records into web searches. This is an instructional safeguard, not a network sandbox. Review generated queries and outputs when risk is material.
 
 ## Reporting a vulnerability
 

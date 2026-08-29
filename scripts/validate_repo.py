@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -25,6 +26,9 @@ REQUIRED = [
     ROOT / "ROADMAP.md",
     ROOT / "CHANGELOG.md",
     ROOT / "VERSION",
+    ROOT / ".codex-plugin" / "plugin.json",
+    ROOT / "scripts" / "package_skill.py",
+    ROOT / "adapters" / "deepseek" / "run.py",
     ROOT / ".github" / "PULL_REQUEST_TEMPLATE.md",
     ROOT / ".github" / "ISSUE_TEMPLATE" / "bug-report.yml",
     ROOT / ".github" / "ISSUE_TEMPLATE" / "feature-request.yml",
@@ -82,6 +86,20 @@ def main() -> int:
         for readme in (ROOT / "README.md", ROOT / "README.zh-CN.md"):
             if readme.is_file() and version not in readme.read_text(encoding="utf-8"):
                 fail(f"Version {version} is missing from {readme.name}", errors)
+
+        plugin_file = ROOT / ".codex-plugin" / "plugin.json"
+        if plugin_file.is_file():
+            try:
+                plugin = json.loads(plugin_file.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as exc:
+                fail(f"Invalid plugin.json: {exc}", errors)
+            else:
+                if plugin.get("name") != SKILL_NAME:
+                    fail("plugin.json name does not match the Skill name", errors)
+                if plugin.get("version") != version:
+                    fail("plugin.json version does not match VERSION", errors)
+                if plugin.get("skills") != "./skills/":
+                    fail("plugin.json must discover Skills from ./skills/", errors)
 
     if (SKILL / "SKILL.md").is_file():
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")

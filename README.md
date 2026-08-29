@@ -7,16 +7,16 @@
 [简体中文](README.zh-CN.md) · [Architecture](ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Status](https://img.shields.io/badge/status-beta-f59e0b)
-![Version](https://img.shields.io/badge/version-0.3.0--beta-2563eb)
-![Codex Skill](https://img.shields.io/badge/Codex-career_skill-111827)
+![Version](https://img.shields.io/badge/version-0.4.0--beta-2563eb)
+![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20DeepSeek-111827)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
 
-`v0.3.0-beta`
+`v0.4.0-beta`
 
 </div>
 
-This local Codex Skill is built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
+This cross-agent career Skill is built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
 
 > **Product position:** focused on job-market research, role fit, resume evidence diagnosis, skill prioritization, and capacity-bounded 30/60/90-day job-search plans. General education, personal-development, and life decisions unrelated to a target career are outside the current product scope.
 
@@ -129,15 +129,24 @@ See the [fictional abbreviated example](examples/early-career-ai-role-brief.md).
 
 ### 5.1 Understand the deployment model
 
-This repository packages a **local Codex Skill**. It copies a folder containing `SKILL.md`, references, eval definitions, metadata, and a local evaluation script into a Codex Skill directory.
+This repository keeps one canonical `SKILL.md` and reference set, then adds thin deployment adapters for ChatGPT, Codex, Claude, and DeepSeek. Career logic is not duplicated between agents.
 
-The product display name is now **Evidence-Based Career & Resume Advisor**. The technical identifier remains `evidence-based-personal-advisor` to preserve existing installations and `$...` invocations.
+The product display name is **Evidence-Based Career & Resume Advisor**. The technical identifier remains `evidence-based-personal-advisor` to preserve existing installations and invocation compatibility.
 
-It does not upload the Skill, your resume, or evaluation records to the [OpenAI Skills API](https://developers.openai.com/api/reference/python/resources/skills/methods/create). Material you later provide to Codex may still be processed by the AI provider and enabled tools; see [Privacy](#9-privacy-limitations-and-safe-use).
+| Agent surface | Support in this repository | Deployment path |
+|---|---|---|
+| Codex | Native filesystem Skill | `scripts/install.py --agent codex` |
+| ChatGPT | Universal OpenAI plugin containing the canonical Skill | `.codex-plugin/plugin.json` plus the ChatGPT package |
+| Claude Code | Native filesystem Skill | `scripts/install.py --agent claude` |
+| claude.ai | Custom Skill upload | Claude Skill zip |
+| DeepSeek in Claude Code | Same Claude Code Skill, with DeepSeek as the model provider | Claude install plus DeepSeek's Claude Code integration |
+| DeepSeek API | System-instruction adapter with optional built-in web search | `adapters/deepseek/run.py` |
+
+This repository does not automatically upload the Skill or your resume to any provider. Material you submit while using an agent is processed under that provider's account, tool, and data settings; see [Privacy](#9-privacy-limitations-and-safe-use).
 
 ### 5.2 Requirements
 
-- Codex desktop or another Codex environment that supports local Skills;
+- at least one supported agent surface listed above;
 - Python 3.11 or later;
 - a downloaded or cloned copy of this repository;
 - network access only when your request needs current research.
@@ -187,18 +196,18 @@ Evaluation cases: 9
 
 Validation checks required files, frontmatter, version consistency, local-path leakage, broken relative links, symlinks, and common secret patterns. It does not prove that web research or recommendations are correct.
 
-### 5.5 Install to the default Codex Skill directory
+### 5.5 Install for Codex
 
 macOS or Linux:
 
 ```bash
-python3 scripts/install.py
+python3 scripts/install.py --agent codex
 ```
 
 Windows PowerShell:
 
 ```powershell
-python scripts\install.py
+python scripts\install.py --agent codex
 ```
 
 The installer resolves the destination as:
@@ -215,23 +224,87 @@ If `CODEX_HOME` is not set, it uses:
 
 The install is transactional: the repository is validated first, symlinks are rejected, files are copied to a temporary staging directory, and the existing destination is never overwritten.
 
-### 5.6 Install to a custom Skill directory
+### 5.6 Package for ChatGPT
+
+ChatGPT and Codex share OpenAI's plugin format. This repository already contains the required `.codex-plugin/plugin.json` and canonical `skills/` directory.
+
+Build the distributable plugin archive:
+
+```bash
+python3 scripts/package_skill.py --target chatgpt
+```
+
+The archive is created under `dist/`. Use it in the [OpenAI plugin authoring and publication workflow](https://developers.openai.com/plugins/build/plugins), or install the published plugin from the universal plugin directory when a listing is available. Packaging the archive locally does not publish or install it automatically.
+
+After the plugin is installed, ChatGPT can choose the Skill automatically or you can select it explicitly with an `@` mention.
+
+### 5.7 Install for Claude
+
+Claude Code uses the same `SKILL.md` folder format:
+
+```bash
+python3 scripts/install.py --agent claude
+```
+
+The default destination is:
+
+```text
+~/.claude/skills/evidence-based-personal-advisor
+```
+
+For claude.ai, build an uploadable Skill archive:
+
+```bash
+python3 scripts/package_skill.py --target claude
+```
+
+Upload the resulting Claude archive through **Settings → Features** where custom Skills are available. Claude surfaces manage Skills separately, so a Claude Code installation does not automatically appear in claude.ai or the Claude API. See [Anthropic's Agent Skills documentation](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview).
+
+Claude API Skill containers do not have network access. This project therefore does not claim recent job-market research on that surface unless the host application separately supplies a working search tool or retrieved evidence.
+
+### 5.8 Run with DeepSeek
+
+There are two supported routes:
+
+1. **Recommended for an agent experience:** install the Claude Code Skill above, then configure Claude Code to use DeepSeek through [DeepSeek's official coding-agent integration](https://api-docs.deepseek.com/guides/coding_agents/). Claude Code handles Skill discovery; DeepSeek supplies the model.
+2. **Direct API adapter:** run the included standard-library adapter against DeepSeek's Responses API.
+
+Test the adapter without making a network request:
+
+```bash
+python3 adapters/deepseek/run.py --self-test
+```
+
+For a live request, set `DEEPSEEK_API_KEY` through your shell or secret manager, then pipe a sanitized text request through standard input:
+
+```bash
+python3 adapters/deepseek/run.py <<'EOF'
+I am targeting [role] in [location]. Research recent JDs and compare them with
+this redacted resume evidence: [facts only]. Prioritize my next three actions.
+EOF
+```
+
+The adapter uses DeepSeek's `instructions` field and optional built-in `web_search`. It inlines the runtime references because the API does not load local Skill files progressively, so it normally consumes more input tokens than Codex or Claude Code. The repository does not claim native Skill upload support for the DeepSeek consumer web chat.
+
+### 5.9 Install to a custom Skill directory
 
 Use a custom destination only when your Codex environment is configured to discover that directory:
 
 ```bash
-python3 scripts/install.py --dest "/absolute/path/to/codex/skills"
+python3 scripts/install.py --agent codex --dest "/absolute/path/to/codex/skills"
 ```
 
 Example for a personal macOS Skill library:
 
 ```bash
-python3 scripts/install.py --dest "$HOME/Desktop/codex/skill"
+python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
 ```
 
 `--dest` must point to the parent Skill directory. The installer creates the final `evidence-based-personal-advisor` folder inside it.
 
-### 5.7 Verify the installed files
+For a custom Claude Code directory, use `--agent claude` with the corresponding parent path.
+
+### 5.10 Verify the installed files
 
 Default macOS/Linux installation:
 
@@ -245,6 +318,12 @@ Windows PowerShell:
 Test-Path "$HOME\.codex\skills\evidence-based-personal-advisor\SKILL.md"
 ```
 
+Claude Code default installation:
+
+```bash
+test -f "$HOME/.claude/skills/evidence-based-personal-advisor/SKILL.md" && echo "Claude Skill files installed"
+```
+
 Then start a new Codex task and invoke the Skill explicitly:
 
 ```text
@@ -253,7 +332,9 @@ Use $evidence-based-personal-advisor to research current target roles and JDs, c
 
 Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$evidence-based-personal-advisor` invocation.
 
-### 5.8 Upgrade safely
+For ChatGPT, use an `@` mention after installing the plugin. For Claude Code, start a new session and ask it to use `evidence-based-personal-advisor`; Claude can also select the Skill automatically when the request matches.
+
+### 5.11 Upgrade safely
 
 The installer intentionally refuses to overwrite an existing Skill. Use a recoverable upgrade:
 
@@ -269,7 +350,7 @@ Default macOS/Linux example:
 ```bash
 mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
   "$HOME/.codex/skills/evidence-based-personal-advisor.backup"
-python3 scripts/install.py
+python3 scripts/install.py --agent codex
 ```
 
 Rollback:
@@ -288,7 +369,7 @@ Windows PowerShell upgrade:
 ```powershell
 Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
   "$HOME\.codex\skills\evidence-based-personal-advisor.backup"
-python scripts\install.py
+python scripts\install.py --agent codex
 ```
 
 Windows PowerShell rollback:
@@ -300,7 +381,9 @@ Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor.backup" `
   "$HOME\.codex\skills\evidence-based-personal-advisor"
 ```
 
-### 5.9 Uninstall without immediate deletion
+For Claude Code, use the same procedure under `$HOME/.claude/skills` and reinstall with `--agent claude`. ChatGPT and claude.ai packages are upgraded through their respective plugin or Skill management surfaces.
+
+### 5.12 Uninstall without immediate deletion
 
 Move the installed folder out of the active Skill directory:
 
@@ -317,6 +400,8 @@ Windows PowerShell:
 Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
   "$HOME\.codex\evidence-based-personal-advisor.uninstalled"
 ```
+
+For Claude Code, move the corresponding folder out of `$HOME/.claude/skills`. Remove ChatGPT or claude.ai packages from their respective Skill or Plugin management screens.
 
 ## 6. Use it well
 
@@ -424,14 +509,17 @@ Read [ARCHITECTURE.md](ARCHITECTURE.md) for the runtime and evaluation flows.
 ### Privacy
 
 - The repository does not receive or collect your resume or evaluation data.
-- Local installation does not mean offline inference. Codex and enabled tools may send supplied material to the configured AI provider or services.
-- The Skill instructs Codex not to put resume text, identifiers, contact details, or confidential records into web searches.
+- Local installation does not mean offline inference. ChatGPT, Codex, Claude, DeepSeek, and enabled tools may send supplied material to their configured providers or services.
+- The Skill instructs the active agent not to put resume text, identifiers, contact details, or confidential records into web searches.
 - This is an instructional safeguard, not a network sandbox. Review generated queries when risk is material.
+- The DeepSeek adapter sends the sanitized standard-input request and inlined Skill instructions to the configured DeepSeek endpoint. It never reads or uploads a resume file automatically.
 
 ### Research limits
 
 - Job boards may require authentication, personalize results, block automation, or expose stale pages.
-- The Skill has no bundled BOSS, LinkedIn, or Indeed crawler. It uses web access available in the active Codex environment.
+- The Skill has no bundled BOSS, LinkedIn, or Indeed crawler. It uses web access available in the active agent environment.
+- Agent capabilities are not identical: login state, browser access, built-in search, file parsing, and citation behavior vary by product and account.
+- The DeepSeek API adapter loads more instruction tokens and cannot reproduce filesystem-based progressive disclosure.
 - JD samples are convenience samples, not statistically representative labor-market surveys.
 - Job-ad frequency is a directional demand signal, not total hiring volume.
 - Frameworks organize reasoning; they do not prove claims.
@@ -451,7 +539,9 @@ See [SECURITY.md](SECURITY.md) for reporting and privacy guidance.
 | Evidence level | Current status |
 |---|---|
 | Repository structure and privacy checks | Passed locally; CI workflow is configured for GitHub |
-| Installer and evaluation summarizer execute | Passed local installation and synthetic self-tests |
+| Codex and Claude Code installers | Passed isolated local installation tests |
+| ChatGPT and Claude package generation | Passed archive structure checks |
+| DeepSeek API adapter | Payload and parsing self-test passed; no live account call published |
 | Behavioral compliance across model/tool versions | Nine scenarios exist; repeatable results are not yet published |
 | Better than a neutral baseline | Not established |
 | Improves real user outcomes | Not established |
@@ -476,6 +566,8 @@ Read the [evaluation protocol](skills/evidence-based-personal-advisor/references
 | Destination already exists | The installer protects an existing installation | Use the backup-and-upgrade procedure above |
 | Skill files exist but Codex does not show it | Confirm the parent directory is a Skill directory for that environment | Start a new task, invoke `$evidence-based-personal-advisor`, then restart Codex if needed |
 | Requested platforms are inaccessible | Check authentication and platform restrictions | Provide exported links/text or accept a narrower, clearly labeled sample |
+| ChatGPT package cannot be installed | Confirm the plugin is published or available through an enabled development/local source | Validate `.codex-plugin/plugin.json`; packaging alone does not create a listing |
+| DeepSeek request fails before an answer | Check the API key, endpoint, model availability, and account access | Run `--self-test`, then retry without including personal data in logs |
 | Answer is too long | Ask for `quick` mode and state weekly capacity | Request only the bottom line, three actions, and main uncertainty |
 | Resume analysis invents facts | Stop using the output | Report a privacy-safe bug and remove unsupported claims |
 
@@ -483,6 +575,8 @@ Read the [evaluation protocol](skills/evidence-based-personal-advisor/references
 
 ```text
 evidence-based-personal-advisor/
+├── .codex-plugin/plugin.json            # ChatGPT/Codex universal Plugin manifest
+├── adapters/deepseek/run.py              # DeepSeek Responses API adapter
 ├── skills/evidence-based-personal-advisor/
 │   ├── SKILL.md                         # Core decision router
 │   ├── agents/openai.yaml               # Codex UI metadata
@@ -491,6 +585,7 @@ evidence-based-personal-advisor/
 │   └── scripts/summarize_evals.py       # Local paired-result summary
 ├── examples/                            # Explicitly labeled examples
 ├── scripts/install.py                   # Transactional installer
+├── scripts/package_skill.py             # ChatGPT and Claude archive builder
 ├── scripts/validate_repo.py             # Structure and privacy checks
 ├── ARCHITECTURE.md
 ├── ROADMAP.md

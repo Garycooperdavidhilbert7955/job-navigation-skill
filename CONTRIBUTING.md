@@ -34,8 +34,12 @@ Never post resumes, names, contact details, private prompts, raw model outputs, 
 
 ```bash
 python3 scripts/validate_repo.py
+python3 adapters/deepseek/run.py --self-test
 python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --self-test
+python3 scripts/package_skill.py --target all --output /tmp/evidence-advisor-dist
 ```
+
+Cross-agent wrappers must continue to use `skills/evidence-based-personal-advisor/` as the canonical source. Do not fork the core instructions into provider-specific copies.
 
 ## Evaluation contributions
 

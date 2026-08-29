@@ -7,16 +7,16 @@
 [English](README.md) · [架构](ARCHITECTURE.md) · [路线图](ROADMAP.md) · [参与贡献](CONTRIBUTING.md)
 
 ![状态](https://img.shields.io/badge/status-beta-f59e0b)
-![版本](https://img.shields.io/badge/version-0.3.0--beta-2563eb)
-![Codex Skill](https://img.shields.io/badge/Codex-career_skill-111827)
+![版本](https://img.shields.io/badge/version-0.4.0--beta-2563eb)
+![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20DeepSeek-111827)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
 ![许可证](https://img.shields.io/badge/license-MIT-16a34a)
 
-`v0.3.0-beta`
+`v0.4.0-beta`
 
 </div>
 
-这是一款面向应届生、求职者和职业转型者的本地Codex Skill。它研究近期行业、岗位和招聘JD，把市场要求与你提供的简历、项目和技能证据逐项对照，帮助你决定目标岗位、补足证据并安排下一步求职行动。
+这是一款面向应届生、求职者和职业转型者的跨Agent职业Skill。它研究近期行业、岗位和招聘JD，把市场要求与你提供的简历、项目和技能证据逐项对照，帮助你决定目标岗位、补足证据并安排下一步求职行动。
 
 > **产品定位：**专注求职市场研究、细分岗位匹配、简历证据诊断、技能提升排序和30/60/90天求职计划。与目标岗位无关的通用教育、个人成长或其他生活决策不属于当前产品范围。
 
@@ -129,15 +129,24 @@
 
 ### 5.1 先理解部署方式
 
-本仓库提供的是一款**本地Codex Skill**。安装过程会把包含`SKILL.md`、references、eval定义、界面元数据和本地评测脚本的文件夹复制到Codex Skill目录。
+本仓库只维护一份核心`SKILL.md`和reference规则，再通过轻量适配层部署到ChatGPT、Codex、Claude和DeepSeek。不同Agent不会各自维护一套容易漂移的职业分析逻辑。
 
-产品显示名已经收窄为“循证求职与简历顾问”。为兼容现有安装和提示词，技术标识仍保留为`evidence-based-personal-advisor`。
+产品显示名是“循证求职与简历顾问”。为兼容现有安装和调用方式，技术标识仍保留为`evidence-based-personal-advisor`。
 
-它不会通过[OpenAI Skills API](https://developers.openai.com/api/reference/python/resources/skills/methods/create)上传Skill、简历或评测记录。但你之后交给Codex的材料仍可能由当前环境配置的AI提供商和工具处理，详见[隐私说明](#9-隐私限制与注意事项)。
+| Agent界面 | 本仓库支持方式 | 部署入口 |
+|---|---|---|
+| Codex | 原生文件系统Skill | `scripts/install.py --agent codex` |
+| ChatGPT | 包含核心Skill的OpenAI通用Plugin | `.codex-plugin/plugin.json`与ChatGPT发布包 |
+| Claude Code | 原生文件系统Skill | `scripts/install.py --agent claude` |
+| claude.ai | 上传自定义Skill | Claude Skill ZIP |
+| Claude Code中的DeepSeek | 由Claude Code加载同一Skill，DeepSeek作为模型提供商 | Claude安装方式加DeepSeek官方Claude Code接入 |
+| DeepSeek API | 系统指令适配器，可选内置网页搜索 | `adapters/deepseek/run.py` |
+
+仓库不会自动把Skill、简历或评测记录上传给任何提供商。你实际使用某个Agent时提交的材料，将受该提供商的账号、工具和数据设置约束，详见[隐私说明](#9-隐私限制与注意事项)。
 
 ### 5.2 系统要求
 
-- Codex桌面端，或支持本地Skill的其他Codex环境；
+- 上表中的至少一个Agent环境；
 - Python 3.11或更高版本；
 - 已下载或克隆的本仓库；
 - 只有在需要检索最新资料时才需要网络访问。
@@ -187,18 +196,18 @@ Evaluation cases: 9
 
 该命令会检查必要文件、frontmatter、版本一致性、本地路径泄漏、相对链接、符号链接和常见密钥模式。它不能证明网页研究和建议本身正确。
 
-### 5.5 安装到Codex默认Skill目录
+### 5.5 安装到Codex
 
 macOS或Linux：
 
 ```bash
-python3 scripts/install.py
+python3 scripts/install.py --agent codex
 ```
 
 Windows PowerShell：
 
 ```powershell
-python scripts\install.py
+python scripts\install.py --agent codex
 ```
 
 安装器会把目标解析为：
@@ -215,23 +224,87 @@ ${CODEX_HOME}/skills/evidence-based-personal-advisor
 
 安装采用事务式流程：先验证仓库，拒绝符号链接，把文件复制到临时目录，再移动到最终位置；如果目标已存在则停止，不会直接覆盖。
 
-### 5.6 安装到自定义Skill目录
+### 5.6 打包给ChatGPT
+
+ChatGPT和Codex共享OpenAI Plugin格式。本仓库已经包含必须的`.codex-plugin/plugin.json`以及核心`skills/`目录。
+
+生成可分发Plugin压缩包：
+
+```bash
+python3 scripts/package_skill.py --target chatgpt
+```
+
+压缩包会生成在`dist/`。它可以进入[OpenAI Plugin开发与发布流程](https://developers.openai.com/plugins/build/plugins)；正式上架后，用户也可以从通用Plugin目录安装。仅在本地生成ZIP不会自动发布或安装。
+
+安装Plugin后，ChatGPT可以根据请求自动选择Skill，也可以通过`@`显式选择。
+
+### 5.7 安装到Claude
+
+Claude Code使用相同的`SKILL.md`目录格式：
+
+```bash
+python3 scripts/install.py --agent claude
+```
+
+默认安装位置：
+
+```text
+~/.claude/skills/evidence-based-personal-advisor
+```
+
+给claude.ai生成可上传的Skill压缩包：
+
+```bash
+python3 scripts/package_skill.py --target claude
+```
+
+在支持自定义Skill的账号中，通过 **Settings → Features** 上传生成的Claude压缩包。Claude各个界面的Skill相互独立：安装到Claude Code不会自动同步到claude.ai或Claude API。详见[Anthropic Agent Skills官方文档](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)。
+
+Claude API的Skill容器本身不能访问网络。因此，除非宿主应用另外提供可用的搜索工具或检索结果，本项目不会声称Claude API版本能够完成近期岗位市场研究。
+
+### 5.8 使用DeepSeek
+
+支持两条路径：
+
+1. **推荐的Agent方式：**先按上面的方法安装Claude Code Skill，再根据[DeepSeek官方Coding Agent接入说明](https://api-docs.deepseek.com/guides/coding_agents/)让Claude Code使用DeepSeek。Claude Code负责发现Skill，DeepSeek负责模型推理。
+2. **直接使用API：**运行仓库中的标准库适配器，调用DeepSeek Responses API。
+
+不联网测试适配器：
+
+```bash
+python3 adapters/deepseek/run.py --self-test
+```
+
+实际调用前，通过终端或密钥管理器设置`DEEPSEEK_API_KEY`，然后从标准输入传入已经脱敏的文本请求：
+
+```bash
+python3 adapters/deepseek/run.py <<'EOF'
+我想申请[地区]的[岗位]。请研究近期JD，并结合以下脱敏简历事实分析：
+[只填写必要事实]。请给出最重要的三项下一步行动。
+EOF
+```
+
+适配器使用DeepSeek的`instructions`字段和可选内置`web_search`。由于DeepSeek API不会渐进式读取本地Skill文件，适配器需要内联运行时reference，通常会比Codex或Claude Code消耗更多输入Token。本仓库没有声称DeepSeek消费级网页聊天支持原生Skill上传。
+
+### 5.9 安装到自定义Skill目录
 
 只有在你的Codex环境已经配置为发现该目录时，才使用自定义路径：
 
 ```bash
-python3 scripts/install.py --dest "/absolute/path/to/codex/skills"
+python3 scripts/install.py --agent codex --dest "/absolute/path/to/codex/skills"
 ```
 
 例如，将个人Skill统一保存在macOS桌面目录：
 
 ```bash
-python3 scripts/install.py --dest "$HOME/Desktop/codex/skill"
+python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
 ```
 
 `--dest`指向Skill父目录，安装器会在其中创建最终的`evidence-based-personal-advisor`文件夹。
 
-### 5.7 验证安装结果
+如需自定义Claude Code目录，请使用`--agent claude`并传入对应父目录。
+
+### 5.10 验证安装结果
 
 macOS或Linux默认路径：
 
@@ -245,6 +318,12 @@ Windows PowerShell：
 Test-Path "$HOME\.codex\skills\evidence-based-personal-advisor\SKILL.md"
 ```
 
+Claude Code默认安装验证：
+
+```bash
+test -f "$HOME/.claude/skills/evidence-based-personal-advisor/SKILL.md" && echo "Claude Skill files installed"
+```
+
 然后新建一个Codex任务，并显式调用：
 
 ```text
@@ -253,7 +332,9 @@ Test-Path "$HOME\.codex\skills\evidence-based-personal-advisor\SKILL.md"
 
 不同Codex环境和配置对本地Skill的发现方式可能不同。如果没有显示或触发，请重启Codex、检查安装目录，并使用完整的`$evidence-based-personal-advisor`显式调用。
 
-### 5.8 安全升级
+ChatGPT安装Plugin后使用`@`选择；Claude Code请新建会话并要求使用`evidence-based-personal-advisor`，也可以让Claude根据请求自动匹配。
+
+### 5.11 安全升级
 
 安装器会主动拒绝覆盖已有Skill。请使用可恢复的升级方式：
 
@@ -269,7 +350,7 @@ macOS或Linux默认路径示例：
 ```bash
 mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
   "$HOME/.codex/skills/evidence-based-personal-advisor.backup"
-python3 scripts/install.py
+python3 scripts/install.py --agent codex
 ```
 
 回滚：
@@ -288,7 +369,7 @@ Windows PowerShell升级：
 ```powershell
 Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
   "$HOME\.codex\skills\evidence-based-personal-advisor.backup"
-python scripts\install.py
+python scripts\install.py --agent codex
 ```
 
 Windows PowerShell回滚：
@@ -300,7 +381,9 @@ Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor.backup" `
   "$HOME\.codex\skills\evidence-based-personal-advisor"
 ```
 
-### 5.9 可恢复卸载
+Claude Code采用相同步骤，但目录换成`$HOME/.claude/skills`，并通过`--agent claude`重新安装。ChatGPT和claude.ai版本分别通过各自的Plugin或Skill管理界面升级。
+
+### 5.12 可恢复卸载
 
 把Skill移出活动目录，不立即删除：
 
@@ -317,6 +400,8 @@ Windows PowerShell：
 Move-Item "$HOME\.codex\skills\evidence-based-personal-advisor" `
   "$HOME\.codex\evidence-based-personal-advisor.uninstalled"
 ```
+
+Claude Code请把对应文件夹移出`$HOME/.claude/skills`。ChatGPT或claude.ai版本应从各自的Skill或Plugin管理界面移除。
 
 ## 6. 正确使用方法
 
@@ -421,14 +506,17 @@ JD要求 → 需求带 → 候选人证据 → 证据等级
 ### 隐私
 
 - 仓库不会接收或收集你的简历和评测记录。
-- 本地安装不等于离线推理。Codex及启用的工具可能把材料发送给当前环境配置的AI提供商或服务。
-- Skill要求Codex不要把简历原文、身份信息、联系方式和机密记录放入网页搜索。
+- 本地安装不等于离线推理。ChatGPT、Codex、Claude、DeepSeek及启用的工具可能把材料发送给各自配置的提供商或服务。
+- Skill要求当前Agent不要把简历原文、身份信息、联系方式和机密记录放入网页搜索。
 - 这是提示层约束，不是网络沙箱；风险较高时应检查生成的查询。
+- DeepSeek适配器会把标准输入中的脱敏请求以及内联Skill指令发送到配置的DeepSeek端点，但不会自动读取或上传简历文件。
 
 ### 检索限制
 
 - 招聘平台可能要求登录、返回个性化结果、阻止自动访问或保留过期页面。
-- Skill不包含BOSS直聘、LinkedIn或Indeed专用爬虫，只使用当前Codex环境可用的网络能力。
+- Skill不包含BOSS直聘、LinkedIn或Indeed专用爬虫，只使用当前Agent环境可用的网络能力。
+- 不同Agent的登录状态、浏览器访问、内置搜索、文件解析和引用行为并不相同。
+- DeepSeek API适配器需要加载更多指令Token，不能完全复现文件系统Skill的渐进式加载。
 - JD样本是便利样本，不是具有统计代表性的劳动力市场调查。
 - 招聘广告频率只能作为方向信号，不等于全部招聘数量。
 - 分析模型用于组织思考，不负责证明事实。
@@ -448,7 +536,9 @@ JD要求 → 需求带 → 候选人证据 → 证据等级
 | 证据层级 | 当前状态 |
 |---|---|
 | 仓库结构与隐私检查 | 已在本地通过；已配置GitHub CI工作流 |
-| 安装器和评测汇总器可运行 | 已通过本地安装和合成自测 |
+| Codex与Claude Code安装器 | 已通过隔离的本地安装测试 |
+| ChatGPT与Claude压缩包生成 | 已通过压缩包结构检查 |
+| DeepSeek API适配器 | 载荷与解析自测通过；尚未发布真实账号调用结果 |
 | 不同模型/工具下稳定遵循规则 | 已有9个场景，尚未发布可重复结果 |
 | 优于不使用Skill的中性基础提示 | 尚未证明 |
 | 改善真实用户结果 | 尚未证明 |
@@ -473,6 +563,8 @@ python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --temp
 | 目标目录已存在 | 安装器正在保护现有版本 | 按上面的备份升级流程操作 |
 | 文件存在但Codex没有显示Skill | 确认父目录是当前环境的Skill目录 | 新建任务、显式调用，然后在需要时重启Codex |
 | 指定招聘平台无法访问 | 检查登录和平台限制 | 提供导出的链接/文本，或接受范围更窄且明确标注的样本 |
+| ChatGPT压缩包无法安装 | 确认Plugin已经发布，或当前账号已启用开发/本地来源 | 验证`.codex-plugin/plugin.json`；生成压缩包不等于创建上架条目 |
+| DeepSeek在回答前报错 | 检查API密钥、端点、模型可用性和账号权限 | 先运行`--self-test`，重试时不要把个人信息写入日志 |
 | 输出太长 | 指定`quick`并说明每周可用时间 | 只要求结论、三项行动和最大不确定性 |
 | 简历分析出现虚构内容 | 立即停止使用该输出 | 删除不支持的内容并提交脱敏Bug报告 |
 
@@ -480,6 +572,8 @@ python3 skills/evidence-based-personal-advisor/scripts/summarize_evals.py --temp
 
 ```text
 evidence-based-personal-advisor/
+├── .codex-plugin/plugin.json            # ChatGPT/Codex通用Plugin清单
+├── adapters/deepseek/run.py              # DeepSeek Responses API适配器
 ├── skills/evidence-based-personal-advisor/
 │   ├── SKILL.md                         # 核心决策路由
 │   ├── agents/openai.yaml               # Codex界面元数据
@@ -488,6 +582,7 @@ evidence-based-personal-advisor/
 │   └── scripts/summarize_evals.py       # 本地成对结果汇总器
 ├── examples/                            # 明确标注边界的示例
 ├── scripts/install.py                   # 事务式安装器
+├── scripts/package_skill.py             # ChatGPT与Claude压缩包生成器
 ├── scripts/validate_repo.py             # 结构与隐私检查
 ├── ARCHITECTURE.md
 ├── ROADMAP.md
