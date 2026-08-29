@@ -459,7 +459,7 @@ Claude Code请把对应文件夹移出`$HOME/.claude/skills`。ChatGPT或claude.
 ## 7. 工作原理
 
 ```text
-你的问题与脱敏材料
+你的问题与个人材料/描述
         │
         ▼
 明确决定与研究预算
