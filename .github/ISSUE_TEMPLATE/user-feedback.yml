@@ -1,0 +1,52 @@
+name: User research feedback
+description: Share minimal, opt-in feedback about clarity, workload, and follow-through.
+title: "[User feedback]: "
+labels: [user-research]
+body:
+  - type: checkboxes
+    attributes:
+      label: Consent and privacy
+      options:
+        - label: I am sharing this voluntarily and removed resumes, prompts, names, contact details, employer identities, and confidential information.
+          required: true
+        - label: I understand this is user-experience evidence, not proof of factual accuracy or causality.
+          required: true
+  - type: dropdown
+    attributes:
+      label: User context
+      options:
+        - Student or recent graduate
+        - Career changer
+        - Experienced job seeker
+        - Education or personal-development decision
+        - Evaluator or researcher
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: First action you understood
+      description: State the action, not your personal background.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What felt unclear, unrealistic, or too long?
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Did you attempt the first action within seven days?
+      options:
+        - "Yes"
+        - "No"
+        - "Not yet seven days"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Weekly time available
+      placeholder: e.g. 3 hours
+  - type: textarea
+    attributes:
+      label: Access limits or failure
+      description: Mention blocked sources, incorrect citations, invented facts, excessive length, or other failures.

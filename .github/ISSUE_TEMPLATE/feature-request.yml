@@ -1,0 +1,37 @@
+name: Feature request
+description: Propose a focused behavior or workflow change tied to a user problem.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: checkboxes
+    attributes:
+      label: Scope and privacy
+      options:
+        - label: This request contains no resumes, prompts, personal data, secrets, private URLs, or proprietary job descriptions.
+          required: true
+        - label: I checked the roadmap and am describing a user problem, not only requesting another framework.
+          required: true
+  - type: textarea
+    attributes:
+      label: User problem
+      description: Who is blocked, in what situation, and what happens today?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest observable change that would solve the problem.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Example request and expected shape
+      description: Use fictional, minimal, non-identifying content.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: How should it be tested?
+      description: Suggest a behavioral assertion, failure case, or user signal.
+    validations:
+      required: true

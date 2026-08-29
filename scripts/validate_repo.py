@@ -20,6 +20,18 @@ REQUIRED = [
     ROOT / "LICENSE",
     ROOT / "CONTRIBUTING.md",
     ROOT / "SECURITY.md",
+    ROOT / "CODE_OF_CONDUCT.md",
+    ROOT / "ARCHITECTURE.md",
+    ROOT / "ROADMAP.md",
+    ROOT / "CHANGELOG.md",
+    ROOT / "VERSION",
+    ROOT / ".github" / "PULL_REQUEST_TEMPLATE.md",
+    ROOT / ".github" / "ISSUE_TEMPLATE" / "bug-report.yml",
+    ROOT / ".github" / "ISSUE_TEMPLATE" / "feature-request.yml",
+    ROOT / ".github" / "ISSUE_TEMPLATE" / "user-feedback.yml",
+    ROOT / ".github" / "ISSUE_TEMPLATE" / "evaluation-result.yml",
+    ROOT / "examples" / "README.md",
+    ROOT / "examples" / "early-career-ai-role-brief.md",
     SKILL / "SKILL.md",
     SKILL / "agents" / "openai.yaml",
     SKILL / "references" / "evidence-protocol.md",
@@ -61,6 +73,15 @@ def main() -> int:
 
     if SKILL.name != SKILL_NAME:
         fail("Skill folder name does not match the expected skill name", errors)
+
+    version_file = ROOT / "VERSION"
+    if version_file.is_file():
+        version = version_file.read_text(encoding="utf-8").strip()
+        if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?", version):
+            fail("VERSION must use semantic version form, optionally with a prerelease suffix", errors)
+        for readme in (ROOT / "README.md", ROOT / "README.zh-CN.md"):
+            if readme.is_file() and version not in readme.read_text(encoding="utf-8"):
+                fail(f"Version {version} is missing from {readme.name}", errors)
 
     if (SKILL / "SKILL.md").is_file():
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
