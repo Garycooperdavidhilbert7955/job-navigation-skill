@@ -2,31 +2,119 @@
 
 # Job Navigation Skill
 
-### Research current roles and real JDs, compare them with your resume, and decide what to target, fix, and do first
+### Research current roles and real job descriptions (JDs), compare them with your resume, and decide what to target, fix, and do first
 
 [简体中文](README.zh-CN.md) · [Architecture](ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Status](https://img.shields.io/badge/status-beta-f59e0b)
 ![Version](https://img.shields.io/badge/version-0.6.0--beta-2563eb)
 ![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20Cursor%20%7C%20WorkBuddy-111827)
-![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
+![Command line](https://img.shields.io/badge/CLI-Python%203.11%2B-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
 
 `v0.6.0-beta`
 
 </div>
 
-This cross-agent career Skill is built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
+This is a set of installable career-research instructions for AI tools, built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
 
 > **Product position:** focused on job-market research, role fit, resume evidence diagnosis, skill prioritization, and capacity-bounded 30/60/90-day job-search plans. General education, personal-development, and life decisions unrelated to a target career are outside the current product scope.
 
-## Manual map
+## 0. First use: no coding knowledge required
+
+### What this is
+
+- **Skill:** a folder of professional instructions that an AI tool can read. It is not a new chat app and does not train a model.
+- **JD:** job description—the role and hiring requirements published by an employer.
+- **Agent:** the AI tool you use, such as Codex, Claude Code, Cursor, or work-buddy.
+- **Terminal / PowerShell:** a window for entering computer commands. The commands below only need to be copied, pasted, and run.
+- **Repository:** the complete `job-navigation-skill` project folder downloaded and extracted from GitHub.
+
+### Choose only the AI tool you already use
+
+You do not need to install the Skill everywhere.
+
+| Tool you use | Beginner difficulty | Recommended method |
+|---|---:|---|
+| claude.ai website | Easiest | Download the Claude ZIP and upload it if your account supports custom Skills |
+| Cursor | Easy | Import from GitHub inside Cursor; no Python command required |
+| Codex | One command | Download the repository and run the Codex installer |
+| Claude Code | One command | Download the repository and run the Claude installer |
+| work-buddy | One command | Use the Claude Code Skill directory that hosts work-buddy |
+| ChatGPT | No general one-click route yet | This repository provides a developer Plugin package, but not a public store install button |
+
+### Method A: do not open a terminal
+
+**Cursor**
+
+1. Copy the repository URL: `https://github.com/xinyu0115/job-navigation-skill`.
+2. Open **Cursor Settings → Rules → Add Rule → Remote Rule (GitHub)**.
+3. Paste the repository URL and import it.
+4. Start a new chat and enter `/job-navigation-skill`, or select it with `@`.
+
+**claude.ai website**
+
+1. Open the [`v0.6.0-beta` release](https://github.com/xinyu0115/job-navigation-skill/releases/tag/v0.6.0-beta).
+2. Download the ZIP whose filename contains `claude-skill`; do not extract it.
+3. If your account provides custom Skills, upload the ZIP under **Settings → Features**.
+4. Start a new chat and ask Claude to use `job-navigation-skill`.
+
+If your interface does not contain that option, the feature may not be available for your current product version, account, or plan. That is not an installation mistake. Use the Codex, Claude Code, Cursor, or work-buddy command route below instead.
+
+### Method B: copy one installation command
+
+1. [Download the project ZIP directly](https://github.com/xinyu0115/job-navigation-skill/archive/refs/heads/main.zip), or select the green **Code → Download ZIP** button on GitHub.
+2. Open your Downloads folder and double-click the ZIP to extract it.
+3. Open a terminal in the extracted folder, whose name will look like `job-navigation-skill-main`:
+   - **macOS:** open Terminal, type `cd ` with one trailing space, drag the folder into the Terminal window, and press Return.
+   - **Windows:** open the folder, select the File Explorer address bar, type `powershell`, and press Enter.
+4. Copy only the command for the tool you use:
+
+| Tool | macOS / Linux | Windows PowerShell |
+|---|---|---|
+| Codex | `python3 scripts/install.py --agent codex` | `python scripts\install.py --agent codex` |
+| Claude Code | `python3 scripts/install.py --agent claude` | `python scripts\install.py --agent claude` |
+| Cursor | `python3 scripts/install.py --agent cursor` | `python scripts\install.py --agent cursor` |
+| work-buddy | `python3 scripts/install.py --agent workbuddy` | `python scripts\install.py --agent workbuddy` |
+
+A successful installation ends with output similar to:
+
+```text
+Validation passed.
+Installed job-navigation-skill for codex to ...
+```
+
+If `python3` or `python` is not found, your computer does not currently have a usable Python installation. Install [Python 3.11 or later](https://www.python.org/downloads/); on Windows, select **Add Python to PATH** during installation. You can also use one of the no-terminal routes above.
+
+### Your first message after installation
+
+Close and reopen the AI tool, or start a new chat, then paste:
+
+```text
+Use $job-navigation-skill:
+I am targeting [role] in [location]. Research recent roles and JDs, compare them with the
+redacted resume I will provide, and identify role fit, evidence gaps, and my top three actions.
+Separate facts, inferences, and recommendations.
+```
+
+Before uploading a resume, remove phone numbers, personal email addresses, identity numbers, exact home addresses, and unnecessary private links. Installing the Skill does not automatically read or upload your resume; only material you deliberately provide enters the conversation.
+
+### Four common beginner misunderstandings
+
+1. **Install it only once:** you do not need every platform version.
+2. **work-buddy and Claude Code share one copy:** both use `~/.claude/skills`; do not duplicate the installation.
+3. **The release ZIP is not a resume template:** it contains Skill files for an AI tool.
+4. **Installation does not guarantee web access:** current job-market research still depends on the active AI tool's ability to search the web or open links you provide.
+
+After the first successful invocation, you can jump directly to [Use it well](#6-use-it-well). The remaining installation sections are for troubleshooting, upgrades, removal, and publishing.
+
+## Continue reading
 
 - [1. Who this is for](#1-who-this-is-for)
 - [2. What it does](#2-what-it-does)
 - [3. Typical scenarios](#3-typical-scenarios)
 - [4. What the result looks like](#4-what-the-result-looks-like)
-- [5. Deploy locally](#5-deploy-locally)
+- [5. Install, validate, and maintain](#5-install-validate-and-maintain)
 - [6. Use it well](#6-use-it-well)
 - [7. How it works](#7-how-it-works)
 - [8. Technical design and defensibility](#8-technical-design-and-defensibility)
@@ -125,7 +213,9 @@ The goal is not a longer answer. It is a decision you can inspect: **what is kno
 
 See the [fictional abbreviated example](examples/early-career-ai-role-brief.md). It demonstrates output shape only; it is not current market evidence or a success claim.
 
-## 5. Deploy locally
+## 5. Install, validate, and maintain
+
+> If you successfully invoked the Skill after section 0, do not repeat the installation commands below. This section is for paths, validation, upgrades, removal, and publishing.
 
 ### 5.1 Understand the deployment model
 
@@ -146,14 +236,15 @@ This repository does not automatically upload the Skill or your resume to any pr
 
 ### 5.2 Requirements
 
-- at least one supported agent surface listed above;
-- Python 3.11 or later;
-- a downloaded or cloned copy of this repository;
+- at least one supported AI tool listed above;
+- no Python requirement for the no-terminal Cursor or claude.ai routes;
+- Python 3.11 or later for command installation, validation, or packaging;
+- a downloaded or cloned copy of this repository for command installation;
 - network access only when your request needs current research.
 
 No Python package installation is required. The installer and validation scripts use the standard library.
 
-### 5.3 Download the repository
+### 5.3 Download the repository for command installation
 
 From the GitHub repository page, choose one method:
 
@@ -172,7 +263,7 @@ From the GitHub repository page, choose one method:
 
 The remaining commands in this manual assume that this repository folder is your current working directory.
 
-### 5.4 Validate before installation
+### 5.4 Optional: validate separately
 
 macOS, Linux, or PowerShell:
 
@@ -194,7 +285,7 @@ Skill: job-navigation-skill
 Evaluation cases: 9
 ```
 
-Validation checks required files, frontmatter, version consistency, local-path leakage, broken relative links, symlinks, and common secret patterns. It does not prove that web research or recommendations are correct.
+The installer runs validation automatically, so ordinary users can install directly. Maintainers and people troubleshooting a failure can run the command above separately. It checks required files, frontmatter, version consistency, local-path leakage, broken relative links, symlinks, and common secret patterns. It does not prove that web research or recommendations are correct.
 
 ### 5.5 Install for Codex
 
@@ -224,9 +315,9 @@ If `CODEX_HOME` is not set, it uses:
 
 The install is transactional: the repository is validated first, symlinks are rejected, files are copied to a temporary staging directory, and the existing destination is never overwritten.
 
-### 5.6 Package for ChatGPT
+### 5.6 For developers: package for ChatGPT
 
-ChatGPT and Codex share OpenAI's plugin format. This repository already contains the required `.codex-plugin/plugin.json` and canonical `skills/` directory.
+This section is for people developing or publishing a Plugin, not an ordinary ChatGPT installation path. ChatGPT and Codex share OpenAI's plugin format. This repository already contains the required `.codex-plugin/plugin.json` and canonical `skills/` directory.
 
 Build the distributable plugin archive:
 

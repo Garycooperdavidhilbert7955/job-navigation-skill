@@ -2,31 +2,118 @@
 
 # 求职导航 Skill
 
-### 研究近期岗位与真实JD，对照你的简历，判断适合什么、缺什么、先做什么
+### 研究近期岗位与真实招聘要求（JD），对照你的简历，判断适合什么、缺什么、先做什么
 
 [English](README.md) · [架构](ARCHITECTURE.md) · [路线图](ROADMAP.md) · [参与贡献](CONTRIBUTING.md)
 
 ![状态](https://img.shields.io/badge/status-beta-f59e0b)
 ![版本](https://img.shields.io/badge/version-0.6.0--beta-2563eb)
 ![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20Cursor%20%7C%20WorkBuddy-111827)
-![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
+![命令行](https://img.shields.io/badge/CLI-Python%203.11%2B-3776AB)
 ![许可证](https://img.shields.io/badge/license-MIT-16a34a)
 
 `v0.6.0-beta`
 
 </div>
 
-这是一款面向应届生、求职者和职业转型者的跨Agent职业Skill。它研究近期行业、岗位和招聘JD，把市场要求与你提供的简历、项目和技能证据逐项对照，帮助你决定目标岗位、补足证据并安排下一步求职行动。
+这是一套可以安装给AI使用的求职分析规则，面向应届生、求职者和职业转型者。它让AI研究近期行业、岗位和招聘信息，把市场要求与你提供的简历、项目和技能证据逐项对照，帮助你决定目标岗位、补足证据并安排下一步求职行动。
 
 > **产品定位：**专注求职市场研究、细分岗位匹配、简历证据诊断、技能提升排序和30/60/90天求职计划。与目标岗位无关的通用教育、个人成长或其他生活决策不属于当前产品范围。
 
-## 手册导航
+## 0. 第一次使用：完全不懂代码也可以
+
+### 先知道它是什么
+
+- **Skill**：一组供AI读取的专业工作说明，不是新的聊天软件，也不需要训练模型。
+- **JD**：Job Description，即公司发布的岗位说明或招聘要求。
+- **Agent**：你正在使用的AI工具，例如Codex、Claude Code、Cursor或work-buddy。
+- **终端 / PowerShell**：电脑中输入命令的窗口。下面的命令只需复制、粘贴并按回车，不要求会编程。
+- **仓库**：你从GitHub下载并解压后的整个`job-navigation-skill`项目文件夹。
+
+### 只选择你平时使用的一个AI工具
+
+不需要把Skill安装到所有平台。
+
+| 你平时使用的工具 | 新手难度 | 推荐方法 |
+|---|---:|---|
+| claude.ai网页版 | 最简单 | 下载Claude ZIP，在账号支持自定义Skills时上传 |
+| Cursor | 简单 | 在Cursor中从GitHub远程导入，不需要运行Python |
+| Codex | 一条命令 | 下载仓库，在终端中运行Codex安装命令 |
+| Claude Code | 一条命令 | 下载仓库，在终端中运行Claude安装命令 |
+| work-buddy | 一条命令 | 使用work-buddy依赖的Claude Code Skill目录 |
+| ChatGPT | 暂无普通用户一键入口 | 当前仓库提供开发者Plugin包，但尚未提供公开商店安装按钮 |
+
+### 方法A：不打开终端
+
+**Cursor**
+
+1. 复制仓库地址：`https://github.com/xinyu0115/job-navigation-skill`。
+2. 打开Cursor的 **Settings → Rules → Add Rule → Remote Rule (GitHub)**。
+3. 粘贴仓库地址并导入。
+4. 新建对话，输入`/job-navigation-skill`，或通过`@`选择它。
+
+**claude.ai网页版**
+
+1. 打开[`v0.6.0-beta`发布页](https://github.com/xinyu0115/job-navigation-skill/releases/tag/v0.6.0-beta)。
+2. 下载文件名包含`claude-skill`的ZIP；不要解压。
+3. 如果你的账号提供自定义Skills，在 **Settings → Features** 中上传该ZIP。
+4. 新建对话，并要求Claude使用`job-navigation-skill`。
+
+如果你的界面没有上述入口，通常表示当前产品版本、账号或套餐没有开放该功能；这不是你操作错误。请改用下面的Codex、Claude Code、Cursor或work-buddy命令安装方式。
+
+### 方法B：复制一条安装命令
+
+1. [直接下载项目ZIP](https://github.com/xinyu0115/job-navigation-skill/archive/refs/heads/main.zip)，或者在GitHub页面点击绿色 **Code → Download ZIP**。
+2. 打开电脑的“下载”文件夹，双击ZIP解压。
+3. 在解压后名称类似`job-navigation-skill-main`的文件夹中打开终端：
+   - **macOS**：打开“终端”，输入`cd `（后面保留一个空格），把该文件夹拖进终端窗口，然后按回车。
+   - **Windows**：打开该文件夹，点击文件资源管理器顶部的地址栏，输入`powershell`并按回车。
+4. 只复制与你使用的工具对应的一条命令：
+
+| 工具 | macOS / Linux | Windows PowerShell |
+|---|---|---|
+| Codex | `python3 scripts/install.py --agent codex` | `python scripts\install.py --agent codex` |
+| Claude Code | `python3 scripts/install.py --agent claude` | `python scripts\install.py --agent claude` |
+| Cursor | `python3 scripts/install.py --agent cursor` | `python scripts\install.py --agent cursor` |
+| work-buddy | `python3 scripts/install.py --agent workbuddy` | `python scripts\install.py --agent workbuddy` |
+
+成功时会看到类似内容：
+
+```text
+Validation passed.
+Installed job-navigation-skill for codex to ...
+```
+
+如果提示找不到`python3`或`python`，你的电脑还没有可用的Python。可以安装[Python 3.11或更高版本](https://www.python.org/downloads/)；Windows安装时请勾选 **Add Python to PATH**。也可以改用上面的无终端安装方式。
+
+### 安装后的第一句话
+
+关闭并重新打开对应AI工具，或新建一个对话，然后粘贴：
+
+```text
+使用 $job-navigation-skill：
+我想申请[城市]的[目标岗位]。请研究近期岗位与JD，结合我随后提供的脱敏简历，
+判断适合方向、证据缺口和最优先的三项行动，并区分事实、推断和建议。
+```
+
+上传简历前，请删除电话号码、个人邮箱、证件号码、精确住址和不必要的私人链接。安装Skill不会自动读取或上传你的简历；只有你主动提供的材料才会进入当前对话。
+
+### 新手最容易误解的四件事
+
+1. **只安装一次即可**：不要同时安装到所有平台。
+2. **work-buddy与Claude Code共享一份Skill**：两者都使用`~/.claude/skills`，不要重复安装。
+3. **发布包不是简历模板**：ZIP是给AI工具读取的Skill文件。
+4. **安装成功不等于一定能联网**：近期岗位研究仍取决于所用AI工具是否能搜索网页或访问你提供的链接。
+
+完成第一次调用后，可以直接跳到[正确使用方法](#6-正确使用方法)。后面的安装章节主要用于排查、升级、卸载和开发发布。
+
+## 继续阅读
 
 - [1. 适合哪些用户](#1-适合哪些用户)
 - [2. 产品功能](#2-产品功能)
 - [3. 典型使用场景](#3-典型使用场景)
 - [4. 输出结果示例](#4-输出结果示例)
-- [5. 本地部署](#5-本地部署)
+- [5. 安装、验证与维护](#5-安装验证与维护)
 - [6. 正确使用方法](#6-正确使用方法)
 - [7. 工作原理](#7-工作原理)
 - [8. 技术设计与壁垒](#8-技术设计与壁垒)
@@ -125,7 +212,9 @@
 
 [虚构的精简示例](examples/early-career-ai-role-brief.md)只展示输出形态，不代表最新市场证据或效果证明。
 
-## 5. 本地部署
+## 5. 安装、验证与维护
+
+> 如果你已经按照第0节成功调用Skill，不需要重复执行本节安装命令。本节保留给需要了解路径、验证、升级、卸载或发布的人。
 
 ### 5.1 先理解部署方式
 
@@ -146,14 +235,15 @@
 
 ### 5.2 系统要求
 
-- 上表中的至少一个Agent环境；
-- Python 3.11或更高版本；
-- 已下载或克隆的本仓库；
+- 上表中的至少一个AI工具；
+- 无终端的Cursor或claude.ai安装不要求Python；
+- 使用命令安装、验证或打包时需要Python 3.11或更高版本；
+- 使用命令安装时需要先下载或克隆本仓库；
 - 只有在需要检索最新资料时才需要网络访问。
 
 不需要安装额外Python依赖。安装器和验证器只使用标准库。
 
-### 5.3 下载仓库
+### 5.3 下载仓库（只用于命令安装）
 
 在GitHub仓库页面选择一种方式：
 
@@ -172,7 +262,7 @@
 
 本手册后续命令都默认仓库根目录是当前工作目录。
 
-### 5.4 安装前验证
+### 5.4 可选：单独验证仓库
 
 macOS、Linux或PowerShell：
 
@@ -194,7 +284,7 @@ Skill: job-navigation-skill
 Evaluation cases: 9
 ```
 
-该命令会检查必要文件、frontmatter、版本一致性、本地路径泄漏、相对链接、符号链接和常见密钥模式。它不能证明网页研究和建议本身正确。
+安装器本身会自动执行验证，因此普通用户可以直接安装。维护者或排查故障时，可以单独运行上面的命令。它会检查必要文件、frontmatter、版本一致性、本地路径泄漏、相对链接、符号链接和常见密钥模式，但不能证明网页研究和建议本身正确。
 
 ### 5.5 安装到Codex
 
@@ -224,9 +314,9 @@ ${CODEX_HOME}/skills/job-navigation-skill
 
 安装采用事务式流程：先验证仓库，拒绝符号链接，把文件复制到临时目录，再移动到最终位置；如果目标已存在则停止，不会直接覆盖。
 
-### 5.6 打包给ChatGPT
+### 5.6 开发者：打包给ChatGPT
 
-ChatGPT和Codex共享OpenAI Plugin格式。本仓库已经包含必须的`.codex-plugin/plugin.json`以及核心`skills/`目录。
+本节面向准备开发或发布Plugin的人，不是普通ChatGPT用户的安装步骤。ChatGPT和Codex共享OpenAI Plugin格式；本仓库已经包含必须的`.codex-plugin/plugin.json`以及核心`skills/`目录。
 
 生成可分发Plugin压缩包：
 
