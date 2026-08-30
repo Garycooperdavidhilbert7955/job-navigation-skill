@@ -2,6 +2,13 @@
 
 This project is in public beta. Versions describe repository milestones, not proof of effectiveness.
 
+## 0.6.0-beta — 2026-08-30
+
+- Added native Cursor installation and a Cursor Agent Skill archive.
+- Added work-buddy installation through its Claude Code Skill runtime.
+- Retired the direct third-party model API adapter and its documentation.
+- Expanded isolated installer and package checks across the supported deployment paths.
+
 ## 0.5.0-beta — 2026-08-30
 
 - Renamed the project, Skill identifier, Plugin identifier, repository, install directory, invocation, and package filenames to `job-navigation-skill`.
@@ -14,9 +21,8 @@ This project is in public beta. Versions describe repository milestones, not pro
 - Added a universal ChatGPT/Codex plugin manifest around the canonical Skill.
 - Extended the transactional installer to target Codex or Claude Code.
 - Added uploadable ChatGPT plugin and Claude Skill archive generation.
-- Added a standard-library DeepSeek Responses API adapter with optional built-in web search.
 - Kept one canonical `SKILL.md` and reference set so platform packages do not drift.
-- Documented platform-specific capability and privacy limits; actual account uploads and live DeepSeek API calls remain environment-dependent.
+- Documented platform-specific capability and privacy limits; actual account uploads remain environment-dependent.
 
 ## 0.3.0-beta — 2026-08-29
 

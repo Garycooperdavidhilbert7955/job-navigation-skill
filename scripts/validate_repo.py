@@ -28,7 +28,6 @@ REQUIRED = [
     ROOT / "VERSION",
     ROOT / ".codex-plugin" / "plugin.json",
     ROOT / "scripts" / "package_skill.py",
-    ROOT / "adapters" / "deepseek" / "run.py",
     ROOT / ".github" / "PULL_REQUEST_TEMPLATE.md",
     ROOT / ".github" / "ISSUE_TEMPLATE" / "bug-report.yml",
     ROOT / ".github" / "ISSUE_TEMPLATE" / "feature-request.yml",

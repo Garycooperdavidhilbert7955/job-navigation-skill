@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build uploadable ChatGPT plugin and Claude Skill zip archives."""
+"""Build uploadable ChatGPT, Claude, and Cursor archives."""
 
 from __future__ import annotations
 
@@ -35,8 +35,8 @@ def write_zip(destination: Path, entries: list[tuple[Path, Path]]) -> None:
 
 
 def build(target: str, output_dir: Path, version: str) -> Path:
-    if target == "claude":
-        destination = output_dir / f"{SKILL_NAME}-claude-skill-{version}.zip"
+    if target in ("claude", "cursor"):
+        destination = output_dir / f"{SKILL_NAME}-{target}-skill-{version}.zip"
         entries = [(path, path.relative_to(SKILL)) for path in included_files(SKILL)]
     else:
         destination = output_dir / f"{SKILL_NAME}-chatgpt-plugin-{version}.zip"
@@ -52,7 +52,11 @@ def build(target: str, output_dir: Path, version: str) -> Path:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", choices=("chatgpt", "claude", "all"), default="all")
+    parser.add_argument(
+        "--target",
+        choices=("chatgpt", "claude", "cursor", "all"),
+        default="all",
+    )
     parser.add_argument("--output", type=Path, default=ROOT / "dist")
     args = parser.parse_args()
 
@@ -64,7 +68,7 @@ def main() -> int:
         raise SystemExit("Repository validation failed; packaging was cancelled.")
 
     version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-    targets = ("chatgpt", "claude") if args.target == "all" else (args.target,)
+    targets = ("chatgpt", "claude", "cursor") if args.target == "all" else (args.target,)
     for target in targets:
         archive = build(target, args.output.expanduser().resolve(), version)
         print(f"Built {target}: {archive}")

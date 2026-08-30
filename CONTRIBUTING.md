@@ -34,9 +34,8 @@ Never post resumes, names, contact details, private prompts, raw model outputs, 
 
 ```bash
 python3 scripts/validate_repo.py
-python3 adapters/deepseek/run.py --self-test
 python3 skills/job-navigation-skill/scripts/summarize_evals.py --self-test
-python3 scripts/package_skill.py --target all --output /tmp/evidence-advisor-dist
+python3 scripts/package_skill.py --target all --output /tmp/job-navigation-skill-dist
 ```
 
 Cross-agent wrappers must continue to use `skills/job-navigation-skill/` as the canonical source. Do not fork the core instructions into provider-specific copies.

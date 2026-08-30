@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the bundled Skill for Codex or Claude Code without overwriting."""
+"""Install the bundled Skill for supported filesystem-based agents."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=f"Install {SKILL_NAME}")
     parser.add_argument(
         "--agent",
-        choices=("codex", "claude"),
+        choices=("codex", "claude", "cursor", "workbuddy"),
         default="codex",
         help="target agent (default: codex)",
     )
@@ -36,7 +36,10 @@ def main() -> int:
         target_root = args.dest
     elif args.agent == "codex":
         target_root = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex")) / "skills"
+    elif args.agent == "cursor":
+        target_root = Path.home() / ".cursor" / "skills"
     else:
+        # work-buddy runs inside Claude Code and therefore uses Claude's Skill directory.
         target_root = Path.home() / ".claude" / "skills"
 
     destination = target_root.expanduser().resolve() / SKILL_NAME

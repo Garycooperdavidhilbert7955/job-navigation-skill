@@ -7,12 +7,12 @@
 [简体中文](README.zh-CN.md) · [Architecture](ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Status](https://img.shields.io/badge/status-beta-f59e0b)
-![Version](https://img.shields.io/badge/version-0.5.0--beta-2563eb)
-![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20DeepSeek-111827)
+![Version](https://img.shields.io/badge/version-0.6.0--beta-2563eb)
+![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20Cursor%20%7C%20WorkBuddy-111827)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
 
-`v0.5.0-beta`
+`v0.6.0-beta`
 
 </div>
 
@@ -129,9 +129,9 @@ See the [fictional abbreviated example](examples/early-career-ai-role-brief.md).
 
 ### 5.1 Understand the deployment model
 
-This repository keeps one canonical `SKILL.md` and reference set, then adds thin deployment adapters for ChatGPT, Codex, Claude, and DeepSeek. Career logic is not duplicated between agents.
+This repository keeps one canonical `SKILL.md` and reference set, then packages it for ChatGPT, Codex, Claude, Cursor, and work-buddy. Career logic is not duplicated between agents.
 
-The product display name and technical identifier are both **Job Navigation Skill** / `job-navigation-skill`. Version `0.5.0-beta` is a breaking rename: existing installations under the previous identifier require the one-time migration in [Safe upgrade](#511-safe-upgrade).
+The product display name and technical identifier are both **Job Navigation Skill** / `job-navigation-skill`. Version `0.5.0-beta` introduced a breaking rename: installations under the previous identifier require the one-time migration in [Safe upgrade](#511-safe-upgrade).
 
 | Agent surface | Support in this repository | Deployment path |
 |---|---|---|
@@ -139,8 +139,8 @@ The product display name and technical identifier are both **Job Navigation Skil
 | ChatGPT | Universal OpenAI plugin containing the canonical Skill | `.codex-plugin/plugin.json` plus the ChatGPT package |
 | Claude Code | Native filesystem Skill | `scripts/install.py --agent claude` |
 | claude.ai | Custom Skill upload | Claude Skill zip |
-| DeepSeek in Claude Code | Same Claude Code Skill, with DeepSeek as the model provider | Claude install plus DeepSeek's Claude Code integration |
-| DeepSeek API | System-instruction adapter with optional built-in web search | `adapters/deepseek/run.py` |
+| Cursor | Native Agent Skill | `scripts/install.py --agent cursor` or GitHub remote import |
+| work-buddy | Claude Code-hosted compatibility | `scripts/install.py --agent workbuddy` |
 
 This repository does not automatically upload the Skill or your resume to any provider. Material you submit while using an agent is processed under that provider's account, tool, and data settings; see [Privacy](#9-privacy-limitations-and-safe-use).
 
@@ -262,29 +262,37 @@ Upload the resulting Claude archive through **Settings → Features** where cust
 
 Claude API Skill containers do not have network access. This project therefore does not claim recent job-market research on that surface unless the host application separately supplies a working search tool or retrieved evidence.
 
-### 5.8 Run with DeepSeek
+### 5.8 Install for Cursor and work-buddy
 
-There are two supported routes:
-
-1. **Recommended for an agent experience:** install the Claude Code Skill above, then configure Claude Code to use DeepSeek through [DeepSeek's official coding-agent integration](https://api-docs.deepseek.com/guides/coding_agents/). Claude Code handles Skill discovery; DeepSeek supplies the model.
-2. **Direct API adapter:** run the included standard-library adapter against DeepSeek's Responses API.
-
-Test the adapter without making a network request:
+Cursor natively discovers Agent Skills. Install this Skill to its user-level directory:
 
 ```bash
-python3 adapters/deepseek/run.py --self-test
+python3 scripts/install.py --agent cursor
 ```
 
-For a live request, set `DEEPSEEK_API_KEY` through your shell or secret manager, then pipe a sanitized text request through standard input:
+The default destination is:
+
+```text
+~/.cursor/skills/job-navigation-skill
+```
+
+You can also use **Cursor Settings → Rules → Add Rule → Remote Rule (GitHub)** and import this repository. Start a new chat after installation, then invoke `/job-navigation-skill` or mention it with `@`. See the [Cursor Agent Skills documentation](https://prod.cursor.com/docs/skills).
+
+To build a portable Cursor archive:
 
 ```bash
-python3 adapters/deepseek/run.py <<'EOF'
-I am targeting [role] in [location]. Research recent JDs and compare them with
-this redacted resume evidence: [facts only]. Prioritize my next three actions.
-EOF
+python3 scripts/package_skill.py --target cursor
 ```
 
-The adapter uses DeepSeek's `instructions` field and optional built-in `web_search`. It inlines the runtime references because the API does not load local Skill files progressively, so it normally consumes more input tokens than Codex or Claude Code. The repository does not claim native Skill upload support for the DeepSeek consumer web chat.
+work-buddy runs inside Claude Code, so it uses the same Claude Code Skill directory instead of a separate package format:
+
+```bash
+python3 scripts/install.py --agent workbuddy
+```
+
+This installs to `~/.claude/skills/job-navigation-skill`. If you already installed the Skill with `--agent claude`, do not install a duplicate. Open a new Claude Code/work-buddy session so the Skill can be discovered. See the [work-buddy documentation](https://docs.work-buddy.ai/).
+
+This repository does not claim a separate work-buddy-native Skill store or archive. For distribution, work-buddy users can use the Claude Skill archive because the host runtime is Claude Code.
 
 ### 5.9 Install to a custom Skill directory
 
@@ -302,7 +310,7 @@ python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
 
 `--dest` must point to the parent Skill directory. The installer creates the final `job-navigation-skill` folder inside it.
 
-For a custom Claude Code directory, use `--agent claude` with the corresponding parent path.
+For a custom Claude Code, Cursor, or work-buddy directory, select the matching `--agent` value and pass the corresponding parent path. work-buddy and Claude Code normally share the same destination.
 
 ### 5.10 Verify the installed files
 
@@ -324,6 +332,12 @@ Claude Code default installation:
 test -f "$HOME/.claude/skills/job-navigation-skill/SKILL.md" && echo "Claude Skill files installed"
 ```
 
+Cursor default installation:
+
+```bash
+test -f "$HOME/.cursor/skills/job-navigation-skill/SKILL.md" && echo "Cursor Skill files installed"
+```
+
 Then start a new Codex task and invoke the Skill explicitly:
 
 ```text
@@ -332,7 +346,7 @@ Use $job-navigation-skill to research current target roles and JDs, compare them
 
 Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$job-navigation-skill` invocation.
 
-For ChatGPT, use an `@` mention after installing the plugin. For Claude Code, start a new session and ask it to use `job-navigation-skill`; Claude can also select the Skill automatically when the request matches.
+For ChatGPT, use an `@` mention after installing the plugin. For Claude Code or work-buddy, start a new session and ask it to use `job-navigation-skill`; Claude can also select the Skill automatically when the request matches. In Cursor, use `/job-navigation-skill` or `@`.
 
 ### 5.11 Upgrade safely
 
@@ -346,7 +360,7 @@ mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
 python3 scripts/install.py --agent codex
 ```
 
-For Claude Code, apply the same migration under `$HOME/.claude/skills`. For custom Skill directories, replace the parent path with the directory used in your installation.
+For Claude Code and work-buddy, apply the same migration under `$HOME/.claude/skills`. For Cursor, use `$HOME/.cursor/skills`. For custom Skill directories, replace the parent path with the directory used in your installation.
 
 1. Download or pull the new repository version.
 2. Validate the new repository.
@@ -391,7 +405,7 @@ Move-Item "$HOME\.codex\skills\job-navigation-skill.backup" `
   "$HOME\.codex\skills\job-navigation-skill"
 ```
 
-For Claude Code, use the same procedure under `$HOME/.claude/skills` and reinstall with `--agent claude`. ChatGPT and claude.ai packages are upgraded through their respective plugin or Skill management surfaces.
+For Claude Code or work-buddy, use the same procedure under `$HOME/.claude/skills` and reinstall with `--agent claude` or `--agent workbuddy`. For Cursor, use `$HOME/.cursor/skills` and `--agent cursor`. ChatGPT and claude.ai packages are upgraded through their respective plugin or Skill management surfaces.
 
 ### 5.12 Uninstall without immediate deletion
 
@@ -411,7 +425,7 @@ Move-Item "$HOME\.codex\skills\job-navigation-skill" `
   "$HOME\.codex\job-navigation-skill.uninstalled"
 ```
 
-For Claude Code, move the corresponding folder out of `$HOME/.claude/skills`. Remove ChatGPT or claude.ai packages from their respective Skill or Plugin management screens.
+For Claude Code or work-buddy, move the corresponding folder out of `$HOME/.claude/skills`. For Cursor, move it out of `$HOME/.cursor/skills`. Remove ChatGPT or claude.ai packages from their respective Skill or Plugin management screens.
 
 ## 6. Use it well
 
@@ -519,17 +533,15 @@ Read [ARCHITECTURE.md](ARCHITECTURE.md) for the runtime and evaluation flows.
 ### Privacy
 
 - The repository does not receive or collect your resume or evaluation data.
-- Local installation does not mean offline inference. ChatGPT, Codex, Claude, DeepSeek, and enabled tools may send supplied material to their configured providers or services.
+- Local installation does not mean offline inference. ChatGPT, Codex, Claude, Cursor, work-buddy, and enabled tools may send supplied material to their configured providers or services.
 - The Skill instructs the active agent not to put resume text, identifiers, contact details, or confidential records into web searches.
 - This is an instructional safeguard, not a network sandbox. Review generated queries when risk is material.
-- The DeepSeek adapter sends the sanitized standard-input request and inlined Skill instructions to the configured DeepSeek endpoint. It never reads or uploads a resume file automatically.
 
 ### Research limits
 
 - Job boards may require authentication, personalize results, block automation, or expose stale pages.
 - The Skill has no bundled BOSS, LinkedIn, or Indeed crawler. It uses web access available in the active agent environment.
 - Agent capabilities are not identical: login state, browser access, built-in search, file parsing, and citation behavior vary by product and account.
-- The DeepSeek API adapter loads more instruction tokens and cannot reproduce filesystem-based progressive disclosure.
 - JD samples are convenience samples, not statistically representative labor-market surveys.
 - Job-ad frequency is a directional demand signal, not total hiring volume.
 - Frameworks organize reasoning; they do not prove claims.
@@ -549,9 +561,8 @@ See [SECURITY.md](SECURITY.md) for reporting and privacy guidance.
 | Evidence level | Current status |
 |---|---|
 | Repository structure and privacy checks | Passed locally; CI workflow is configured for GitHub |
-| Codex and Claude Code installers | Passed isolated local installation tests |
-| ChatGPT and Claude package generation | Passed archive structure checks |
-| DeepSeek API adapter | Payload and parsing self-test passed; no live account call published |
+| Codex, Claude Code, Cursor, and work-buddy installer paths | Passed isolated local installation tests; work-buddy shares Claude Code's destination |
+| ChatGPT, Claude, and Cursor package generation | Passed archive structure checks |
 | Behavioral compliance across model/tool versions | Nine scenarios exist; repeatable results are not yet published |
 | Better than a neutral baseline | Not established |
 | Improves real user outcomes | Not established |
@@ -577,7 +588,8 @@ Read the [evaluation protocol](skills/job-navigation-skill/references/evaluation
 | Skill files exist but Codex does not show it | Confirm the parent directory is a Skill directory for that environment | Start a new task, invoke `$job-navigation-skill`, then restart Codex if needed |
 | Requested platforms are inaccessible | Check authentication and platform restrictions | Provide exported links/text or accept a narrower, clearly labeled sample |
 | ChatGPT package cannot be installed | Confirm the plugin is published or available through an enabled development/local source | Validate `.codex-plugin/plugin.json`; packaging alone does not create a listing |
-| DeepSeek request fails before an answer | Check the API key, endpoint, model availability, and account access | Run `--self-test`, then retry without including personal data in logs |
+| Cursor does not discover the Skill | Confirm it is under `~/.cursor/skills/` and contains `SKILL.md` | Start a new chat and invoke `/job-navigation-skill` or mention it with `@` |
+| work-buddy does not discover the Skill | Confirm Claude Code can see `~/.claude/skills/job-navigation-skill` | Do not duplicate the install; start a new Claude Code/work-buddy session |
 | Answer is too long | Ask for `quick` mode and state weekly capacity | Request only the bottom line, three actions, and main uncertainty |
 | Resume analysis invents facts | Stop using the output | Report a privacy-safe bug and remove unsupported claims |
 
@@ -586,7 +598,6 @@ Read the [evaluation protocol](skills/job-navigation-skill/references/evaluation
 ```text
 job-navigation-skill/
 ├── .codex-plugin/plugin.json            # ChatGPT/Codex universal Plugin manifest
-├── adapters/deepseek/run.py              # DeepSeek Responses API adapter
 ├── skills/job-navigation-skill/
 │   ├── SKILL.md                         # Core decision router
 │   ├── agents/openai.yaml               # Codex UI metadata
@@ -595,7 +606,7 @@ job-navigation-skill/
 │   └── scripts/summarize_evals.py       # Local paired-result summary
 ├── examples/                            # Explicitly labeled examples
 ├── scripts/install.py                   # Transactional installer
-├── scripts/package_skill.py             # ChatGPT and Claude archive builder
+├── scripts/package_skill.py             # ChatGPT, Claude, and Cursor archive builder
 ├── scripts/validate_repo.py             # Structure and privacy checks
 ├── ARCHITECTURE.md
 ├── ROADMAP.md

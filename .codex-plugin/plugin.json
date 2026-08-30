@@ -1,6 +1,6 @@
 {
   "name": "job-navigation-skill",
-  "version": "0.5.0-beta",
+  "version": "0.6.0-beta",
   "description": "Research current roles and job descriptions, compare them with resume evidence, and prioritize job-search actions.",
   "author": {
     "name": "Job Navigation Skill contributors",
