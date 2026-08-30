@@ -4,10 +4,10 @@ This project is in public beta. Versions describe repository milestones, not pro
 
 ## Unreleased
 
-- Added a no-code and one-command first-use guide for complete beginners.
-- Defined Skill, JD, agent, terminal, and repository before using those terms.
+- Reordered the README around product direction, user problems, functions, scenarios, and a result example before installation.
+- Consolidated the duplicated first-use and installation instructions into one technical section.
+- Added no-code and one-command routes, expected output, missing-Python recovery, and a first invocation.
 - Separated ordinary-user installation from developer-only ChatGPT packaging.
-- Clarified expected installation output, missing-Python recovery, first invocation, and platform-specific limits.
 
 ## 0.6.0-beta — 2026-08-30
 

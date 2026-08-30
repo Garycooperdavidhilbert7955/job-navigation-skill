@@ -18,111 +18,34 @@
 
 This is a set of installable career-research instructions for AI tools, built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
 
-> **Product position:** focused on job-market research, role fit, resume evidence diagnosis, skill prioritization, and capacity-bounded 30/60/90-day job-search plans. General education, personal-development, and life decisions unrelated to a target career are outside the current product scope.
+## Product manual
 
-## 0. First use: no coding knowledge required
-
-### What this is
-
-- **Skill:** a folder of professional instructions that an AI tool can read. It is not a new chat app and does not train a model.
-- **JD:** job description—the role and hiring requirements published by an employer.
-- **Agent:** the AI tool you use, such as Codex, Claude Code, Cursor, or work-buddy.
-- **Terminal / PowerShell:** a window for entering computer commands. The commands below only need to be copied, pasted, and run.
-- **Repository:** the complete `job-navigation-skill` project folder downloaded and extracted from GitHub.
-
-### Choose only the AI tool you already use
-
-You do not need to install the Skill everywhere.
-
-| Tool you use | Beginner difficulty | Recommended method |
-|---|---:|---|
-| claude.ai website | Easiest | Download the Claude ZIP and upload it if your account supports custom Skills |
-| Cursor | Easy | Import from GitHub inside Cursor; no Python command required |
-| Codex | One command | Download the repository and run the Codex installer |
-| Claude Code | One command | Download the repository and run the Claude installer |
-| work-buddy | One command | Use the Claude Code Skill directory that hosts work-buddy |
-| ChatGPT | No general one-click route yet | This repository provides a developer Plugin package, but not a public store install button |
-
-### Method A: do not open a terminal
-
-**Cursor**
-
-1. Copy the repository URL: `https://github.com/xinyu0115/job-navigation-skill`.
-2. Open **Cursor Settings → Rules → Add Rule → Remote Rule (GitHub)**.
-3. Paste the repository URL and import it.
-4. Start a new chat and enter `/job-navigation-skill`, or select it with `@`.
-
-**claude.ai website**
-
-1. Open the [`v0.6.0-beta` release](https://github.com/xinyu0115/job-navigation-skill/releases/tag/v0.6.0-beta).
-2. Download the ZIP whose filename contains `claude-skill`; do not extract it.
-3. If your account provides custom Skills, upload the ZIP under **Settings → Features**.
-4. Start a new chat and ask Claude to use `job-navigation-skill`.
-
-If your interface does not contain that option, the feature may not be available for your current product version, account, or plan. That is not an installation mistake. Use the Codex, Claude Code, Cursor, or work-buddy command route below instead.
-
-### Method B: copy one installation command
-
-1. [Download the project ZIP directly](https://github.com/xinyu0115/job-navigation-skill/archive/refs/heads/main.zip), or select the green **Code → Download ZIP** button on GitHub.
-2. Open your Downloads folder and double-click the ZIP to extract it.
-3. Open a terminal in the extracted folder, whose name will look like `job-navigation-skill-main`:
-   - **macOS:** open Terminal, type `cd ` with one trailing space, drag the folder into the Terminal window, and press Return.
-   - **Windows:** open the folder, select the File Explorer address bar, type `powershell`, and press Enter.
-4. Copy only the command for the tool you use:
-
-| Tool | macOS / Linux | Windows PowerShell |
-|---|---|---|
-| Codex | `python3 scripts/install.py --agent codex` | `python scripts\install.py --agent codex` |
-| Claude Code | `python3 scripts/install.py --agent claude` | `python scripts\install.py --agent claude` |
-| Cursor | `python3 scripts/install.py --agent cursor` | `python scripts\install.py --agent cursor` |
-| work-buddy | `python3 scripts/install.py --agent workbuddy` | `python scripts\install.py --agent workbuddy` |
-
-A successful installation ends with output similar to:
-
-```text
-Validation passed.
-Installed job-navigation-skill for codex to ...
-```
-
-If `python3` or `python` is not found, your computer does not currently have a usable Python installation. Install [Python 3.11 or later](https://www.python.org/downloads/); on Windows, select **Add Python to PATH** during installation. You can also use one of the no-terminal routes above.
-
-### Your first message after installation
-
-Close and reopen the AI tool, or start a new chat, then paste:
-
-```text
-Use $job-navigation-skill:
-I am targeting [role] in [location]. Research recent roles and JDs, compare them with the
-redacted resume I will provide, and identify role fit, evidence gaps, and my top three actions.
-Separate facts, inferences, and recommendations.
-```
-
-Before uploading a resume, remove phone numbers, personal email addresses, identity numbers, exact home addresses, and unnecessary private links. Installing the Skill does not automatically read or upload your resume; only material you deliberately provide enters the conversation.
-
-### Four common beginner misunderstandings
-
-1. **Install it only once:** you do not need every platform version.
-2. **work-buddy and Claude Code share one copy:** both use `~/.claude/skills`; do not duplicate the installation.
-3. **The release ZIP is not a resume template:** it contains Skill files for an AI tool.
-4. **Installation does not guarantee web access:** current job-market research still depends on the active AI tool's ability to search the web or open links you provide.
-
-After the first successful invocation, you can jump directly to [Use it well](#6-use-it-well). The remaining installation sections are for troubleshooting, upgrades, removal, and publishing.
-
-## Continue reading
-
-- [1. Who this is for](#1-who-this-is-for)
+- [1. Product direction and user problems](#1-product-direction-and-user-problems)
 - [2. What it does](#2-what-it-does)
 - [3. Typical scenarios](#3-typical-scenarios)
 - [4. What the result looks like](#4-what-the-result-looks-like)
-- [5. Install, validate, and maintain](#5-install-validate-and-maintain)
+- [5. Install and use it for the first time](#5-install-and-use-it-for-the-first-time)
 - [6. Use it well](#6-use-it-well)
 - [7. How it works](#7-how-it-works)
 - [8. Technical design and defensibility](#8-technical-design-and-defensibility)
 - [9. Privacy, limitations, and safe use](#9-privacy-limitations-and-safe-use)
 - [10. Validation status](#10-validation-status)
-- [11. Maintenance and troubleshooting](#11-maintenance-and-troubleshooting)
+- [11. Common problems](#11-common-problems)
 
-## 1. Who this is for
+## 1. Product direction and user problems
+
+### Product direction
+
+Job Navigation Skill is not a general chat prompt or an automatic application tool. It is designed to do one job: **compare current job-market requirements with the experience and evidence you actually have, then reduce the result to a small number of executable job-search actions.**
+
+### Problems it solves
+
+- hiring information is scattered across company sites and job platforms, making repeated requirements hard to identify;
+- generic AI advice often omits sources and fails to show where the evidence ends;
+- what a resume says someone did is not always the same as what it proves against a target role;
+- students without formal work experience struggle to judge whether courses, projects, and campus experience count as credible evidence;
+- learning lists expand without considering target roles, time, cost, or order;
+- overloaded 30/60/90-day plans still leave users unsure what to do in the first week.
 
 ### Best fit
 
@@ -174,6 +97,8 @@ This is a **job-search decision and evidence-diagnosis tool, not a hiring predic
 
 ## 4. What the result looks like
 
+**Example context:** a data-science master's graduate is targeting AI product or AI operations roles in Shenzhen. They provide a redacted resume, course list, and project evidence, and want recent JDs compared before choosing a role direction and a 90-day plan.
+
 The first screen is designed for a tired or inexperienced user:
 
 ```text
@@ -213,24 +138,22 @@ The goal is not a longer answer. It is a decision you can inspect: **what is kno
 
 See the [fictional abbreviated example](examples/early-career-ai-role-brief.md). It demonstrates output shape only; it is not current market evidence or a success claim.
 
-## 5. Install, validate, and maintain
+## 5. Install and use it for the first time
 
-> If you successfully invoked the Skill after section 0, do not repeat the installation commands below. This section is for paths, validation, upgrades, removal, and publishing.
+### 5.1 Choose the AI tool you use
 
-### 5.1 Understand the deployment model
-
-This repository keeps one canonical `SKILL.md` and reference set, then packages it for ChatGPT, Codex, Claude, Cursor, and work-buddy. Career logic is not duplicated between agents.
+A Skill is a set of professional instructions that an AI tool can read. It is not a new chat app and does not train a model. Choose the one platform you already use; do not install every version.
 
 The product display name and technical identifier are both **Job Navigation Skill** / `job-navigation-skill`. Version `0.5.0-beta` introduced a breaking rename: installations under the previous identifier require the one-time migration in [Safe upgrade](#511-safe-upgrade).
 
-| Agent surface | Support in this repository | Deployment path |
+| Platform you use | Installation difficulty | Recommended route |
 |---|---|---|
-| Codex | Native filesystem Skill | `scripts/install.py --agent codex` |
-| ChatGPT | Universal OpenAI plugin containing the canonical Skill | `.codex-plugin/plugin.json` plus the ChatGPT package |
-| Claude Code | Native filesystem Skill | `scripts/install.py --agent claude` |
-| claude.ai | Custom Skill upload | Claude Skill zip |
-| Cursor | Native Agent Skill | `scripts/install.py --agent cursor` or GitHub remote import |
-| work-buddy | Claude Code-hosted compatibility | `scripts/install.py --agent workbuddy` |
+| Codex | Copy one command | [Codex instructions](#55-install-for-codex) |
+| Claude Code | Copy one command | [Claude instructions](#57-install-for-claude) |
+| Cursor | No-code import or one command | [Cursor instructions](#58-install-for-cursor-and-work-buddy) |
+| work-buddy | Copy one command | [work-buddy instructions](#58-install-for-cursor-and-work-buddy) |
+| claude.ai website | No-code upload | [claude.ai upload steps](#57-install-for-claude); account support for custom Skills is required |
+| ChatGPT | Developer route | [ChatGPT note](#56-chatgpt-note-ordinary-users-can-skip-this); no public store listing is currently available |
 
 This repository does not automatically upload the Skill or your resume to any provider. Material you submit while using an agent is processed under that provider's account, tool, and data settings; see [Privacy](#9-privacy-limitations-and-safe-use).
 
@@ -244,17 +167,21 @@ This repository does not automatically upload the Skill or your resume to any pr
 
 No Python package installation is required. The installer and validation scripts use the standard library.
 
-### 5.3 Download the repository for command installation
+### 5.3 Download the repository and open a terminal
 
 From the GitHub repository page, choose one method:
 
 **Download ZIP**
 
-1. Select **Code → Download ZIP**.
+1. [Download the project ZIP directly](https://github.com/xinyu0115/job-navigation-skill/archive/refs/heads/main.zip), or select **Code → Download ZIP**.
 2. Extract the archive.
-3. Open Terminal or PowerShell inside the extracted repository—not inside the nested Skill folder.
+3. Open a terminal in the extracted folder, whose name will look like `job-navigation-skill-main`:
+   - **macOS:** open Terminal, type `cd ` with a trailing space, drag the folder into the Terminal window, and press Return;
+   - **Windows:** open the folder, select the File Explorer address bar, type `powershell`, and press Enter.
 
 **Git clone**
+
+Use this method only if you are already comfortable with Git.
 
 1. Select **Code** on the GitHub repository page.
 2. Copy the HTTPS or SSH URL.
@@ -315,9 +242,9 @@ If `CODEX_HOME` is not set, it uses:
 
 The install is transactional: the repository is validated first, symlinks are rejected, files are copied to a temporary staging directory, and the existing destination is never overwritten.
 
-### 5.6 For developers: package for ChatGPT
+### 5.6 ChatGPT note: ordinary users can skip this
 
-This section is for people developing or publishing a Plugin, not an ordinary ChatGPT installation path. ChatGPT and Codex share OpenAI's plugin format. This repository already contains the required `.codex-plugin/plugin.json` and canonical `skills/` directory.
+This repository does not currently have a public store listing that an ordinary ChatGPT user can click to install. This section is only for people developing or publishing a Plugin; downloading a ZIP does not install the Skill into ChatGPT. ChatGPT and Codex share OpenAI's plugin format, and this repository contains `.codex-plugin/plugin.json` plus the canonical `skills/` directory.
 
 Build the distributable plugin archive:
 
@@ -343,7 +270,14 @@ The default destination is:
 ~/.claude/skills/job-navigation-skill
 ```
 
-For claude.ai, build an uploadable Skill archive:
+The claude.ai website does not require a terminal:
+
+1. Open the [`v0.6.0-beta` release](https://github.com/xinyu0115/job-navigation-skill/releases/tag/v0.6.0-beta).
+2. Download the ZIP whose name contains `claude-skill`; do not extract it.
+3. If your account supports custom Skills, upload the ZIP under **Settings → Features**.
+4. Start a new chat and ask Claude to use `job-navigation-skill`.
+
+If the custom Skills option is missing, it may not be available for your current product version, account, or plan. Developers can also build an archive with the same structure:
 
 ```bash
 python3 scripts/package_skill.py --target claude
@@ -405,6 +339,15 @@ For a custom Claude Code, Cursor, or work-buddy directory, select the matching `
 
 ### 5.10 Verify the installed files
 
+Every command installation validates the repository automatically. Successful output looks like:
+
+```text
+Validation passed.
+Installed job-navigation-skill for [agent] to ...
+```
+
+If `python3` or `python` is not found, install [Python 3.11 or later](https://www.python.org/downloads/). On Windows, select **Add Python to PATH**, then reopen PowerShell.
+
 Default macOS/Linux installation:
 
 ```bash
@@ -432,8 +375,13 @@ test -f "$HOME/.cursor/skills/job-navigation-skill/SKILL.md" && echo "Cursor Ski
 Then start a new Codex task and invoke the Skill explicitly:
 
 ```text
-Use $job-navigation-skill to research current target roles and JDs, compare them with my resume evidence, and prioritize my job-search actions.
+Use $job-navigation-skill:
+I am targeting [role] in [location]. Research recent roles and JDs, compare them with the
+redacted resume I will provide, and identify role fit, evidence gaps, and my top three actions.
+Separate facts, inferences, and recommendations.
 ```
+
+Before uploading a resume, remove phone numbers, personal email addresses, identity numbers, exact home addresses, and unnecessary private links. Installing the Skill does not automatically read or upload a resume; only content you deliberately provide enters the conversation.
 
 Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$job-navigation-skill` invocation.
 
@@ -669,7 +617,7 @@ python3 skills/job-navigation-skill/scripts/summarize_evals.py --template
 
 Read the [evaluation protocol](skills/job-navigation-skill/references/evaluation-and-user-feedback.md) before collecting results. Raw prompts, resumes, employer identities, and complete model outputs do not belong in the public repository.
 
-## 11. Maintenance and troubleshooting
+## 11. Common problems
 
 | Problem | Check | Next step |
 |---|---|---|
