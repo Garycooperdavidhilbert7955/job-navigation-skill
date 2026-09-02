@@ -577,6 +577,7 @@ JD要求 → 需求带 → 候选人证据 → 证据等级
 - 招聘平台可能要求登录、返回个性化结果、阻止自动访问或保留过期页面。
 - Skill不包含BOSS直聘、LinkedIn或Indeed专用爬虫，只使用当前Agent环境可用的网络能力。
 - 不同Agent的登录状态、浏览器访问、内置搜索、文件解析和引用行为并不相同。
+- Connector和MCP工具均为可选能力：Skill会检查当前环境实际可用且已授权的工具，不会假设某个服务已经安装。详见[工具访问策略](skills/job-navigation-skill/references/tool-access-policy.md)。
 - JD样本是便利样本，不是具有统计代表性的劳动力市场调查。
 - 招聘广告频率只能作为方向信号，不等于全部招聘数量。
 - 分析模型用于组织思考，不负责证明事实。
@@ -598,7 +599,8 @@ JD要求 → 需求带 → 候选人证据 → 证据等级
 | 仓库结构与隐私检查 | 已在本地通过；已配置GitHub CI工作流 |
 | Codex、Claude Code、Cursor与work-buddy安装路径 | 已通过隔离安装测试；work-buddy与Claude Code共享目标目录 |
 | ChatGPT、Claude与Cursor压缩包生成 | 已通过压缩包结构检查 |
-| 不同模型/工具下稳定遵循规则 | 已有9个场景，尚未发布可重复结果 |
+| 自动发现并触发Skill | 已有14个中英文正反触发场景，尚未发布跨Agent结果 |
+| 不同模型/工具下稳定遵循规则 | 已有9个输出行为场景，尚未发布可重复结果 |
 | 优于不使用Skill的中性基础提示 | 尚未证明 |
 | 改善真实用户结果 | 尚未证明 |
 
@@ -637,7 +639,8 @@ job-navigation-skill/
 │   ├── SKILL.md                         # 核心决策路由
 │   ├── agents/openai.yaml               # Codex界面元数据
 │   ├── references/                      # 按需加载的专业规则
-│   ├── evals/cases.yaml                 # 9个行为测试场景
+│   ├── evals/cases.yaml                 # 9个输出行为测试场景
+│   ├── evals/trigger-cases.yaml         # 14个中英文触发测试场景
 │   └── scripts/summarize_evals.py       # 本地成对结果汇总器
 ├── examples/                            # 明确标注边界的示例
 ├── scripts/install.py                   # 事务式安装器

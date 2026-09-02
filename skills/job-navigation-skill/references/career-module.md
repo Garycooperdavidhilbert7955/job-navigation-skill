@@ -2,6 +2,16 @@
 
 Use for role research, resume analysis, career entry/change, and skill planning.
 
+## Contents
+
+- [Minimum personal inputs](#minimum-personal-inputs)
+- [Market evidence stack](#market-evidence-stack)
+- [Sampling](#sampling)
+- [Extraction schema](#extraction-schema)
+- [Candidate evidence strength](#candidate-evidence-strength)
+- [Resume evidence-gap matrix](#resume-evidence-gap-matrix)
+- [Advice for early-career candidates](#advice-for-early-career-candidates)
+
 ## Minimum personal inputs
 
 Extract from the resume and prompt: target role(s), target geography/work authorization, languages, education, projects, internships/work, tools, demonstrated outcomes, constraints, and time available. Do not equate “no formal work experience” with “no evidence”: inspect coursework, projects, volunteering, competitions, freelance work, and leadership.

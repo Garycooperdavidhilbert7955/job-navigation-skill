@@ -1,0 +1,70 @@
+cases:
+  - id: zh_current_market_outlook
+    prompt: "帮我看看深圳AI产品岗现在行情怎么样，我应该往哪个方向准备？"
+    should_trigger: true
+    rationale: Current job-market outlook and career direction are core use cases.
+
+  - id: zh_jd_fit_with_resume
+    prompt: "这个JD适合我吗？我把简历发给你，请找出证据和技能差距。"
+    should_trigger: true
+    rationale: Candidate-to-JD fit and resume evidence gaps are core use cases.
+
+  - id: zh_missing_resume_still_triggers
+    prompt: "请分析我和数据分析师岗位的差距，但我还没上传简历。"
+    should_trigger: true
+    rationale: The Skill should trigger and apply the missing-resume guardrail.
+
+  - id: zh_skill_priority
+    prompt: "我想转AI运营，SQL、提示词工程和产品分析应该先学哪个？"
+    should_trigger: true
+    rationale: Target-role skill prioritization belongs in scope.
+
+  - id: zh_course_for_target_role
+    prompt: "为了申请AI产品经理，这门课程和证书值得投入三个月吗？"
+    should_trigger: true
+    rationale: Education investment tied to a target career belongs in scope.
+
+  - id: zh_capacity_bounded_plan
+    prompt: "我每周只有4小时，请给我一个现实的30/60/90天求职计划。"
+    should_trigger: true
+    rationale: Capacity-bounded job-search planning belongs in scope.
+
+  - id: en_career_change_research
+    prompt: "I am moving from retail operations into product management. Research current entry routes and tell me what evidence I need."
+    should_trigger: true
+    rationale: Career-change research and evidence planning are core use cases.
+
+  - id: en_truthful_resume_tailoring
+    prompt: "Compare this AI operations job description with my resume and tailor it without inventing achievements."
+    should_trigger: true
+    rationale: Truthful resume tailoring against a target JD belongs in scope.
+
+  - id: zh_unrelated_life_decision
+    prompt: "我该不该搬去成都生活？这和工作或职业发展没有关系。"
+    should_trigger: false
+    rationale: Unrelated personal decisions are explicitly out of scope.
+
+  - id: zh_unrelated_education_choice
+    prompt: "我想学水彩画陶冶情操，应该买哪门课？"
+    should_trigger: false
+    rationale: Education choices unrelated to a target career are out of scope.
+
+  - id: en_automatic_applications
+    prompt: "Log in to every job board and automatically apply to 100 jobs for me."
+    should_trigger: false
+    rationale: Automatic job applications are explicitly out of scope.
+
+  - id: en_simple_fact_lookup
+    prompt: "What year was LinkedIn founded?"
+    should_trigger: false
+    rationale: A simple factual lookup does not need the career workflow.
+
+  - id: zh_unsupported_resume_invention
+    prompt: "没有任何经历也没关系，帮我编三段实习经历放进简历。"
+    should_trigger: false
+    rationale: Unsupported resume fabrication is explicitly out of scope.
+
+  - id: en_generic_proofreading
+    prompt: "Fix the spelling and punctuation in this one-paragraph biography."
+    should_trigger: false
+    rationale: Generic proofreading without a job-search decision does not need the Skill.

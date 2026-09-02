@@ -9,6 +9,7 @@ The next milestone is evidence, not more frameworks.
 - Recruit at least 10 students, recent graduates, and career changers for opt-in usability feedback.
 - Publish aggregate cost, failure, and null-result data without resumes, prompts, or personal records.
 - Run the same sanitized scope and failure cases across ChatGPT, Codex, Claude, Cursor, and work-buddy environments.
+- Measure automatic Skill discovery with the bilingual positive and negative trigger cases; report false positives and false negatives by environment.
 
 ## Next — behavioral validation
 

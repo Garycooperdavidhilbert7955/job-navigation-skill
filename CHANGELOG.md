@@ -4,6 +4,10 @@ This project is in public beta. Versions describe repository milestones, not pro
 
 ## Unreleased
 
+- Added bilingual positive and negative trigger-evaluation cases for automatic Skill discovery.
+- Added a cross-agent tool-access policy covering available-tool checks, MCP naming, job-platform limits, and resume privacy.
+- Added colloquial job-market and JD-fit phrases to the Skill description without introducing non-standard frontmatter fields.
+- Added navigation to the longer career reference and extended repository validation for the new resources.
 - Reordered the README around product direction, user problems, functions, scenarios, and a result example before installation.
 - Consolidated the duplicated first-use and installation instructions into one technical section.
 - Added no-code and one-command routes, expected output, missing-Python recovery, and a first invocation.

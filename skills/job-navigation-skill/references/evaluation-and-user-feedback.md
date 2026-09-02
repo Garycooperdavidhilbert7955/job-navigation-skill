@@ -13,6 +13,10 @@ Keep four claims separate:
 
 Never use evidence from a lower rung to claim a higher rung. A synthetic script self-test proves only that the measurement code runs.
 
+## Trigger evaluation
+
+Keep discovery tests separate from output-quality tests. Run `evals/trigger-cases.yaml` without explicitly naming the Skill and record whether the host selected it. Include colloquial Chinese and English prompts, missing-material cases that should still trigger a guardrail, and nearby out-of-scope requests. Report false negatives and false positives by agent/model/version; a case definition alone is not evidence that automatic discovery works.
+
 ## Paired baseline protocol
 
 For every comparison:

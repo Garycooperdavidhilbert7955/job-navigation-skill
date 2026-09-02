@@ -42,7 +42,9 @@ REQUIRED = [
     SKILL / "references" / "model-router.md",
     SKILL / "references" / "output-contract.md",
     SKILL / "references" / "evaluation-and-user-feedback.md",
+    SKILL / "references" / "tool-access-policy.md",
     SKILL / "evals" / "cases.yaml",
+    SKILL / "evals" / "trigger-cases.yaml",
     SKILL / "scripts" / "summarize_evals.py",
 ]
 
@@ -69,6 +71,7 @@ def parse_frontmatter(text: str) -> dict[str, str]:
 def main() -> int:
     errors: list[str] = []
     eval_text = ""
+    trigger_eval_text = ""
 
     for path in REQUIRED:
         if not path.is_file():
@@ -121,6 +124,23 @@ def main() -> int:
         eval_text = eval_file.read_text(encoding="utf-8")
         if len(re.findall(r"^\s*- id:\s*", eval_text, flags=re.MULTILINE)) < 8:
             fail("At least eight behavioral evaluation cases are required", errors)
+
+    trigger_eval_file = SKILL / "evals" / "trigger-cases.yaml"
+    if trigger_eval_file.is_file():
+        trigger_eval_text = trigger_eval_file.read_text(encoding="utf-8")
+        trigger_case_count = len(
+            re.findall(r"^\s*- id:\s*", trigger_eval_text, flags=re.MULTILINE)
+        )
+        positive_count = len(
+            re.findall(r"^\s*should_trigger:\s*true\s*$", trigger_eval_text, flags=re.MULTILINE)
+        )
+        negative_count = len(
+            re.findall(r"^\s*should_trigger:\s*false\s*$", trigger_eval_text, flags=re.MULTILINE)
+        )
+        if trigger_case_count < 10:
+            fail("At least ten trigger evaluation cases are required", errors)
+        if positive_count < 4 or negative_count < 4:
+            fail("Trigger evaluations require at least four positive and four negative cases", errors)
 
     local_path_patterns = [
         re.compile(r"/Users/[^/\s]+/"),
@@ -180,7 +200,11 @@ def main() -> int:
     print("Validation passed.")
     print(f"Skill: {SKILL_NAME}")
     case_count = len(re.findall(r"^\s*- id:\s*", eval_text, flags=re.MULTILINE))
+    trigger_case_count = len(
+        re.findall(r"^\s*- id:\s*", trigger_eval_text, flags=re.MULTILINE)
+    )
     print(f"Evaluation cases: {case_count}")
+    print(f"Trigger cases: {trigger_case_count}")
     return 0
 
 

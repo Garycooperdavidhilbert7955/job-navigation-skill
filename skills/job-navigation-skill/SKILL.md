@@ -1,6 +1,6 @@
 ---
 name: job-navigation-skill
-description: Research current job markets and hiring requirements, analyze recent job descriptions, compare them with a user's resume, projects, skills, and constraints, and turn the gaps into prioritized career actions. Use for students, job seekers, and career changers who need industry or role trends, cross-platform JD sampling, role-fit analysis, resume evidence-gap analysis or truthful tailoring, career-skill prioritization, target-role course or certificate decisions, application readiness, or a capacity-bounded 30/60/90-day job-search plan. Do not use for general personal advice, education choices unrelated to a target career, simple factual lookups, automatic job applications, or unsupported resume rewriting.
+description: Research current job markets and hiring requirements, analyze recent job descriptions (JDs), compare them with a user's resume, projects, skills, and constraints, and turn evidence gaps into prioritized career actions. Use when students, job seekers, or career changers ask about current role or industry outlook (including “现在行情怎么样”), whether a role or JD fits them (including “这个JD适合我吗”), cross-platform JD sampling, resume evidence gaps or truthful tailoring, what career skill to learn next, target-role course or certificate decisions, application readiness, or a capacity-bounded 30/60/90-day job-search plan. Do not use for unrelated personal or education advice, simple factual lookups, automatic job applications, or unsupported resume rewriting.
 ---
 
 # Job Navigation Skill
@@ -31,6 +31,7 @@ Use current web research whenever recency, recommendations, laws, markets, job l
    - Also read [references/evidence-protocol.md](references/evidence-protocol.md) for contested, academic, high-stakes, or multi-source claims.
 
 4. Search in layers.
+   - Before using web search, browsers, connectors, or MCP servers, read [references/tool-access-policy.md](references/tool-access-policy.md). Use only tools that are actually available and authorized in the active environment.
    - Start with primary sources: official statistics, regulators, standards, original research, company career pages, and first-party product documentation.
    - Add strong secondary synthesis for context, then current market signals such as job boards. Use forums and personal posts only for hypotheses or lived experience.
    - Search in the user's language plus English when useful. Record geography, publication or posting date, sample period, and access limitations.

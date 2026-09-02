@@ -581,6 +581,7 @@ Read [ARCHITECTURE.md](ARCHITECTURE.md) for the runtime and evaluation flows.
 - Job boards may require authentication, personalize results, block automation, or expose stale pages.
 - The Skill has no bundled BOSS, LinkedIn, or Indeed crawler. It uses web access available in the active agent environment.
 - Agent capabilities are not identical: login state, browser access, built-in search, file parsing, and citation behavior vary by product and account.
+- Connectors and MCP tools are optional: the Skill checks what is actually available and authorized instead of assuming a provider is installed. See the [tool-access policy](skills/job-navigation-skill/references/tool-access-policy.md).
 - JD samples are convenience samples, not statistically representative labor-market surveys.
 - Job-ad frequency is a directional demand signal, not total hiring volume.
 - Frameworks organize reasoning; they do not prove claims.
@@ -602,7 +603,8 @@ See [SECURITY.md](SECURITY.md) for reporting and privacy guidance.
 | Repository structure and privacy checks | Passed locally; CI workflow is configured for GitHub |
 | Codex, Claude Code, Cursor, and work-buddy installer paths | Passed isolated local installation tests; work-buddy shares Claude Code's destination |
 | ChatGPT, Claude, and Cursor package generation | Passed archive structure checks |
-| Behavioral compliance across model/tool versions | Nine scenarios exist; repeatable results are not yet published |
+| Automatic Skill discovery | 14 bilingual positive/negative trigger cases exist; cross-agent results are not yet published |
+| Behavioral compliance across model/tool versions | Nine output-behavior scenarios exist; repeatable results are not yet published |
 | Better than a neutral baseline | Not established |
 | Improves real user outcomes | Not established |
 
@@ -641,7 +643,8 @@ job-navigation-skill/
 │   ├── SKILL.md                         # Core decision router
 │   ├── agents/openai.yaml               # Codex UI metadata
 │   ├── references/                      # Conditional specialist guidance
-│   ├── evals/cases.yaml                 # Nine behavioral scenarios
+│   ├── evals/cases.yaml                 # Nine output-behavior scenarios
+│   ├── evals/trigger-cases.yaml         # 14 bilingual discovery scenarios
 │   └── scripts/summarize_evals.py       # Local paired-result summary
 ├── examples/                            # Explicitly labeled examples
 ├── scripts/install.py                   # Transactional installer

@@ -27,7 +27,7 @@ Never post resumes, names, contact details, private prompts, raw model outputs, 
 1. Keep `SKILL.md` concise; move conditional detail into `references/`.
 2. Use imperative language in Skill instructions.
 3. Preserve the separation between market-source confidence and candidate evidence.
-4. Add or update a case in `evals/cases.yaml` when behavior changes.
+4. Add or update `evals/cases.yaml` when behavior changes, and `evals/trigger-cases.yaml` when discovery scope changes.
 5. Do not convert a structural check or synthetic self-test into a benefit claim.
 6. Keep examples fictional or explicitly opt-in and redacted.
 7. Run:
